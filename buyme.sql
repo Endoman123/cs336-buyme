@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
-  `user_ID` int NOT NULL,
-  PRIMARY KEY (`user_ID`),
-  CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`)
+  `login` varchar(30) NOT NULL,
+  PRIMARY KEY (`login`),
+  CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,7 +35,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (5);
+INSERT INTO `admin` VALUES ('Admin');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -47,9 +47,9 @@ DROP TABLE IF EXISTS `customer_rep`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_rep` (
-  `user_ID` int NOT NULL,
-  PRIMARY KEY (`user_ID`),
-  CONSTRAINT `customer_rep_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`)
+  `login` varchar(30) NOT NULL,
+  PRIMARY KEY (`login`),
+  CONSTRAINT `customer_rep_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,7 +59,7 @@ CREATE TABLE `customer_rep` (
 
 LOCK TABLES `customer_rep` WRITE;
 /*!40000 ALTER TABLE `customer_rep` DISABLE KEYS */;
-INSERT INTO `customer_rep` VALUES (1),(2),(3),(4);
+INSERT INTO `customer_rep` VALUES ('Dorian_Hobot'),('Jared_Tulayan'),('Mikita_Belausau'),('Muskan_Burman');
 /*!40000 ALTER TABLE `customer_rep` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,10 +71,10 @@ DROP TABLE IF EXISTS `end_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `end_user` (
-  `user_ID` int NOT NULL,
+  `login` varchar(30) NOT NULL,
   `bid_alert` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`user_ID`),
-  CONSTRAINT `end_user_ibfk_1` FOREIGN KEY (`user_ID`) REFERENCES `user` (`user_ID`)
+  PRIMARY KEY (`login`),
+  CONSTRAINT `end_user_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,6 +84,7 @@ CREATE TABLE `end_user` (
 
 LOCK TABLES `end_user` WRITE;
 /*!40000 ALTER TABLE `end_user` DISABLE KEYS */;
+INSERT INTO `end_user` VALUES ('Customer',NULL);
 /*!40000 ALTER TABLE `end_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,11 +96,10 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `user_ID` int NOT NULL,
-  `login` varchar(30) DEFAULT NULL,
+  `login` varchar(30) NOT NULL,
   `password` varchar(30) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`user_ID`)
+  PRIMARY KEY (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -109,7 +109,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Dorian_Hobot','testpassword1','djh242@scarletmail.rutgers.edu'),(2,'Muskan_Burman','testpassword2','mb1966@rutgers.edu'),(3,'Mikita_Belausau','testpassword3','mikita.belausau@rutgers.edu'),(4,'Jared_Tulayan','testpassword4','jared.tulayan@rutgers.edu'),(5,'Admin','testpassword5','Admin@buyme.com');
+INSERT INTO `user` VALUES ('Admin','testpassword5','Admin@buyme.com'),('Customer','testpassword6','customer@buyme.com'),('Dorian_Hobot','testpassword1','djh242@scarletmail.rutgers.edu'),('Jared_Tulayan','testpassword4','jared.tulayan@rutgers.edu'),('Mikita_Belausau','testpassword3','mikita.belausau@rutgers.edu'),('Muskan_Burman','testpassword2','mb1966@rutgers.edu');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -122,4 +122,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-16 18:04:27
+-- Dump completed on 2021-03-17  1:20:56
