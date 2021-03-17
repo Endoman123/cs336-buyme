@@ -1,0 +1,12 @@
+Points to bring up in the video
+
+
+When loggin in and the given credentials match the database:
+	if a Customer Rep logs in theyll be taken to the customer rep login page
+	if a Admin logs in theyll be taken to the Admin login page
+	any other user will be taken to the end user login page
+
+if the credentials don't match:
+	the user will be sent back to the index page
+
+also show examples, you can get logins and passwords by querying the Database
