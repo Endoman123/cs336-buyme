@@ -1,6 +1,7 @@
 plugins {
     id "war"
     id 'com.bmuschko.tomcat' version '2.5'
+    id "eclipse"
 }
 
 repositories {
@@ -8,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    def tomcatVersion = '7.0.76'
+    def tomcatVersion = '7.0.108'
 
     implementation 'mysql:mysql-connector-java:8.0.23'
 
@@ -24,5 +25,5 @@ java {
 }
 
 tasks.compileJava {
-    options.release = 8
+    options.release = 11
 }
