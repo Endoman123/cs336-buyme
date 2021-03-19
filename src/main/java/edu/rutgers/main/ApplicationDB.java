@@ -1,15 +1,12 @@
-package Buyme;
+package edu.rutgers.main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 public class ApplicationDB {
 	
-	public ApplicationDB(){
-		
-	}
+	public ApplicationDB() {}
 
 	public Connection getConnection(){
 		
@@ -19,7 +16,7 @@ public class ApplicationDB {
 		
 		try {
 			//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,7 +29,7 @@ public class ApplicationDB {
 		}
 		try {
 			//Create a connection to your DB
-			connection = DriverManager.getConnection(connectionUrl,"root", "cs336project");
+			connection = DriverManager.getConnection(connectionUrl,"root", "cs336-buyme");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,10 +47,6 @@ public class ApplicationDB {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
 	
 	public static void main(String[] args) {
 		ApplicationDB dao = new ApplicationDB();
