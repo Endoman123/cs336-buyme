@@ -29,7 +29,7 @@ public class ApplicationDB {
 		}
 		try {
 			//Create a connection to your DB
-			connection = DriverManager.getConnection(connectionUrl,"root", "cs336project");
+			connection = DriverManager.getConnection(connectionUrl, "root", "cs336project");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
