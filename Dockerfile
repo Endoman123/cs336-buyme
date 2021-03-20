@@ -1,9 +1,8 @@
-FROM tomcat:8-jre11-slim
+FROM mysql:latest
 
-RUN apt-get update && apt-get install -y mariadb-server
+COPY buyme.sql ./docker-entrypoint-initdb.d
 
-ADD build/libs/cs336-buyme.war /usr/local/tomcat/webapps/
+ENV MYSQL_ROOT_PASSWORD="cs336project"
+ENV MYSQL_DATABASE="buyme"
 
-EXPOSE 8080
-
-CMD [ "catalina.sh", "run" ]
+EXPOSE 3306
