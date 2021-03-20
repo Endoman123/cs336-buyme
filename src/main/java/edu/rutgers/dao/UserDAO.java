@@ -21,29 +21,31 @@ import edu.rutgers.model.User;
  */
 public class UserDAO extends DAO<User> {
     // Query constants for easy access and change
-    private static final String SQL_LIST_USERS_BY_ID = "SELECT id, login, email FROM user ORDER BY id";
+    private static final String SQL_LIST_USERS_BY_LOGIN = "SELECT login, email FROM user ORDER BY login";
 
-    private static final String SQL_FIND_USER_BY_ID = "SELECT id, login, email FROM user WHERE id=?";
+    private static final String SQL_FIND_USER_BY_LOGIN = "SELECT login, email FROM user WHERE login=?";
+
+    private static final String SQL_FIND_USER_BY_EMAIL = "SELECT login, email FROM user WHERE email=?";
 
     // TODO: Query with hashed password
-    private static final String SQL_FIND_USER_BY_LOGIN_INFO = "SELECT id, login, email FROM user WHERE login=? AND password=?";
+    private static final String SQL_FIND_USER_BY_LOGIN_INFO = "SELECT login, email FROM user WHERE login=? AND password=?";
 
     // TOOD: Insert with hashed password
     private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, password) VALUES (?, ?, ?)";
 
     // TOOD: update with hashed password
-    private static final String SQL_UPDATE_USER = "UPDATE user SET login=?, email=? WHERE id=?";
+    private static final String SQL_UPDATE_USER = "UPDATE user SET email=? WHERE login=?";
 
-    private static final String SQL_DELETE_USER = "DELETE FROM user WHERE id=?";
+    private static final String SQL_DELETE_USER = "DELETE FROM user WHERE login=?";
 
     UserDAO(DAOFactory f) {
         super(f);
     }
 
     /**
-     * Lists users by user ID
+     * Lists users by user login.
      * 
-     * @return              a list of {@code User} objects, sorted by ID.
+     * @return              a list of {@code User} objects, sorted by login name
      * @throws DAOException if there is an issue with interfacing with the database
      */
     @Override
@@ -52,7 +54,7 @@ public class UserDAO extends DAO<User> {
 
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_LIST_USERS_BY_ID, true);
+            PreparedStatement statement = prepareStatement(connection, SQL_LIST_USERS_BY_LOGIN, true);
             ResultSet resultSet = statement.executeQuery();
         ) {
             // Attempt to get a query of users.
@@ -68,19 +70,19 @@ public class UserDAO extends DAO<User> {
     }
 
     /**
-     * Finds a user by id.
+     * Finds a user by login name.
      * 
-     * @param  id           the user id to look for
-     * @return              a {@code User} object with the given ID,
+     * @param  login        the user login name to look for
+     * @return              a {@code User} object with the given login name,
      *                      or {@code null} if no {@code User} was found
      * @throws DAOException if there is an issue with interfacing with the database
      */
-    public User find(Integer id) throws DAOException {
+    public User find(String login) throws DAOException {
         User user = null;
 
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_FIND_USER_BY_ID, true, id);
+            PreparedStatement statement = prepareStatement(connection, SQL_FIND_USER_BY_LOGIN, true, login);
             ResultSet resultSet = statement.executeQuery();
         ) {
             // Attempt to get a user.
@@ -112,7 +114,7 @@ public class UserDAO extends DAO<User> {
 
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_FIND_USER_BY_ID, true, values);
+            PreparedStatement statement = prepareStatement(connection, SQL_FIND_USER_BY_LOGIN_INFO, true, values);
             ResultSet resultSet = statement.executeQuery();
         ) {
             // Attempt to get a user.
@@ -124,9 +126,34 @@ public class UserDAO extends DAO<User> {
 
         return user;
     }
+
+    /**
+     * Check if a email is currently being used in the users database.
+     * 
+     * @param  email        the email to test against the database
+     * @return              true if the login is being used,
+     *                      false otherwise
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public boolean checkEmailExists(String email) throws DAOException {
+        boolean exists = false;
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_FIND_USER_BY_EMAIL, true, email);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            // Find a user that has the login name.
+            exists = resultSet.next();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return exists;
+    }
+
     /**
      * Attempt to create a new user using the given info.
-     * The id of the {@code User} object is ignored.
      * 
      * @param  user         the user to add to the database
      * @throws DAOException if there is an issue with interfacing with the database
@@ -145,13 +172,6 @@ public class UserDAO extends DAO<User> {
         ) {
             if (statement.executeUpdate() == 0)
                 throw new DAOException("Failed to create user, no affected rows.");
-
-            try (ResultSet keys = statement.getGeneratedKeys()) {
-                if (keys.next())
-                    user.setID(keys.getInt(1));
-                else
-                    throw new DAOException("Failed to create user, no generated key.");
-            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -166,9 +186,8 @@ public class UserDAO extends DAO<User> {
     @Override
     public void update(User user) throws DAOException {
         Object values = new Object[] {
-            user.getLogin(),
             user.getEmail(),
-            user.getID()
+            user.getLogin()
         };
 
         try (
@@ -183,7 +202,7 @@ public class UserDAO extends DAO<User> {
     }
 
     /**
-     * Deletes the user from the database and sets their ID to null.
+     * Deletes the user from the database and sets their login name to null.
      * 
      * @param  user         the user to delete from the database
      * @throws DAOException if there is an issue with interfacing with the database
@@ -191,7 +210,7 @@ public class UserDAO extends DAO<User> {
     @Override
     public void delete(User user) throws DAOException {
         Object values = new Object[] {
-            user.getID()
+            user.getLogin()
         };
 
         try (
@@ -201,7 +220,7 @@ public class UserDAO extends DAO<User> {
             if (statement.executeUpdate() == 0)
                 throw new DAOException("Failed to delete user, no affected rows.");
             else
-                user.setID(null);
+                user.setLogin(null);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -219,10 +238,8 @@ public class UserDAO extends DAO<User> {
     public User map(ResultSet resultSet) throws SQLException {
         User user = new User();
 
-        user.setID(resultSet.getInt("id"));
         user.setLogin(resultSet.getString("login"));
         user.setEmail(resultSet.getString("email"));
-        user.setPassword(resultSet.getString("password"));
 
         return user;
     }
