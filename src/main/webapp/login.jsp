@@ -24,7 +24,7 @@
 	String password = request.getParameter("pass");
 	
 	//Form query statment
-	String query = "SELECT login FROM User WHERE login='" + login + "' AND password='" + password + "'";
+	String query = "SELECT login FROM user WHERE login='" + login + "' AND password='" + password + "'";
 	
 	login = "";
 	
@@ -37,7 +37,7 @@
 	 }
 	 
 	 //check if user is a Customer Representative
-	 query = "SELECT login From Customer_Rep Where login='" + login + "'";
+	 query = "SELECT login From customer_rep Where login='" + login + "'";
 	 result = stmt.executeQuery(query);
 	 
 	 if (result.next()){
@@ -46,7 +46,7 @@
 	 }
 	 
 	 //check if user is a Admin
-	 query = "SELECT login From Admin Where login='" + login + "'";
+	 query = "SELECT login From admin Where login='" + login + "'";
 	 result = stmt.executeQuery(query);
 	 
 	 if (result.next()){
