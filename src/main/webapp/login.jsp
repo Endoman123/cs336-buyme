@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="edu.rutgers.*"%>
+    pageEncoding="ISO-8859-1" import="edu.rutgers.main.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
@@ -13,7 +13,8 @@
 <% 
     try {
         // Get the database connection
-        Connection con = DAOFactory.getConnection();	
+        ApplicationDB db = new ApplicationDB();	
+        Connection con = db.getConnection();	
 
         // Create a SQL statement
         Statement stmt = con.createStatement();
