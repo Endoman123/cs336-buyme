@@ -10,9 +10,18 @@ package edu.rutgers.model;
  * @author Jared Tulayan
  */
 public class User {
+    private Integer id;
     private String login;
     private String email;
     private String password;
+
+    public void setID(Integer i) {
+        id = i;
+    }
+
+    public Integer getID() {
+        return id;
+    }
 
     public void setLogin(String l) {
         login = l;
@@ -40,16 +49,16 @@ public class User {
    
     @Override
     public boolean equals(Object other) {
-        return (other instanceof User) ? login.equals(((User)other).login) : (other == this);
+        return (other instanceof User) && (id != null) ? id == ((User)other).id : (other == this);
     }
 
     @Override
     public int hashCode() {
-        return (login != null) ? (this.getClass().hashCode() + login.hashCode()) : super.hashCode();
+        return (id != null) ? (this.getClass().hashCode() + id.hashCode()) : super.hashCode();
     }
 
     @Override
     public String toString() {
-        return String.format("User<login=%s,email=%s>", login, email);
+        return String.format("User<%d : login=%s,email=%s>", id, login, email);
     } 
 }
