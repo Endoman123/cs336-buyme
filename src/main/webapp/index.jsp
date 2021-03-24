@@ -19,7 +19,7 @@
 		<form method="post" action="login.jsp">
 			Login<input type="text" name="log" >
 			<br>
-			Password <input type="text" name="pass">
+			Password <input type="password" name="pass">
 			<br>
 			 <input type="submit" value="Submit">
 		</form>

@@ -9,6 +9,11 @@
 <title>BuyMe</title>
 </head>
 <body>
-Successfully logged in as admin
+Admin Page
+<br>
+Successfully logged in as <%=session.getAttribute("login")%>
+<form method="post" action="logout.jsp">
+<input type="submit" value="logout">
+</form>
 </body>
 </html>

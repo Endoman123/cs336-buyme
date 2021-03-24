@@ -6,14 +6,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>BuyMe</title>
+<title>Insert title here</title>
 </head>
 <body>
-Customer Rep Page
-<br>
-Successfully logged in as <%=session.getAttribute("login")%>
-<form method="post" action="logout.jsp">
-<input type="submit" value="logout">
-</form>
+<%
+session.invalidate();
+response.sendRedirect("index.jsp");
+%>
 </body>
 </html>

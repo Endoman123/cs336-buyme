@@ -9,8 +9,8 @@ repositories {
 
 dependencies {
     def tomcatVersion = '7.0.76'
-
-    implementation 'mysql:mysql-connector-java:8.0.23'
+    
+    provided 'javax.servlet:javax.servlet'
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
