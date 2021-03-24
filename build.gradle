@@ -8,15 +8,10 @@ repositories {
 }
 
 dependencies {
-<<<<<<< HEAD
-    def tomcatVersion = '7.0.76'
-    
-    provided 'javax.servlet:javax.servlet'
-=======
     def tomcatVersion = '7.0.108'
 
     implementation 'mysql:mysql-connector-java:8.0.23'
->>>>>>> a80f0a1c45cd9a83b29f02bd8dddb1ab847d7310
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
