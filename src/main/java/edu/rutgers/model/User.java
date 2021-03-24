@@ -2,7 +2,7 @@ package edu.rutgers.model;
 
 /**
  * User model for the database.
- * Handles creation, modification, and deletion of users from the SQL table.
+ * Handles the high-level representation of a user.
  * 
  * @author Mikita Belausau
  * @author Muskan Burman
