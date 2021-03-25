@@ -27,10 +27,13 @@
         String query = "SELECT login FROM user WHERE login='" + login + "' AND password='" + password + "'";
 
         login = "";
-
         ResultSet result = stmt.executeQuery(query);
-        if (result.next())
+        
+        // check if login in database
+        if (result.next()){
             login = result.getString("login");
+        	session.setAttribute("username", login);
+        }
         else {
             String redirectURL = "index.jsp";
             response.sendRedirect(redirectURL);
@@ -49,11 +52,16 @@
 
         if (result.next())
             response.sendRedirect("admin_login.jsp");
+        
+        con.close();
 
     } catch (Exception ex){
         out.print(ex);
     } 
 %>
-Successfully logged in
+Successfully logged in as <%=session.getAttribute("username")%>
+<form method="post" action="logout.jsp">
+<input type="submit" value="logout">
+</form>
 </body>
 </html>

@@ -11,7 +11,7 @@
 <body>
 Admin Page
 <br>
-Successfully logged in as <%=session.getAttribute("login")%>
+Successfully logged in as <%=session.getAttribute("username")%>
 <form method="post" action="logout.jsp">
 <input type="submit" value="logout">
 </form>
