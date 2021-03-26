@@ -11,6 +11,7 @@ dependencies {
     def tomcatVersion = '7.0.108'
 
     implementation 'mysql:mysql-connector-java:8.0.23'
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",

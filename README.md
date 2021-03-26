@@ -6,7 +6,7 @@ CS336 final project, an online auction site.
 
 - **JDK:** Version 11 or higher
 - **MySQL**: Version 8.0 or higher
-  *NOTE: You can build the Dockerfile included with the project to have a containerized instance of the database.*
+  - *NOTE: You can build the Dockerfile included with the project to have a containerized instance of the database.*
 
 ## Building with Gradle
 
