@@ -11,7 +11,7 @@
 <body>
 Customer Rep Page
 <br>
-Successfully logged in as <%=session.getAttribute("username")%>
+Successfully logged in as <%=session.getAttribute("login")%>
 <form method="post" action="logout.jsp">
 <input type="submit" value="logout">
 </form>

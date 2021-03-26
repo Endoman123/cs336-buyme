@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="edu.rutgers.main.*"%>
+    pageEncoding="ISO-8859-1" import="edu.rutgers.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
@@ -10,7 +10,7 @@
         <title>BuyMe</title>
     </head>
     <header>
-        <h1 style="text-align:center" >BuyMe</h1>
+        <h1 style="text-align:center">BuyMe</h1>
     </header>
     <body>
         <div>
