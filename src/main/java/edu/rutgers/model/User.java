@@ -10,9 +10,16 @@ package edu.rutgers.model;
  * @author Jared Tulayan
  */
 public class User {
+    public static enum Type {
+        END_USER,
+        CUSTOMER_REP,
+        ADMIN
+    };
+
     private String login;
     private String email;
     private String password;
+    private Type type;
 
     public void setLogin(String l) {
         login = l;
@@ -37,6 +44,14 @@ public class User {
     public String getPassword() {
         return password;
     }
+    
+    public void setType(Type t) {
+        type = t;
+    }
+
+    public Type getType() {
+        return type;
+    }
    
     @Override
     public boolean equals(Object other) {
@@ -50,6 +65,6 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User<login=%s,email=%s>", login, email);
+        return String.format("User[type=%s,login=%s,email=%s]", type.name(), login, email);
     } 
 }

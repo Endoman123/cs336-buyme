@@ -21,17 +21,17 @@ import edu.rutgers.model.User;
  */
 public class UserDAO extends DAO<User> {
     // Query constants for easy access and change
-    private static final String SQL_LIST_USERS_BY_LOGIN = "SELECT login, email FROM user ORDER BY login";
+    private static final String SQL_LIST_USERS_BY_LOGIN = "SELECT login, email, type FROM user ORDER BY login";
 
-    private static final String SQL_FIND_USER_BY_LOGIN = "SELECT login, email FROM user WHERE login=?";
+    private static final String SQL_FIND_USER_BY_LOGIN = "SELECT login, email, type FROM user WHERE login=?";
 
-    private static final String SQL_FIND_USER_BY_EMAIL = "SELECT login, email FROM user WHERE email=?";
+    private static final String SQL_FIND_USER_BY_EMAIL = "SELECT login, email, type FROM user WHERE email=?";
 
     // TODO: Query with hashed password
-    private static final String SQL_FIND_USER_BY_LOGIN_INFO = "SELECT login, email FROM user WHERE login=? AND password=?";
+    private static final String SQL_FIND_USER_BY_LOGIN_INFO = "SELECT login, email, type FROM user WHERE login=? AND password=?";
 
     // TOOD: Insert with hashed password
-    private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, password) VALUES (?, ?, ?)";
+    private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, password, type) VALUES (?, ?, ?, ?)";
 
     // TOOD: update with hashed password
     private static final String SQL_UPDATE_USER = "UPDATE user SET email=? WHERE login=?";
@@ -163,7 +163,8 @@ public class UserDAO extends DAO<User> {
         Object values = new Object[] {
             user.getLogin(),
             user.getEmail(),
-            user.getPassword()
+            user.getPassword(),
+            user.getType().name()
         };
 
         try (
@@ -240,6 +241,7 @@ public class UserDAO extends DAO<User> {
 
         user.setLogin(resultSet.getString("login"));
         user.setEmail(resultSet.getString("email"));
+        user.setType(User.Type.valueOf(resultSet.getString("type")));
 
         return user;
     }
