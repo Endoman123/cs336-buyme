@@ -160,7 +160,7 @@ public class UserDAO extends DAO<User> {
      */
     @Override
     public void create(User user) throws DAOException {
-        Object values = new Object[] {
+        Object[] values = new Object[] {
             user.getLogin(),
             user.getEmail(),
             user.getPassword(),
@@ -186,7 +186,7 @@ public class UserDAO extends DAO<User> {
      */
     @Override
     public void update(User user) throws DAOException {
-        Object values = new Object[] {
+        Object[] values = new Object[] {
             user.getEmail(),
             user.getLogin()
         };
@@ -210,13 +210,9 @@ public class UserDAO extends DAO<User> {
      */
     @Override
     public void delete(User user) throws DAOException {
-        Object values = new Object[] {
-            user.getLogin()
-        };
-
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_DELETE_USER, false, values);
+            PreparedStatement statement = prepareStatement(connection, SQL_DELETE_USER, false, user.getLogin());
         ) {
             if (statement.executeUpdate() == 0)
                 throw new DAOException("Failed to delete user, no affected rows.");
