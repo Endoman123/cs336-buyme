@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="edu.rutgers.main.*"%>
+    pageEncoding="ISO-8859-1" import="edu.rutgers.dao.*,edu.rutgers.model.User"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 
@@ -10,52 +10,27 @@
 <title>BuyMe</title>
 </head>
 <body>
-	<%
+<%
     try {
+        DAOFactory daoFactory = new DAOFactory();
+        UserDAO userDao = daoFactory.getUserDAO();
 
-        //Get the database connection
-        ApplicationDB db = new ApplicationDB();    
-        Connection con = db.getConnection();
+        // Create a user
+        User user = new User();
 
-        //Create a SQL statement
-        Statement stmt = con.createStatement();
+        // Use the fields from the request to set up this user
+        user.setLogin(request.getParameter("log"));
+        user.setEmail(request.getParameter("email"));
+        user.setPassword(request.getParameter("pass"));
+        user.setType(User.Type.END_USER);
 
-        //Get parameters from the HTML form at the index.jsp
-        String newLog = request.getParameter("log");
-        String newPass = request.getParameter("pass");
-        String email = request.getParameter("email");
-        
-        //Make an insert statement for the User table:
-                String insert = "INSERT INTO user(login, password, email)"
-                        + "VALUES (?, ?, ?)";
-                //Create a Prepared SQL statement allowing you to introduce the parameters of the query
-               PreparedStatement ps = con.prepareStatement(insert);
-
-                //Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
-                ps.setString(1, newLog);
-                ps.setString(2, newPass);
-                ps.setString(3, email);
-                //Run the query against the DB
-                ps.executeUpdate();
-                //Run the query against the DB
-                
-                insert = "INSERT INTO end_user(login)"
-				+ "VALUES (?)";
-				//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-				ps = con.prepareStatement(insert);
-				//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself		
-				ps.setString(1, newLog);
-				ps.executeUpdate();
-                
-                //Close the connection. Don't forget to do it, otherwise you're keeping the resources of the server allocated.
-                con.close();
-                out.print("Account Created");                         
-                
-            } catch (Exception ex) {
-                out.print(ex);
-                out.print("insert failed");
-            }
-        %>
+        // Add the user to the database
+        userDao.create(user);
+        out.print("Successfully created the account. Welcome, " + user.getLogin() + "!");
+    } catch (Exception ex) {
+       ex.printStackTrace(new java.io.PrintWriter(out));
+    }
+%>
 <form method="post" action="index.jsp">
 <input type="submit" value="login">
 </form>
