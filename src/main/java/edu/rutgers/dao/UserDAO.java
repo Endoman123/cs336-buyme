@@ -34,7 +34,7 @@ public class UserDAO extends DAO<User> {
     private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, password, type) VALUES (?, ?, ?, ?)";
 
     // TOOD: update with hashed password
-    private static final String SQL_UPDATE_USER = "UPDATE user SET email=? WHERE login=?";
+    private static final String SQL_UPDATE_USER = "UPDATE user SET email=?, type=? WHERE login=?";
 
     private static final String SQL_DELETE_USER = "DELETE FROM user WHERE login=?";
 
@@ -188,6 +188,7 @@ public class UserDAO extends DAO<User> {
     public void update(User user) throws DAOException {
         Object[] values = new Object[] {
             user.getEmail(),
+            user.getType(),
             user.getLogin()
         };
 
