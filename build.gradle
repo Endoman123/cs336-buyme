@@ -24,6 +24,12 @@ java {
     }
 }
 
+tomcat {
+    httpPort = 8090
+    httpsPort = 8091
+}
+
 tasks.compileJava {
     options.release = 11
 }
+
