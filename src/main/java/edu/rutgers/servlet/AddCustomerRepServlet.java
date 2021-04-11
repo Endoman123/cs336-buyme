@@ -31,7 +31,7 @@ public class AddCustomerRepServlet extends HttpServlet {
         try {
             DAOFactory daoFactory = new DAOFactory();
             UserDAO userDao = daoFactory.getUserDAO();
-            String redirectURL = "./admin/add_rep";
+            String redirectURL = "admin/add_rep";
 
             // Create a user
             User user = new User();
