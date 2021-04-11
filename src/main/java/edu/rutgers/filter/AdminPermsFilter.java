@@ -17,7 +17,7 @@ import edu.rutgers.model.User;
 import edu.rutgers.model.User.Type;
 
 /**
- * Filter to check if a user is an admin.
+ * Filter to check if a user is an admin. If they are not, redirect them to login.
  */
 @WebFilter( urlPatterns = { "/admin", "/admin/*"} )
 public class AdminPermsFilter implements Filter {
