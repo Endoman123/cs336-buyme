@@ -25,8 +25,6 @@ public class RegisterServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Postprocess request: gather and validate submitted data and display the result in the same JSP.
-
         // Attempt registration
         try {
             DAOFactory daoFactory = new DAOFactory();
