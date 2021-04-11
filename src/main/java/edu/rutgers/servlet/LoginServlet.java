@@ -45,10 +45,8 @@ public class LoginServlet extends HttpServlet {
             User user = userDao.find(login, password);
             String redirectURL = "index.jsp";
 
-            if (user != null) { // Successfully logged in, let's get the user and type
-                session.setAttribute("login", user.getLogin());
-                session.setAttribute("type", user.getType().name());
-
+            if (user != null) { // Successfully logged in, set user attribute
+                session.setAttribute("user", user);
                 redirectURL = "success.jsp";
             }
 
