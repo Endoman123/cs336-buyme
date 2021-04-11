@@ -1,5 +1,7 @@
 package edu.rutgers.model;
 
+import java.io.Serializable;
+
 /**
  * User model for the database.
  * Handles the high-level representation of a user.
@@ -9,8 +11,10 @@ package edu.rutgers.model;
  * @author Dorian Hobot
  * @author Jared Tulayan
  */
-public class User {
-    public static enum Type {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    public enum Type {
         END_USER,
         CUSTOMER_REP,
         ADMIN
