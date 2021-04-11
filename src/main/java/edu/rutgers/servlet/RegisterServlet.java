@@ -37,9 +37,9 @@ public class RegisterServlet extends HttpServlet {
             User user = new User();
 
             // Use the fields from the request to set up this user
-            user.setLogin(request.getParameter("log"));
+            user.setLogin(request.getParameter("login"));
             user.setEmail(request.getParameter("email"));
-            user.setPassword(request.getParameter("pass"));
+            user.setPassword(request.getParameter("password"));
             user.setType(User.Type.END_USER);
 
             // Add the user to the database

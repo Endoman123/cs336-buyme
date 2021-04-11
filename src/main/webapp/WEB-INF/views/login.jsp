@@ -3,13 +3,13 @@
 
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:base>
+<t:base title="Login">
     <h2>Login</h2>
     <form method="post" action="./login">
-        <label for="log">Login</label>
-        <input type="text" name="log" >
+        <label for="login">Login</label>
+        <input type="text" name="login" >
         <label for="pass">Password</label>
-        <input type="password" name="pass">
+        <input type="password" name="password">
         <input type="submit" value="Submit">
     </form>
 </t:base>

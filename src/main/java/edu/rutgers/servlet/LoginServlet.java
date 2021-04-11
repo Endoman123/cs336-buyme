@@ -38,8 +38,8 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             // Get input name and password
-            String login = request.getParameter("log");
-            String password = request.getParameter("pass");
+            String login = request.getParameter("login");
+            String password = request.getParameter("password");
 
             // Attempt to log in
             User user = userDao.find(login, password);
