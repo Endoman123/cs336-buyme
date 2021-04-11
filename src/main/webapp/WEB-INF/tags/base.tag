@@ -1,12 +1,14 @@
 <!-- Base Website tag -->
 <%@ tag description="Base template" pageEncoding="UTF-8"%>
 
-<%@attribute name="title" type="String" %>
+<%@ attribute name="title" type="String" %>
+<%@ attribute name="context" type="String" %>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="ISO-8859-1">
+        <base href="${context}/"> 
         <title><% if (title != null) { %>${title} | <% } %>BuyMe</title>
     </head>
     <header>
