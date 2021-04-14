@@ -1,4 +1,4 @@
-<!-- Add Customer Rep View -->
+<!-- Admin index -->
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags/forms" %>
 
