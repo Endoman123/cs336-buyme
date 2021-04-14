@@ -1,7 +1,7 @@
 <!-- Login View -->
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:base context="${pageContext.request.contextPath}" title="Login">
+<t:base title="Login">
     <h2>Login</h2>
     <form method="post" action="login">
         <label for="login">Login</label>
