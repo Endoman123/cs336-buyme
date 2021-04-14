@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * User model for the database.
- * Handles the high-level representation of a user.
+ * Models the generic user relation in the backend.
  * 
  * @author Mikita Belausau
  * @author Muskan Burman
@@ -14,16 +14,9 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public enum Type {
-        END_USER,
-        CUSTOMER_REP,
-        ADMIN
-    };
-
     private String login;
     private String email;
     private String password;
-    private Type type;
 
     public void setLogin(String l) {
         login = l;
@@ -49,14 +42,6 @@ public class User implements Serializable {
         return password;
     }
     
-    public void setType(Type t) {
-        type = t;
-    }
-
-    public Type getType() {
-        return type;
-    }
-   
     @Override
     public boolean equals(Object other) {
         return (other instanceof User) ? login.equals(((User)other).login) : (other == this);
@@ -69,6 +54,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("User[type=%s,login=%s,email=%s]", type.name(), login, email);
+        return String.format("User[login=%s,email=%s]", login, email);
     } 
 }

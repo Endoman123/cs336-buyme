@@ -7,9 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import edu.rutgers.dao.DAOException;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.User;
@@ -40,12 +38,12 @@ public class AddCustomerRepServlet extends HttpServlet {
             user.setLogin(request.getParameter("login"));
             user.setEmail(request.getParameter("email"));
             user.setPassword(request.getParameter("password"));
-            user.setType(User.Type.END_USER);
 
-            // Add the user to the database
+            // Add the user to the database as a customer representative
             if (userDao.find(user.getLogin()) == null) {
                 userDao.create(user);
-                redirectURL = ".";
+                userDao.addCustomerRep(user);
+                redirectURL = "login";
             }
 
             response.sendRedirect(redirectURL);

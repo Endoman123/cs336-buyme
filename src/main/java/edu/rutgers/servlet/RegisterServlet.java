@@ -38,11 +38,11 @@ public class RegisterServlet extends HttpServlet {
             user.setLogin(request.getParameter("login"));
             user.setEmail(request.getParameter("email"));
             user.setPassword(request.getParameter("password"));
-            user.setType(User.Type.END_USER);
 
-            // Add the user to the database
+            // Add the user to the database as an end-user
             if (userDao.find(user.getLogin()) == null) {
                 userDao.create(user);
+                userDao.addEndUser(user);
                 redirectURL = "./login";
             }
 
