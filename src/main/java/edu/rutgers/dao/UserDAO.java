@@ -32,13 +32,13 @@ public class UserDAO extends DAO<User> {
 
     private static final String SQL_LIST_REPS = "SELECT u.login, u.email FROM user u JOIN customer_rep c ON u.login = c.login ORDER BY u.login";
 
-    private static final String SQL_LIST_ADMINS = "SELECT u.login, u.email FROM user u JOIN admin a ON u.login = a.login ORDER BY u.login";
+    private static final String SQL_LIST_ADMIN = "SELECT u.login, u.email FROM user u JOIN admin a ON u.login = a.login ORDER BY u.login";
 
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT login, email FROM user WHERE login=?";
 
     private static final String SQL_FIND_ENDUSER_BY_LOGIN = "SELECT u.login, u.email, e.bid_alert FROM user u JOIN end_user e ON u.login = e.login WHERE u.login=?";
 
-    private static final String SQL_FIND_REP_BY_LOGIN = "SELECT u.login, u.email FROM user u JOIN end_user e ON u.login = e.login WHERE u.login=?";
+    private static final String SQL_FIND_REP_BY_LOGIN = "SELECT u.login, u.email FROM user u JOIN customer_rep c ON u.login = c.login WHERE u.login=?";
 
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT login, email FROM user WHERE email=?";
 
@@ -53,6 +53,8 @@ public class UserDAO extends DAO<User> {
     private static final String SQL_ADD_REP = "INSERT INTO customer_rep (login) VALUES (?)";
 
     private static final String SQL_UPDATE_USER = "UPDATE user SET email=? WHERE login=?";
+
+    private static final String SQL_RESET_PASSWORD = "UPDATE user SET password=? WHERE login=?";
 
     private static final String SQL_DELETE_USER = "DELETE FROM user WHERE login=?";
 
@@ -151,7 +153,7 @@ public class UserDAO extends DAO<User> {
 
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_LIST_ADMINS, true);
+            PreparedStatement statement = prepareStatement(connection, SQL_LIST_ADMIN, true);
             ResultSet resultSet = statement.executeQuery();
         ) {
             // Get the admin
@@ -369,7 +371,8 @@ public class UserDAO extends DAO<User> {
     }
 
     /**
-     * Updates the user's information in the database, matched by the given ID.
+     * Updates the user's information in the database, matched by the given {@code User}.
+     * Passwords are not updated in this function and should be done with {@code resetPassword(User)}.
      * 
      * @param  user         the user with which to base the change on
      * @throws DAOException if there is an issue with interfacing with the database
@@ -387,6 +390,29 @@ public class UserDAO extends DAO<User> {
         ) {
             if (statement.executeUpdate() == 0)
                 throw new DAOException("Failed to update user, no affected rows.");
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    /**
+     * Resets the user's password in the database, matched by the given {@code User}.
+     * 
+     * @param  user         the user with which to base the change on
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public void resetPassword(User user) throws DAOException {
+        Object[] values = new Object[] {
+            user.getPassword(),
+            user.getLogin()
+        };
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_RESET_PASSWORD, false, values);
+        ) {
+            if (statement.executeUpdate() == 0)
+                throw new DAOException("Failed to reset password, no affected rows.");
         } catch (SQLException e) {
             throw new DAOException(e);
         }
