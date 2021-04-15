@@ -19,6 +19,8 @@ import edu.rutgers.util.URLQuery;
  */
 @WebServlet("/support/manage-user")
 public class ManageUserServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOFactory daoFactory = new DAOFactory();
@@ -71,5 +73,22 @@ public class ManageUserServlet extends HttpServlet {
             userDao.update(user);
 
         response.sendRedirect(redirectURL);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        DAOFactory daoFactory = new DAOFactory();
+        UserDAO userDao = daoFactory.getUserDAO();
+
+        User user = userDao.find(request.getParameter("login"));
+
+        System.out.println("Message recieved.");
+
+        if (user != null) {
+            System.out.println("Deleting " + user.getLogin());
+            userDao.delete(user);
+        }
+
+        response.sendRedirect(request.getContextPath());
     }
 }

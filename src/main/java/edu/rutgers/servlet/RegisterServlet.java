@@ -17,6 +17,8 @@ import edu.rutgers.model.User;
  */
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Preprocess request: we actually don't need to do any business stuff, so just display JSP.

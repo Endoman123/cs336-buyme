@@ -1,14 +1,7 @@
 package edu.rutgers.util;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.ServletRequest;
 
 /**
  * Utility class to encode GET queries
