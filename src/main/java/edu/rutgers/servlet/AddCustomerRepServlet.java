@@ -15,40 +15,36 @@ import edu.rutgers.model.User;
 /**
  * Admin servlet for creating new customer representatives
  */
-@WebServlet("/admin/add_rep")
+@WebServlet("/admin/add-rep")
 public class AddCustomerRepServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get customer support 
-        request.getRequestDispatcher("/WEB-INF/views/admin/add_rep.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/admin/add-rep.jsp").forward(request, response);
     }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Attempt to add a new customer rep
-        try {
-            DAOFactory daoFactory = new DAOFactory();
-            UserDAO userDao = daoFactory.getUserDAO();
-            String redirectURL = request.getContextPath() + "/admin/add_rep";
+        DAOFactory daoFactory = new DAOFactory();
+        UserDAO userDao = daoFactory.getUserDAO();
+        String redirectURL = request.getContextPath() + "/admin/add-rep";
 
-            // Create a user
-            User user = new User();
+        // Create a user
+        User user = new User();
 
-            // Use the fields from the request to set up this user
-            user.setLogin(request.getParameter("login"));
-            user.setEmail(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
+        // Use the fields from the request to set up this user
+        user.setLogin(request.getParameter("login"));
+        user.setEmail(request.getParameter("email"));
+        user.setPassword(request.getParameter("password"));
 
-            // Add the user to the database as a customer representative
-            if (userDao.find(user.getLogin()) == null) {
-                userDao.create(user);
-                userDao.addCustomerRep(user);
-                redirectURL = request.getContextPath() + "/login";
-            }
-
-            response.sendRedirect(redirectURL);
-        } catch (Exception ex) {
-           ex.printStackTrace(System.out);
+        // Add the user to the database as a customer representative
+        if (userDao.find(user.getLogin()) == null) {
+            userDao.create(user);
+            userDao.addCustomerRep(user);
+            redirectURL = request.getContextPath() + "/login";
         }
+
+        response.sendRedirect(redirectURL);
     }
 }
