@@ -47,6 +47,8 @@ public class ManageUserServlet extends HttpServlet {
         String redirectURL = request.getRequestURI() + "?" + URLQuery.encode("login", request.getParameter("loginOld"));
 
         // Create a user
+        String newLogin = (String) request.getParameter("login"); 
+        boolean changeLogin = newLogin != null && !newLogin.isEmpty();
         EndUser user = new EndUser();
 
         // Use the fields from the request to set up this user
@@ -54,10 +56,14 @@ public class ManageUserServlet extends HttpServlet {
         user.setEmail(request.getParameter("email"));
         user.setPassword(request.getParameter("password"));
 
+        changeLogin = changeLogin && !user.getLogin().equals((String) request.getParameter("loginNew"));
+
         // Attempt to change the username, if applicable.
-        if (request.getParameter("login") != null) { 
-            System.out.println("Changing username");
-            userDao.updateLogin(user, request.getParameter("login"));
+        if (changeLogin) { 
+            System.out.println("Changing " + request.getParameter("loginOld") + " to " + request.getParameter("loginNew"));
+            userDao.updateLogin(user, request.getParameter("loginNew"));
+        } else {
+            System.out.println("Skipping change: " + request.getParameter("loginOld") + " to " + request.getParameter("loginNew"));
         }
 
         // Attempt to update the user info
