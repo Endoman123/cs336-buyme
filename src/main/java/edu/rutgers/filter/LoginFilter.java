@@ -1,6 +1,7 @@
 package edu.rutgers.filter;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -31,7 +32,8 @@ public class LoginFilter implements Filter {
         if (isLoggedIn)
             chain.doFilter(request, response);
         else {
-            response.sendRedirect(loginURI + "?redirectURI=" + request.getRequestURI());
+            String queryString = "redirectURI=" + URLEncoder.encode(request.getRequestURI() + "?" + request.getQueryString(), "UTF-8");
+            response.sendRedirect(loginURI + "?" + queryString);
         }
     }
 

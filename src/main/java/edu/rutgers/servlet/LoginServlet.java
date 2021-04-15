@@ -1,6 +1,9 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.User;
+import edu.rutgers.util.URLQuery;
 
 /**
  * Login servlet for processing login info
@@ -32,7 +36,9 @@ public class LoginServlet extends HttpServlet {
         // Get input name, password, and redirectURI
         String login = request.getParameter("login");
         String password = request.getParameter("password");           
-        String redirectURI = request.getRequestURI() + "?redirectURI=" + request.getParameter("redirectURI"); // Basically loop back every time the login is incorrect
+
+        // Create loopback redirect
+        String redirectURI = request.getRequestURI() + "?" + URLQuery.encode("redirectURI", request.getParameter("redirectURI"));
 
         // Attempt to log in
         User user = userDao.find(login, password);
@@ -41,11 +47,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", user);
 
             // Redirect to where they were originally heading to.
-            redirectURI = !((String) request.getParameter("redirectURI")).isEmpty() ? 
-                (String) request.getParameter("redirectURI") : 
-                request.getContextPath();
-
-            System.out.println("Testing");
+            redirectURI = request.getParameter("redirectURI");
+            redirectURI = !redirectURI.isEmpty() ? redirectURI : request.getContextPath();
         }
 
         response.sendRedirect(redirectURI);
