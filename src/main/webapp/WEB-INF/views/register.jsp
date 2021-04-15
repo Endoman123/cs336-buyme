@@ -4,5 +4,5 @@
 
 <t:base title="Register">
     <h2>Register</h2>
-    <tf:account action="register" />
+    <tf:account-create />
 </t:base>

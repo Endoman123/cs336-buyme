@@ -6,8 +6,10 @@
     version="3.0">
     <display-name>Buyme</display-name>
 
+    <!-- Welcome Page -->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- Filters -->
@@ -38,7 +40,7 @@
     </filter-mapping>  
     <filter-mapping>  
         <filter-name>CustomerRepPermsFilter</filter-name>  
-        <url-pattern>/support/reset-password</url-pattern>  
+        <url-pattern>/support/manage-user</url-pattern>  
     </filter-mapping>  
     <filter-mapping>  
         <filter-name>AdminPermsFilter</filter-name>  

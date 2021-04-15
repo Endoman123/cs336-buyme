@@ -4,5 +4,5 @@
 
 <t:base title="Add Customer Rep">
     <h2>New Customer Representative</h2>
-    <tf:account action="admin/add_rep" />
+    <tf:account-create />
 </t:base>

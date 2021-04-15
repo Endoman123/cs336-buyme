@@ -1,5 +1,5 @@
-<!-- Account Form tag -->
-<%@ tag description="Account Form" pageEncoding="UTF-8"%>
+<!-- Account Create Form tag -->
+<%@ tag description="Account Create Form" pageEncoding="UTF-8"%>
 
 <%@ attribute name="action" type="String" %>
 <%@ attribute name="login" type="String" %>

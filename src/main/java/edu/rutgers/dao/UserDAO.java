@@ -52,9 +52,11 @@ public class UserDAO extends DAO<User> {
 
     private static final String SQL_ADD_REP = "INSERT INTO customer_rep (login) VALUES (?)";
 
-    private static final String SQL_UPDATE_USER = "UPDATE user SET email=? WHERE login=?";
+    private static final String SQL_UPDATE_USER = "UPDATE user SET email=IFNULL(NULLIF(?, ''), email), password=IFNULL(NULLIF(?, ''), password) WHERE login=?";
 
-    private static final String SQL_RESET_PASSWORD = "UPDATE user SET password=? WHERE login=?";
+    private static final String SQL_UPDATE_ENDUSER = "UPDATE end_user SET bid_alert=IFNULL(?, TRUE) WHERE login=?";
+
+    private static final String SQL_UPDATE_LOGIN = "UPDATE user SET login=? WHERE login=?";
 
     private static final String SQL_DELETE_USER = "DELETE FROM user WHERE login=?";
 
@@ -372,47 +374,72 @@ public class UserDAO extends DAO<User> {
 
     /**
      * Updates the user's information in the database, matched by the given {@code User}.
-     * Passwords are not updated in this function and should be done with {@code resetPassword(User)}.
+     * If an end-user is passed in, it will update {@code bid_alert} as well.
+     * <p>
+     * Any field left {@code null} will not be updated.
      * 
      * @param  user         the user with which to base the change on
      * @throws DAOException if there is an issue with interfacing with the database
      */
     @Override
     public void update(User user) throws DAOException {
+        String query = SQL_UPDATE_USER;
         Object[] values = new Object[] {
             user.getEmail(),
+            user.getPassword(),
             user.getLogin()
         };
 
+
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_UPDATE_USER, false, values);
+            PreparedStatement statement = prepareStatement(connection, query, false, values);
         ) {
             if (statement.executeUpdate() == 0)
                 throw new DAOException("Failed to update user, no affected rows.");
         } catch (SQLException e) {
             throw new DAOException(e);
         }
+
+        if (user instanceof EndUser) {
+            values = new Object[] {
+                ((EndUser)user).getBidAlerts(),
+                user.getLogin()
+            };
+
+            try (
+                Connection connection = FACTORY.getConnection();
+                PreparedStatement statement = prepareStatement(connection, SQL_UPDATE_ENDUSER, false, values);
+            ) {
+                if (statement.executeUpdate() == 0)
+                    throw new DAOException("Failed to update user, no affected rows.");
+            } catch (SQLException e) {
+                throw new DAOException(e);
+            }
+        }
     }
 
     /**
-     * Resets the user's password in the database, matched by the given {@code User}.
+     * Updates the login of the specified {@code User}.
      * 
      * @param  user         the user with which to base the change on
+     * @param  newLogin     the new login to associate with this {@code User}
      * @throws DAOException if there is an issue with interfacing with the database
      */
-    public void resetPassword(User user) throws DAOException {
+    public void updateLogin(User user, String newLogin) throws DAOException {
         Object[] values = new Object[] {
-            user.getPassword(),
+            newLogin,
             user.getLogin()
         };
 
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_RESET_PASSWORD, false, values);
+            PreparedStatement statement = prepareStatement(connection, SQL_UPDATE_LOGIN, false, values);
         ) {
             if (statement.executeUpdate() == 0)
-                throw new DAOException("Failed to reset password, no affected rows.");
+                throw new DAOException("Failed to update user, no affected rows.");
+            else
+                user.setLogin(newLogin);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -470,7 +497,7 @@ public class UserDAO extends DAO<User> {
 
         user.setLogin(resultSet.getString("login"));
         user.setEmail(resultSet.getString("email"));
-        user.setBidAlert(resultSet.getInt("bid_alert") == 1);
+        user.setBidAlert(resultSet.getBoolean("bid_alert"));
 
         return user;
     }
