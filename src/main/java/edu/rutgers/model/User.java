@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String login;
     private String email;
     private String password;
+    private String salt;
 
     public void setLogin(String l) {
         login = l;
@@ -40,6 +41,14 @@ public class User implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setSalt(String s) {
+        salt = s;
+    }
+
+    public String getSalt() {
+        return salt;
     }
     
     @Override
