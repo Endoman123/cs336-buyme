@@ -56,7 +56,7 @@ public class UserDAO extends DAO<User> {
 
     private static final String SQL_UPDATE_ENDUSER = "UPDATE end_user SET bid_alert=IFNULL(?, TRUE) WHERE login=?";
 
-    private static final String SQL_UPDATE_LOGIN = "UPDATE user SET login=? WHERE login=?";
+    private static final String SQL_UPDATE_LOGIN = "UPDATE user SET login=NULLIF(?, '') WHERE login=?";
 
     private static final String SQL_DELETE_USER = "DELETE FROM user WHERE login=?";
 
