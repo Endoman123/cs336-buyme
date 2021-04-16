@@ -15,7 +15,7 @@ import edu.rutgers.model.EndUser;
 import edu.rutgers.model.User;
 
 /**
- * This is the DAO to interface with the User model.
+ * This is the DAO to interface with the {@code User} model.
  * <p> 
  * This includes other models such as the admin, customer rep, and end user.
  * 
