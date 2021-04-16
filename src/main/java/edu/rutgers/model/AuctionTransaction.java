@@ -29,19 +29,19 @@ public class AuctionTransaction implements Serializable {
     private Float minimum;
     private Float finalPrice;
 
-    private void setAuctionID(Integer id) {
+    public void setAuctionID(Integer id) {
         auctionID = id;
     }
 
-    private Integer getAuctionID() {
+    public Integer getAuctionID() {
         return auctionID;
     }
 
-    private void setItemID(Integer id) {
+    public void setItemID(Integer id) {
         itemID = id;
     }
 
-    private Integer getItemID() {
+    public Integer getItemID() {
         return itemID;
     }
 
@@ -53,59 +53,59 @@ public class AuctionTransaction implements Serializable {
         return login;
     }
 
-    private void setCloseDate(Date date) {
+    public void setCloseDate(Date date) {
         closeDate = date;
     }
 
-    private Date getCloseDate() {
+    public Date getCloseDate() {
         return closeDate;
     }
 
-    private void setCloseTime(Date time) {
+    public void setCloseTime(Date time) {
         closeTime = time;
     }
 
-    private Date getCloseTime() {
+    public Date getCloseTime() {
         return closeTime;
     }
 
-    private void setWinner(String login) {
+    public void setWinner(String login) {
         winner = login;
     }
 
-    private String getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    private void setInitPrice(Float price) {
+    public void setInitPrice(Float price) {
         initPrice = price;
     }
 
-    private Float getInitPrice() {
+    public Float getInitPrice() {
         return initPrice;
     }
 
-    private void setBidIncrement(Float bid) {
+    public void setBidIncrement(Float bid) {
         bidIncrement = bid;
     }
 
-    private Float getBidIncrement() {
+    public Float getBidIncrement() {
         return bidIncrement;
     }
 
-    private void setMinimum(Float price) {
+    public void setMinimum(Float price) {
         minimum = price;
     }
 
-    private Float getMinimum() {
+    public Float getMinimum() {
         return minimum;
     }
 
-    private void setFinalPrice(Float price) {
+    public void setFinalPrice(Float price) {
         finalPrice = price;
     }
 
-    private Float getFinalPrice() {
+    public Float getFinalPrice() {
         return finalPrice;
     }
     
