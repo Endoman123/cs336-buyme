@@ -69,7 +69,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
      * 
      * @param  id           the auction ID to look for
      * @return              an {@code AuctionTransaction} object with the given ID,
-     *                      or {@code null} if no {@code User} was found
+     *                      or {@code null} if no {@code AuctionTransaction} was found
      * @throws DAOException if there is an issue with interfacing with the database
      */
     public AuctionTransaction find(int id) throws DAOException {
@@ -178,7 +178,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
      * Map the result set to a new {@code AuctionTransaction} object.
      * 
      * @param  resultSet    the {@code ResultSet} to use for mapping
-     * @return              a {@code AuctionTransaction} with the fields from the {@code ResultSet}
+     * @return              an {@code AuctionTransaction} with the fields from the {@code ResultSet}
      *                      mapped to its field
      * @throws SQLException if there is an issue accessing the values in the database
      */
@@ -186,7 +186,8 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     public AuctionTransaction map(ResultSet resultSet) throws SQLException {
         AuctionTransaction auction = new AuctionTransaction();
 
-        auction.setItemID(resultSet.getInt("itemID"));
+        auction.setAuctionID(resultSet.getInt("auction_ID"));
+        auction.setItemID(resultSet.getInt("item_ID"));
         auction.setLogin(resultSet.getString("login"));
         auction.setCloseDate(resultSet.getDate("close_date"));
         auction.setCloseTime(resultSet.getDate("close_time"));
