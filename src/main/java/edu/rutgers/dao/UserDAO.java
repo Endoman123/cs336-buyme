@@ -48,7 +48,7 @@ public class UserDAO extends DAO<User> {
     // TOOD: Insert with hashed password
     private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, password) VALUES (?, ?, ?)";
 
-    private static final String SQL_ADD_ENDUSER = "INSERT INTO end_user (login, bid_alert) VALUES (?, NULL)";
+    private static final String SQL_ADD_ENDUSER = "INSERT INTO end_user (login) VALUES (?)";
 
     private static final String SQL_ADD_REP = "INSERT INTO customer_rep (login) VALUES (?)";
 

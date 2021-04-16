@@ -12,34 +12,25 @@ import javax.servlet.http.HttpSession;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.Admin;
-import edu.rutgers.model.EndUser;
 import edu.rutgers.model.User;
-import edu.rutgers.util.URLQuery;
 
 /**
- * User servlet for editing their profile
+ * User servlet for viewing and editing their profile
  */
 @WebServlet( "/profile" )
-public class EditUserServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOFactory daoFactory = new DAOFactory();
         UserDAO userDao = daoFactory.getUserDAO();
-        String login = (String) request.getSession(false).getAttribute("login");
+        User user = (User) request.getSession(false).getAttribute("user");
 
-        if (login == null)
-            throw new IllegalStateException("No active login session, was this not enforced?");
-        else  { 
-            User editUser = userDao.findEndUser(login);
-            if (editUser == null)
-                throw new ServletException("No end-user found with the login " + login);
-            else {
-                request.setAttribute("editUser", editUser);
-                request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
-            }
-        }
+        if (user == null || !userDao.find(user.getLogin()).equals(user))
+            throw new IllegalStateException("Illegal session, invalid login information.");
+        else 
+            request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
     }
     
     @Override
@@ -47,15 +38,14 @@ public class EditUserServlet extends HttpServlet {
         // Attempt to update the password
         DAOFactory daoFactory = new DAOFactory();
         UserDAO userDao = daoFactory.getUserDAO();
-        String redirectURL = request.getRequestURI() + "?" + URLQuery.encode("login", request.getParameter("loginOld"));
+        String redirectURL = request.getRequestURI();
 
         // Create a user
-        String newLogin = (String) request.getParameter("login"); 
+        String newLogin = (String) request.getParameter("loginNew"); 
         boolean changeLogin = newLogin != null && !newLogin.isEmpty();
-        EndUser user = new EndUser();
+        User user = (User) request.getSession(false).getAttribute("user");
 
         // Use the fields from the request to set up this user
-        user.setLogin(request.getParameter("loginOld"));
         user.setEmail(request.getParameter("email"));
         user.setPassword(request.getParameter("password"));
 
@@ -66,11 +56,7 @@ public class EditUserServlet extends HttpServlet {
             userDao.updateLogin(user, request.getParameter("loginNew"));
 
         // Attempt to update the user info
-        if (userDao.find(user.getLogin()) != null)
-            userDao.update(user);
-
-        // Update session
-        request.getSession(false).setAttribute("user", user);
+        userDao.update(user);
 
         response.sendRedirect(redirectURL);
     }
@@ -83,7 +69,7 @@ public class EditUserServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
-        if (user != null && user instanceof Admin) {
+        if (user != null && !(user instanceof Admin)) {
             userDao.delete(user);
         }
         

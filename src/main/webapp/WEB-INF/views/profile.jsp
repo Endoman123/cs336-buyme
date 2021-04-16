@@ -3,15 +3,15 @@
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags/forms" %>
 
 <t:base title="Profile">
-    <h2>Manage ${param.login}</h2>
-    <tf:account-edit login="${editUser.login}" email="${editUser.email}" />
+    <h2>Your Profile</h2>
+    <tf:account-edit login="${user.login}" email="${user.email}" />
     <button onclick="askDelete()">Delete Account</a>
 
     <script>
         function askDelete() {
-            if (confirm("Are you sure you want to delete ${editUser.login}?") == true) {
-                alert("Deleting ${editUser.login} !");
-                fetch("./support/manage-user?login=${editUser.login}", {
+            if (confirm("Are you sure you want to delete your account, ${user.login}?") == true) {
+                alert("Deleting ${user.login}!");
+                fetch("./profile", {
                   method: "DELETE",
                   redirect: "follow"
                 }).then(res => {

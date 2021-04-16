@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.rutgers.util.URLQuery;
+
 /**
  * Filter to check if a user is logged in.
  */
@@ -32,7 +34,11 @@ public class LoginFilter implements Filter {
         if (isLoggedIn)
             chain.doFilter(request, response);
         else {
-            String queryString = "redirectURI=" + URLEncoder.encode(request.getRequestURI() + "?" + request.getQueryString(), "UTF-8");
+            String queryString = URLQuery.encode(
+                "redirectURI", 
+                request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "")
+            );
+
             response.sendRedirect(loginURI + "?" + queryString);
         }
     }
