@@ -28,19 +28,11 @@ public class BidPostFor implements Serializable {
     private Float bidIncrement;
     private Float upperLimit;
 
-    private void setAuctionID(Integer id) {
-        auctionID = id;
+    public void setBidNumber(Integer num) {
+        bidNumber = num;
     }
 
-    private Integer getAuctionID() {
-        return auctionID;
-    }
-
-    private void setItemID(Integer id) {
-        bidNumber = id;
-    }
-
-    private Integer getItemID() {
+    public Integer getBidNumber() {
         return bidNumber;
     }
 
@@ -52,44 +44,60 @@ public class BidPostFor implements Serializable {
         return login;
     }
 
-    private void setCloseDate(Date date) {
+    public void setAuctionID(Integer id) {
+        auctionID = id;
+    }
+
+    public Integer getAuctionID() {
+        return auctionID;
+    }
+
+    public void setAmount(Float a) {
+        amount = a;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setBidDate(Date date) {
         bidDate = date;
     }
 
-    private Date getCloseDate() {
+    public Date getBidDate() {
         return bidDate;
     }
 
-    private void setCloseTime(Date time) {
+    public void setBidTime(Date time) {
         bidTime = time;
     }
 
-    private Date getCloseTime() {
+    public Date getBidTime() {
         return bidTime;
     }
 
-    private void setInitPrice(Float price) {
-        upperLimit = price;
+    public void setAutoBid(boolean b) {
+        autoBid = b;
     }
 
-    private Float getInitPrice() {
-        return upperLimit;
+    public Boolean getAutoBid() {
+        return autoBid;
     }
 
-    private void setBidIncrement(Float bid) {
+    public void setBidIncrement(Float bid) {
         bidIncrement = bid;
     }
 
-    private Float getBidIncrement() {
+    public Float getBidIncrement() {
         return bidIncrement;
     }
 
-    private void setMinimum(Float price) {
-        amount = price;
+    public void setUpperLimit(Float price) {
+        upperLimit = price;
     }
 
-    private Float getMinimum() {
-        return amount;
+    public Float getUpperLimit() {
+        return upperLimit;
     }
 
     @Override
