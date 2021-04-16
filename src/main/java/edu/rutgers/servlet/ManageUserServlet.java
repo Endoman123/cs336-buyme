@@ -61,12 +61,8 @@ public class ManageUserServlet extends HttpServlet {
         changeLogin = changeLogin && !user.getLogin().equals((String) request.getParameter("loginNew"));
 
         // Attempt to change the username, if applicable.
-        if (changeLogin) { 
-            System.out.println("Changing " + request.getParameter("loginOld") + " to " + request.getParameter("loginNew"));
+        if (changeLogin)
             userDao.updateLogin(user, request.getParameter("loginNew"));
-        } else {
-            System.out.println("Skipping change: " + request.getParameter("loginOld") + " to " + request.getParameter("loginNew"));
-        }
 
         // Attempt to update the user info
         if (userDao.find(user.getLogin()) != null)
@@ -82,10 +78,7 @@ public class ManageUserServlet extends HttpServlet {
 
         User user = userDao.find(request.getParameter("login"));
 
-        System.out.println("Message recieved.");
-
         if (user != null) {
-            System.out.println("Deleting " + user.getLogin());
             userDao.delete(user);
         }
 
