@@ -29,6 +29,25 @@ public class SupportServlet extends HttpServlet {
         // Create a question display
         // From here we can simply pass it as an attribute to the view 
         List<Question> questions = questionDao.list();
+
+        if (request.getParameter("search") != null) {
+            StringBuilder queryBuilder = new StringBuilder();
+            String[] keys = request.getParameter("search").split(" ");
+            String queryString;
+
+            for (String key : keys) {
+                if (!key.matches("I|THE|YOU")) {
+                    queryBuilder.append(".*\\b" + key + "\\b.*");
+                    queryBuilder.append("|");
+                }
+            }
+
+            queryBuilder.setLength(queryBuilder.length() - 1);
+            queryString = queryBuilder.toString();
+
+            questions.removeIf(q ->!q.getQuestionText().toLowerCase().matches(queryString));
+        }
+
         if (questions.isEmpty()) {
             content.append("<p>Sorry, no questions!</p>");
         } else {
