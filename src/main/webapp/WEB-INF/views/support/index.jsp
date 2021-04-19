@@ -5,4 +5,5 @@
 <t:base title="Customer Support">
     <h2>Customer Support</h2>
     <a href="support/reset-password?login=test">Reset Password</a>
+    ${content}
 </t:base>

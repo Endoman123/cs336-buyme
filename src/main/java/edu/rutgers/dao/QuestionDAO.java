@@ -26,7 +26,7 @@ public class QuestionDAO extends DAO<Question> {
 
     public static final String SQL_FIND_QUESTION_BY_ID = "SELECT * FROM questions WHERE id=?";
 
-    public static final String SQL_CREATE_QUESTION = "INSERT (eu_login, cr_login, question_text, answer_text) INTO questions VALUES (?, ?, ?, ?)";
+    public static final String SQL_CREATE_QUESTION = "INSERT INTO questions (eu_login, cr_login, question_text, answer_text) VALUES (?, ?, ?, ?)";
     
     public static final String SQL_UPDATE_QUESTION = "UPDATE questions SET eu_login=?, cr_login=?, question_text=?, answer_text=?) WHERE id=?";
     
@@ -98,7 +98,6 @@ public class QuestionDAO extends DAO<Question> {
     @Override
     public void create(Question question) throws DAOException {
         Object[] values = new Object[] {
-            question.getID(),
             question.getEULogin(),
             question.getCRLogin(),
             question.getQuestionText(),
