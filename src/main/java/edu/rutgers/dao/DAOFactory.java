@@ -46,4 +46,13 @@ public class DAOFactory {
     public UserDAO getUserDAO() {
         return new UserDAO(this);
     }
+
+    /**
+     * Gets the DAO for auctions given this factory
+     * 
+     * @return the {@code AuctionDAO} constructed from this factory.
+     */
+    public AuctionTransactionDAO getAuctionTransactionDAO() {
+        return new AuctionTransactionDAO(this);
+    }
 }

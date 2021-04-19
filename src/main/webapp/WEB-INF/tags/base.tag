@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta charset="ISO-8859-1">
-        <base href="${context}/"> 
+        <base href="/cs336-buyme/"> 
         <title><% if (title != null) { %>${title} | <% } %>BuyMe</title>
     </head>
     <header>

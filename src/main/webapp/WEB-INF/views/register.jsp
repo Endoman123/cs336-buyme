@@ -2,7 +2,7 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags/forms" %>
 
-<t:base context="${pageContext.request.contextPath}" title="Register">
+<t:base title="Register">
     <h2>Register</h2>
-    <tf:account action="register" />
+    <tf:account-create />
 </t:base>
