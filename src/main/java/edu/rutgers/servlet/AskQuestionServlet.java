@@ -41,7 +41,7 @@ public class AskQuestionServlet extends HttpServlet {
 
         Question question = new Question();
 
-        question.setEULogin(request.getParameter("login"));
+        question.setEuLogin(request.getParameter("login"));
         question.setQuestionText(request.getParameter("question_text"));
 
         questionDao.create(question);

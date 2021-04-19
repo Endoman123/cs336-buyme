@@ -34,7 +34,9 @@ public class SupportServlet extends HttpServlet {
         } else {
             questions.forEach(q -> {
                 content.append("<div class=\"question\">");
-                content.append("<h3 class=\"question__title\">" + q.getQuestionText() + "<h3>");
+                content.append("<a class=\"question__title\" href=\"./support/view?questionID=" + q.getID() + "\">");
+                content.append("<h3>" + q.getQuestionText() + "<h3>");
+                content.append("</a>");
                 content.append("</div>");
             });
         }

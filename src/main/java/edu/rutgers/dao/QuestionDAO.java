@@ -71,7 +71,7 @@ public class QuestionDAO extends DAO<Question> {
      *                      or {@code null} if no {@code Question} was found
      * @throws DAOException if there is an issue with interfacing with the database
      */
-    public Question find(String id) throws DAOException {
+    public Question find(Integer id) throws DAOException {
         Question question = null;
 
         try (
@@ -98,8 +98,8 @@ public class QuestionDAO extends DAO<Question> {
     @Override
     public void create(Question question) throws DAOException {
         Object[] values = new Object[] {
-            question.getEULogin(),
-            question.getCRLogin(),
+            question.getEuLogin(),
+            question.getCrLogin(),
             question.getQuestionText(),
             question.getAnswerText()
         };
@@ -126,8 +126,8 @@ public class QuestionDAO extends DAO<Question> {
     @Override
     public void update(Question question) throws DAOException {
         Object[] values = new Object[] {
-            question.getEULogin(),
-            question.getCRLogin(),
+            question.getEuLogin(),
+            question.getCrLogin(),
             question.getQuestionText(),
             question.getAnswerText(),
             question.getID()
@@ -179,8 +179,8 @@ public class QuestionDAO extends DAO<Question> {
         Question question = new Question();
 
         question.setID(resultSet.getInt("id"));
-        question.setEULogin(resultSet.getString("eu_login"));
-        question.setCRLogin(resultSet.getString("cr_login"));
+        question.setEuLogin(resultSet.getString("eu_login"));
+        question.setCrLogin(resultSet.getString("cr_login"));
         question.setQuestionText(resultSet.getString("question_text"));
         question.setAnswerText(resultSet.getString("answer_text"));
 

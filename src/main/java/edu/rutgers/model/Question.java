@@ -24,19 +24,19 @@ public class Question {
         return id;
     }
 
-    public void setEULogin(String login) {
+    public void setEuLogin(String login) {
         euLogin = login;
     }
 
-    public String getEULogin() {
+    public String getEuLogin() {
         return euLogin;
     }
 
-    public void setCRLogin(String login) {
+    public void setCrLogin(String login) {
         crLogin = login;
     }
 
-    public String getCRLogin() {
+    public String getCrLogin() {
         return crLogin;
     }
 
