@@ -17,7 +17,7 @@ import edu.rutgers.util.URLQuery;
 /**
  * Customer support servlet for managing a user
  */
-@WebServlet("/support/manage-user")
+@WebServlet("/support/manage/user")
 public class ManageUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class ManageUserServlet extends HttpServlet {
                 throw new ServletException("No end-user found with the login " + login);
             else {
                 request.setAttribute("editUser", editUser);
-                request.getRequestDispatcher("/WEB-INF/views/support/manage-user.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/support/manage/user.jsp").forward(request, response);
             }
         }
     }
@@ -75,9 +75,8 @@ public class ManageUserServlet extends HttpServlet {
 
         User user = userDao.find(request.getParameter("login"));
 
-        if (user != null) {
+        if (user != null)
             userDao.delete(user);
-        }
 
         response.sendRedirect(request.getContextPath());
     }

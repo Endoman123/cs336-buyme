@@ -28,14 +28,12 @@ public class AnswerQuestionServlet extends HttpServlet {
         UserDAO userDao = daoFactory.getUserDAO();
         QuestionDAO questionDao = daoFactory.getQuestionDAO();
         HttpSession session = request.getSession(false);
-        Question question = null;
-        CustomerRep rep = null;
 
         // You need a valid question ID to go here
         if (request.getParameter("questionID") == null)
             throw new IllegalArgumentException("No question ID specified");
         else  {
-            question = questionDao.find(Integer.parseInt(request.getParameter("questionID")));
+            Question question = questionDao.find(Integer.parseInt(request.getParameter("questionID")));
 
             if (question == null)
                 throw new IllegalArgumentException("Invalid question ID given.");
@@ -47,7 +45,7 @@ public class AnswerQuestionServlet extends HttpServlet {
         if (session == null || session.getAttribute("user") == null) {
             throw new IllegalStateException("On answer page, but user is not logged in.");
         } else {
-            rep = userDao.findCustomerRep(((User) session.getAttribute("user")).getLogin());
+            CustomerRep rep = userDao.findCustomerRep(((User) session.getAttribute("user")).getLogin());
 
             if (rep == null) 
                 throw new IllegalStateException("On answer page, but not as a customer rep.");

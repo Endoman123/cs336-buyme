@@ -11,7 +11,7 @@
         function askDelete() {
             if (confirm("Are you sure you want to delete ${editUser.login}?") == true) {
                 alert("Deleting ${editUser.login} !");
-                fetch("./support/manage-user?login=${editUser.login}", {
+                fetch("./support/manage/user?login=${editUser.login}", {
                   method: "DELETE",
                   redirect: "follow"
                 }).then(res => {
