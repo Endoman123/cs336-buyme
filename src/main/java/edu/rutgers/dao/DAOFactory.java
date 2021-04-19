@@ -50,10 +50,19 @@ public class DAOFactory {
     /**
      * Gets the DAO for auctions given this factory
      * 
-     * @return the {@code AuctionDAO} constructed from this factory.
+     * @return the {@code AuctionTransactionDAO} constructed from this factory.
      */
     public AuctionTransactionDAO getAuctionTransactionDAO() {
         return new AuctionTransactionDAO(this);
+    }
+
+    /**
+     * Gets the DAO for bids given this factory
+     * 
+     * @return the {@code BidPostForDAO} constructed from this factory.
+     */
+    public BidPostForDAO getBidPostForDAO() {
+        return new BidPostForDAO(this);
     }
 
     /**

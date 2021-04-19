@@ -24,9 +24,6 @@ public class BidPostFor implements Serializable {
     private Float amount;
     private Date bidDate;
     private Date bidTime;
-    private Boolean autoBid;
-    private Float bidIncrement;
-    private Float upperLimit;
 
     public void setBidNumber(Integer num) {
         bidNumber = num;
@@ -76,30 +73,6 @@ public class BidPostFor implements Serializable {
         return bidTime;
     }
 
-    public void setAutoBid(boolean b) {
-        autoBid = b;
-    }
-
-    public Boolean getAutoBid() {
-        return autoBid;
-    }
-
-    public void setBidIncrement(Float bid) {
-        bidIncrement = bid;
-    }
-
-    public Float getBidIncrement() {
-        return bidIncrement;
-    }
-
-    public void setUpperLimit(Float price) {
-        upperLimit = price;
-    }
-
-    public Float getUpperLimit() {
-        return upperLimit;
-    }
-
     @Override
     public boolean equals(Object other) {
         return (other instanceof BidPostFor) ? bidNumber.equals(((BidPostFor)other).bidNumber) : (other == this);
@@ -116,16 +89,13 @@ public class BidPostFor implements Serializable {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 
-        return String.format("BidPost[bidNumber=%i,login=%s,auctionID=%i,bidDate=%s,bidTime=%s,autoBid=%s,bidIncrement=%s,upperLimit=%s]", 
+        return String.format("BidPostFor[bidNumber=%d,login=%s,auctionID=%d,bidDate=%s,bidTime=%s]", 
             bidNumber,
             login,
             auctionID, 
             currencyFormat.format(amount),
             dateFormat.format(bidDate),
-            timeFormat.format(bidTime),
-            autoBid.toString(),
-            currencyFormat.format(bidIncrement),
-            currencyFormat.format(upperLimit)
+            timeFormat.format(bidTime)
         );
     } 
 }
