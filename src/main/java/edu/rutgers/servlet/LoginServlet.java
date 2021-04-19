@@ -1,5 +1,4 @@
 package edu.rutgers.servlet;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -36,7 +35,8 @@ public class LoginServlet extends HttpServlet {
             DAOFactory daoFactory = new DAOFactory();
             UserDAO userDao = daoFactory.getUserDAO();
             HttpSession session = request.getSession();
-
+            
+            
             // Get input name and password
             String login = request.getParameter("login");
             String password = request.getParameter("password");
@@ -46,8 +46,16 @@ public class LoginServlet extends HttpServlet {
             String redirectURL = "index.jsp";
 
             if (user != null) { // Successfully logged in, set user attribute
+            	
+            	User endUser = userDao.findEndUser(login);
+            	if (endUser != null) {
+                    session.setAttribute("user", user);
+                    redirectURL = "enduser.jsp";
+                }
+            	else {
                 session.setAttribute("user", user);
                 redirectURL = "success.jsp";
+            	}
             }
 
             response.sendRedirect(redirectURL);

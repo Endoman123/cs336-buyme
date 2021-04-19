@@ -20,18 +20,8 @@ dependencies {
            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
-
 tomcat {
     httpPort = 8090
     httpsPort = 8091
-}
-
-tasks.compileJava {
-    options.release = 11
 }
 
