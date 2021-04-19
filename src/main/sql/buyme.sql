@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 14, 2021 at 03:02 AM
+-- Generation Time: Apr 19, 2021 at 03:55 PM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -124,15 +124,8 @@ INSERT INTO `customer_rep` (`login`) VALUES
 
 CREATE TABLE `end_user` (
   `login` varchar(30) NOT NULL,
-  `bid_alert` tinyint(1) DEFAULT NULL
+  `bid_alert` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `end_user`
---
-
-INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
-('Customer', NULL);
 
 -- --------------------------------------------------------
 
@@ -162,9 +155,9 @@ CREATE TABLE `item_alerts` (
 --
 
 CREATE TABLE `questions` (
-  `question_number` int NOT NULL,
-  `user_login_End_User` varchar(30) DEFAULT NULL,
-  `user_login_Customer_Rep` varchar(30) DEFAULT NULL,
+  `id` int NOT NULL,
+  `eu_login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `cr_login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `question_text` varchar(144) DEFAULT NULL,
   `answer_text` varchar(144) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -226,7 +219,6 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`login`, `password`, `email`) VALUES
 ('Admin', 'testpassword5', 'Admin@buyme.com'),
-('Customer', 'testpassword6', 'customer@buyme.com'),
 ('Dorian_Hobot', 'testpassword1', 'djh242@scarletmail.rutgers.edu'),
 ('Jared_Tulayan', 'testpassword4', 'jared.tulayan@rutgers.edu'),
 ('Mikita_Belausau', 'testpassword3', 'mikita.belausau@rutgers.edu'),
@@ -300,9 +292,9 @@ ALTER TABLE `item_alerts`
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
-  ADD PRIMARY KEY (`question_number`),
-  ADD KEY `user_login_End_User` (`user_login_End_User`),
-  ADD KEY `user_login_Customer_Rep` (`user_login_Customer_Rep`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_login_Customer_Rep` (`cr_login`),
+  ADD KEY `user_login_End_User` (`eu_login`) USING BTREE;
 
 --
 -- Indexes for table `sub_category_1`
@@ -329,6 +321,16 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`login`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -336,7 +338,7 @@ ALTER TABLE `user`
 -- Constraints for table `admin`
 --
 ALTER TABLE `admin`
-  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`);
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `auction_transactions`
@@ -363,13 +365,13 @@ ALTER TABLE `bid_posts_for`
 -- Constraints for table `customer_rep`
 --
 ALTER TABLE `customer_rep`
-  ADD CONSTRAINT `customer_rep_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE RESTRICT;
+  ADD CONSTRAINT `customer_rep_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `end_user`
 --
 ALTER TABLE `end_user`
-  ADD CONSTRAINT `end_user_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE RESTRICT;
+  ADD CONSTRAINT `end_user_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `item_alerts`
@@ -382,8 +384,8 @@ ALTER TABLE `item_alerts`
 -- Constraints for table `questions`
 --
 ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`user_login_End_User`) REFERENCES `end_user` (`login`),
-  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`user_login_Customer_Rep`) REFERENCES `customer_rep` (`login`);
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`),
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`);
 
 --
 -- Constraints for table `sub_category_1`
