@@ -16,7 +16,7 @@ public class Question {
     private String questionText;
     private String answerText;
 
-    public void setID(int i) {
+    public void setID(Integer i) {
         id = i;
     }
 

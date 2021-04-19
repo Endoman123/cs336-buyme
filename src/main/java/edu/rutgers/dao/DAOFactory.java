@@ -55,4 +55,13 @@ public class DAOFactory {
     public AuctionTransactionDAO getAuctionTransactionDAO() {
         return new AuctionTransactionDAO(this);
     }
+
+    /**
+     * Gets the DAO for questions given this factory
+     * 
+     * @return the {@code QuestionDAO} constructed from this factory.
+     */
+    public QuestionDAO getQuestionDAO() {
+        return new QuestionDAO(this);
+    }
 }
