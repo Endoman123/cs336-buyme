@@ -1,7 +1,6 @@
 package edu.rutgers.filter;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
