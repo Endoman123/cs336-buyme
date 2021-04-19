@@ -1,5 +1,4 @@
 package edu.rutgers.servlet;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -28,28 +27,43 @@ public class LoginServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAOFactory daoFactory = new DAOFactory();
-        UserDAO userDao = daoFactory.getUserDAO();
-        HttpSession session = request.getSession();
+        // Postprocess request: gather and validate submitted data and display the result in the same JSP.
 
-        // Get input name, password, and redirectURI
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");           
+        // Attempt logon
+        
+            // Get a User DAO for the query
+            DAOFactory daoFactory = new DAOFactory();
+            UserDAO userDao = daoFactory.getUserDAO();
+            HttpSession session = request.getSession();
+            
+            
+            // Get input name, password, and redirectURI
+            String login = request.getParameter("login");
+            String password = request.getParameter("password");
+            
+            // Create loopback redirect
+            String redirectURI = request.getRequestURI() + "?" + URLQuery.encode("redirectURI", request.getParameter("redirectURI"));
 
-        // Create loopback redirect
-        String redirectURI = request.getRequestURI() + "?" + URLQuery.encode("redirectURI", request.getParameter("redirectURI"));
+            // Attempt to log in
+            User user = userDao.find(login, password);
+            String redirectURL = "index.jsp";     
 
-        // Attempt to log in
-        User user = userDao.find(login, password);
+            if (user != null) { // Successfully logged in, set user attribute
+                session.setAttribute("user", user);
+                
+                User endUser = userDao.findEndUser(login);
+                
+                if (endUser != null) {
+                    session.setAttribute("user", user);
+                    redirectURI = "enduser.jsp";
+                } else {
 
-        if (user != null) { // Successfully logged in, set user attribute
-            session.setAttribute("user", user);
-
-            // Redirect to where they were originally heading to.
-            redirectURI = request.getParameter("redirectURI");
-            redirectURI = !redirectURI.isEmpty() ? redirectURI : request.getContextPath();
-        }
-
-        response.sendRedirect(redirectURI);
+                // Redirect to where they were originally heading to.
+                redirectURI = request.getParameter("redirectURI");
+                redirectURI = !redirectURI.isEmpty() ? redirectURI : request.getContextPath();
+            }
+            }
+            
+            response.sendRedirect(redirectURI);
     }
 }

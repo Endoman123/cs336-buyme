@@ -26,13 +26,4 @@ tomcat {
     httpsPort = 8091
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
-    }
-}
-
-tasks.compileJava {
-    options.release = 11
-}
 
