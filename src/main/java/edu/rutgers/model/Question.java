@@ -70,7 +70,7 @@ public class Question {
     
     @Override
     public String toString() {
-        return String.format("Question[id=%i,euLogin=%s,crLogin=%s,questionText=%s,answerText=%s]", 
+        return String.format("Question[id=%d,euLogin=%s,crLogin=%s,questionText=%s,answerText=%s]", 
             id, 
             euLogin,
             crLogin,

@@ -28,7 +28,7 @@ public class QuestionDAO extends DAO<Question> {
 
     public static final String SQL_CREATE_QUESTION = "INSERT INTO questions (eu_login, cr_login, question_text, answer_text) VALUES (?, ?, ?, ?)";
     
-    public static final String SQL_UPDATE_QUESTION = "UPDATE questions SET eu_login=?, cr_login=?, question_text=?, answer_text=?) WHERE id=?";
+    public static final String SQL_UPDATE_QUESTION = "UPDATE questions SET eu_login=?, cr_login=?, question_text=?, answer_text=? WHERE id=?";
     
     public static final String SQL_DELETE_QUESTION = "DELETE FROM questions WHERE id=?";
 

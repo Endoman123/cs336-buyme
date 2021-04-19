@@ -40,7 +40,7 @@ public class ViewQuestionServlet extends HttpServlet {
 
             if (question.getAnswerText() != null && question.getCrLogin() != null) {
                 request.setAttribute("content", 
-                    "<h3>Answer by" + question + "</h3>" + System.lineSeparator() +
+                    "<h3>Answer by " + question.getCrLogin() + "</h3>" + System.lineSeparator() +
                     "<p>" + question.getAnswerText() + "</p>"
                 );
             } else if (userDao.findCustomerRep(curUser.getLogin()) != null) {
