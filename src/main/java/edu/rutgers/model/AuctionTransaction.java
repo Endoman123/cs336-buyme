@@ -125,7 +125,7 @@ public class AuctionTransaction implements Serializable {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 
-        return String.format("AuctionTransaction[auctionID=%i,itemID=%i,login=%s,closeDate=%s,closeTime=%s,winner=%s,initPrice=%s,bidIncrement=%s,minimum=%s,finalPrice=%s]", 
+        return String.format("AuctionTransaction[auctionID=%d,itemID=%d,login=%s,closeDate=%s,closeTime=%s,winner=%s,initPrice=%s,bidIncrement=%s,minimum=%s,finalPrice=%s]", 
             auctionID, 
             itemID,
             login,
