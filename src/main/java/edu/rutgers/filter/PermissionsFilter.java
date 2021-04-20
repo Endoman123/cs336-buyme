@@ -49,7 +49,7 @@ public class PermissionsFilter implements Filter {
                 isAllowed |= userDao.findCustomerRep(((User) session.getAttribute("user")).getLogin()) != null;
             break;
             default:
-                // Already logged in, no worries
+                isAllowed |= userDao.findEndUser(((User) session.getAttribute("user")).getLogin()) != null;
             break;
         }
 
