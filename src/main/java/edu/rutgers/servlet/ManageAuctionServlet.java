@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.rutgers.dao.AuctionTransactionDAO;
-import edu.rutgers.dao.BidPostForDAO;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.model.AuctionTransaction;
-import edu.rutgers.model.BidPostFor;
 
 /**
  * Customer support servlet for managing auctions
