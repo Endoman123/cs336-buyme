@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 20, 2021 at 02:57 PM
+-- Generation Time: Apr 20, 2021 at 04:26 PM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -57,6 +57,16 @@ CREATE TABLE `auction_transactions` (
   `final_price` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `auction_transactions`
+--
+
+INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
+(1, 1, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
+(2, 1, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
+(3, 1, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
+(4, 1, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50);
+
 -- --------------------------------------------------------
 
 --
@@ -96,6 +106,15 @@ CREATE TABLE `bid_posts_for` (
   `bid_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `bid_posts_for`
+--
+
+INSERT INTO `bid_posts_for` (`bid_number`, `login`, `auction_ID`, `amount`, `bid_date`, `bid_time`) VALUES
+(1, 'endoman123', 2, 20, '2021-04-20', '11:48:28'),
+(2, 'muskanb12', 2, 20, '2021-04-20', '11:47:00'),
+(3, 'endoman123', 2, 20, '2021-04-21', '11:48:28');
+
 -- --------------------------------------------------------
 
 --
@@ -131,7 +150,7 @@ INSERT INTO `customer_rep` (`login`) VALUES
 
 CREATE TABLE `end_user` (
   `login` varchar(30) NOT NULL,
-  `bid_alert` tinyint(1) DEFAULT NULL
+  `bid_alert` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -139,11 +158,11 @@ CREATE TABLE `end_user` (
 --
 
 INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
-('admin', NULL),
-('dorianht', NULL),
-('endoman123', NULL),
-('muskanb12', NULL),
-('windhollow', NULL);
+('admin', 1),
+('dorianht', 1),
+('endoman123', 1),
+('muskanb12', 1),
+('windhollow', 1);
 
 -- --------------------------------------------------------
 
@@ -173,6 +192,14 @@ CREATE TABLE `item_alerts` (
   `item_ID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `item_alerts`
+--
+
+INSERT INTO `item_alerts` (`login`, `item_ID`) VALUES
+('dorianht', 1),
+('endoman123', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -183,8 +210,8 @@ CREATE TABLE `questions` (
   `id` int NOT NULL,
   `eu_login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `cr_login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `question_text` varchar(144) DEFAULT NULL,
-  `answer_text` varchar(144) DEFAULT NULL
+  `question_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `answer_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -192,10 +219,10 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `eu_login`, `cr_login`, `question_text`, `answer_text`) VALUES
-(1, NULL, NULL, 'What', NULL),
-(2, NULL, NULL, 'How do I get here?', NULL),
-(3, NULL, NULL, 'Where do I go for auctions?', NULL),
-(4, NULL, NULL, 'Why do I need a login?', NULL);
+(1, 'endoman123', NULL, 'How do I create an auction?', NULL),
+(2, 'dorianht', NULL, 'When do I know an auction has ended?', NULL),
+(3, 'muskanb12', NULL, 'How do I reset my password?', NULL),
+(4, 'windhollow', NULL, 'Can I remove an auction?', NULL);
 
 -- --------------------------------------------------------
 
@@ -337,8 +364,8 @@ ALTER TABLE `item_alerts`
 --
 ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_login_End_User` (`eu_login`),
-  ADD KEY `user_login_Customer_Rep` (`cr_login`);
+  ADD KEY `eu_login` (`eu_login`) USING BTREE,
+  ADD KEY `cr_login` (`cr_login`) USING BTREE;
 
 --
 -- Indexes for table `sub_category_1`
@@ -369,10 +396,28 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `auction_transactions`
+--
+ALTER TABLE `auction_transactions`
+  MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `bid_posts_for`
 --
 ALTER TABLE `bid_posts_for`
-  MODIFY `bid_number` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `bid_number` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `category_number` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `item_ID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -415,7 +460,7 @@ ALTER TABLE `belongs_to`
 -- Constraints for table `bid_posts_for`
 --
 ALTER TABLE `bid_posts_for`
-  ADD CONSTRAINT `bid_posts_for_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `bid_posts_for_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
@@ -448,7 +493,7 @@ ALTER TABLE `questions`
 -- Constraints for table `sub_category_1`
 --
 ALTER TABLE `sub_category_1`
-  ADD CONSTRAINT `sub_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `sub_category_1_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sub_category_2`
