@@ -62,7 +62,7 @@ CREATE TABLE `auction_transactions` (
 --
 
 INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
-(2, 1, 'Mikita_Belausau', '2021-04-15', '23:00:00', 'Person', 2, 2, 25, NULL);
+(2, 1, 'Mikita_Belausau', '2021-04-15', '23:00:00', 'Person', 2, 2, 25, 600);
 
 -- --------------------------------------------------------
 
