@@ -8,6 +8,7 @@ Welcome, ${user.login}!
 	<a href="bid">Manually Bid</a>
 	<br>
 	<a href="autobid.jsp">Create Autobid</a>
+	<a href="browse.jsp"> Browse Items </a>
 
 
 </t:base>
