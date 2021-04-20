@@ -44,14 +44,10 @@ public class LoginServlet extends HttpServlet {
         User user = userDao.tryLogin(login, password);
 
         if (user != null) { // Successfully logged in, set user attribute
-            boolean isEndUser = userDao.findEndUser(login) != null;
-            String endResourece = isEndUser ? "/enduser.jsp" : "/";     
-
             session.setAttribute("user", user);
             
             // Redirect to where they were originally heading to.
-            redirectURI = request.getParameter("redirectURI");
-            redirectURI = !redirectURI.isEmpty() ? redirectURI : request.getContextPath() + endResourece;
+            redirectURI = !pRedirectURI.isEmpty() ? pRedirectURI : request.getContextPath();
         }
         
         response.sendRedirect(redirectURI);
