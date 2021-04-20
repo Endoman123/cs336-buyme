@@ -31,7 +31,7 @@
 			User user = (User) session.getAttribute("user");
 			String login = user.getLogin();
 
-			String auctionList = "select distinct auction_ID from Autobid where login=\"" + login + "\"";
+			String auctionList = "select distinct auction_ID from autobid where login=\"" + login + "\"";
 
 			ResultSet rs = st.executeQuery(auctionList);
 

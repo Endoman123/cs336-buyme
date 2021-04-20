@@ -73,7 +73,7 @@ public class Autobid extends HttpServlet {
 			Statement st = con.createStatement();
 
 			// check if the entered ID is valid
-			String checkID = "select max(auction_id) as auction_id from Auction_Transactions;";
+			String checkID = "select max(auction_id) as auction_id from auction_transactions;";
 			Statement st2 = con.createStatement();
 			ResultSet id = st2.executeQuery(checkID);
 			id.next();
