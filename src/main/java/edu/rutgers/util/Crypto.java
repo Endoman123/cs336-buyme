@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import javax.crypto.Cipher;
@@ -44,6 +45,13 @@ public class Crypto {
         SECRET_KEY = secret;
     }
 
+    /**
+     * Encrypt data using the AES-256-CBC standard.
+     * 
+     * @param data the data to encrypt
+     * @param salt the salt to mix into the hash
+     * @return     the salted hash
+     */
     public static String encrypt(String data, String salt) {
         try {
             byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -65,6 +73,13 @@ public class Crypto {
         return null;
     }
 
+    /**
+     * Decrypt a hash encrypted in the AES-256-CBC standard.
+     * 
+     * @param hash the hash to decrypt
+     * @param salt the salt used in encryption
+     * @return     the decrypted data
+     */
     public static String decrypt(String hash, String salt) {
         try {
           byte[] iv = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -87,10 +102,11 @@ public class Crypto {
 
     public static void main(String[] args) {
         // Test crypto
-        String hash = encrypt("password", "salt");
+        String salt = Long.toHexString(Calendar.getInstance().getTimeInMillis());
+        String hash = encrypt("password", salt);
 
-        System.out.println(hash);
+        System.out.println(salt);
 
-        System.out.println(decrypt(hash, "salt"));
+        System.out.println(decrypt(hash, salt));
     }
 }

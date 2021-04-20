@@ -1,6 +1,9 @@
 package edu.rutgers.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+
+import edu.rutgers.util.Crypto;
 
 /**
  * User model for the database.
@@ -35,8 +38,14 @@ public class User implements Serializable {
         return email;
     }
 
+    /**
+     * Sets the password by resetting the salt and encrypting the given plaintext password
+     * 
+     * @param pw the plaintext password to encrypt
+     */
     public void setPassword(String pw) {
-        password = pw;
+        setSalt(Long.toHexString(Calendar.getInstance().getTimeInMillis()));
+        password = Crypto.encrypt(pw, salt);
     }
 
     public String getPassword() {
