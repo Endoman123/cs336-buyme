@@ -19,7 +19,7 @@ public class User implements Serializable {
 
     private String login;
     private String email;
-    private String password;
+    private String hash;
     private String salt;
 
     public void setLogin(String l) {
@@ -38,18 +38,12 @@ public class User implements Serializable {
         return email;
     }
 
-    /**
-     * Sets the password by resetting the salt and encrypting the given plaintext password
-     * 
-     * @param pw the plaintext password to encrypt
-     */
-    public void setPassword(String pw) {
-        setSalt(Long.toHexString(Calendar.getInstance().getTimeInMillis()));
-        password = Crypto.encrypt(pw, salt);
+    public void setHash(String h) {
+        hash = h;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHash() {
+        return hash;
     }
 
     public void setSalt(String s) {

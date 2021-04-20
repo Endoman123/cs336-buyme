@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 20, 2021 at 12:00 AM
+-- Generation Time: Apr 20, 2021 at 01:42 PM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -62,7 +62,7 @@ CREATE TABLE `auction_transactions` (
 --
 
 INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
-(2, 1, 'Mikita_Belausau', '2021-04-15', '23:00:00', 'Person', 2, 2, 25, NULL);
+(2, 1, 'Mikita_Belausau', '2021-04-25', '23:00:00', 'Person', 2, 2, 25, NULL);
 
 -- --------------------------------------------------------
 
@@ -76,6 +76,13 @@ CREATE TABLE `autobid` (
   `bid_increment` float DEFAULT NULL,
   `upper_limit` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `autobid`
+--
+
+INSERT INTO `autobid` (`login`, `auction_ID`, `bid_increment`, `upper_limit`) VALUES
+('Endoman123', 2, 2, 22);
 
 -- --------------------------------------------------------
 
@@ -256,27 +263,28 @@ CREATE TABLE `sub_category_3` (
 
 CREATE TABLE `user` (
   `login` varchar(30) NOT NULL,
-  `password` varchar(30) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `hash` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `salt` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`login`, `password`, `email`) VALUES
-('Admin', 'testpassword5', 'Admin@buyme.com'),
-('Customer', 'testpassword6', 'customer@buyme.com'),
-('customer1', 'password', ''),
-('Dorian_Hobot', 'testpassword1', 'djh242@scarletmail.rutgers.edu'),
-('Endoman123', 'jHkN$NT#$@nn(TrO2D', 'jared@jaredtulayan.xyz'),
-('hello', 'password', ''),
-('Jared_Tulayan', 'testpassword4', 'jared.tulayan@rutgers.edu'),
-('Mikita_Belausau', 'testpassword3', 'mikita.belausau@rutgers.edu'),
-('Muskan_Burman', 'testpassword2', 'mb1966@rutgers.edu'),
-('person', 'password', 'person@buyme.com'),
-('person2', 'password', 'person2@buyme.com'),
-('person3', 'password', '');
+INSERT INTO `user` (`login`, `email`, `hash`, `salt`) VALUES
+('Admin', 'Admin@buyme.com', 'testpassword5', ''),
+('Customer', 'customer@buyme.com', 'testpassword6', ''),
+('customer1', '', 'password', ''),
+('Dorian_Hobot', 'djh242@scarletmail.rutgers.edu', 'testpassword1', ''),
+('Endoman123', 'jared@jaredtulayan.xyz', 'jHkN$NT#$@nn(TrO2D', ''),
+('hello', '', 'password', ''),
+('Jared_Tulayan', 'jared.tulayan@rutgers.edu', 'testpassword4', ''),
+('Mikita_Belausau', 'mikita.belausau@rutgers.edu', 'testpassword3', ''),
+('Muskan_Burman', 'mb1966@rutgers.edu', 'testpassword2', ''),
+('person', 'person@buyme.com', 'password', ''),
+('person2', 'person2@buyme.com', 'password', ''),
+('person3', '', 'password', '');
 
 --
 -- Indexes for dumped tables
