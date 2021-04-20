@@ -35,21 +35,19 @@ public class LoginServlet extends HttpServlet {
         // Get input name, password, and redirectURI
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        String pRedirectURI = request.getParameter("redirectURI");
         
         // Create loopback redirect
-        String redirectURI = request.getRequestURI() + "?" + URLQuery.encode("redirectURI", request.getParameter("redirectURI"));
+        String redirectURI = request.getRequestURI() + (pRedirectURI != null && !pRedirectURI.isEmpty() ? "?" + URLQuery.encode("redirectURI", pRedirectURI) : "");
 
         // Attempt to log in
-        User user = userDao.find(login, password);
-        boolean isEndUser = userDao.findEndUser(login) != null;
-        String endResourece = isEndUser ? "/enduser.jsp" : "/";     
+        User user = userDao.tryLogin(login, password);
 
         if (user != null) { // Successfully logged in, set user attribute
             session.setAttribute("user", user);
             
             // Redirect to where they were originally heading to.
-            redirectURI = request.getParameter("redirectURI");
-            redirectURI = !redirectURI.isEmpty() ? redirectURI : request.getContextPath() + endResourece;
+            redirectURI = !pRedirectURI.isEmpty() ? pRedirectURI : request.getContextPath();
         }
         
         response.sendRedirect(redirectURI);

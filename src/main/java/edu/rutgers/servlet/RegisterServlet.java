@@ -1,6 +1,7 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.User;
+import edu.rutgers.util.Crypto;
 
 /**
  * Registration servlet for processing registration info
@@ -28,29 +30,28 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Attempt registration
-        try {
-            DAOFactory daoFactory = new DAOFactory();
-            UserDAO userDao = daoFactory.getUserDAO();
-            String redirectURL = "./register";
+        DAOFactory daoFactory = new DAOFactory();
+        UserDAO userDao = daoFactory.getUserDAO();
+        String redirectURL = "./register";
 
-            // Create a user
-            User user = new User();
+        // Create a user
+        User user = new User();
+        String salt = Long.toHexString(Calendar.getInstance().getTimeInMillis());
+        String hash = Crypto.encrypt(request.getParameter("password"), salt);
 
-            // Use the fields from the request to set up this user
-            user.setLogin(request.getParameter("login"));
-            user.setEmail(request.getParameter("email"));
-            user.setPassword(request.getParameter("password"));
+        // Use the fields from the request to set up this user
+        user.setLogin(request.getParameter("login"));
+        user.setEmail(request.getParameter("email"));
+        user.setHash(hash);
+        user.setSalt(salt);
 
-            // Add the user to the database as an end-user
-            if (userDao.find(user.getLogin()) == null) {
-                userDao.create(user);
-                userDao.addEndUser(user);
-                redirectURL = "./login";
-            }
-
-            response.sendRedirect(redirectURL);
-        } catch (Exception ex) {
-           ex.printStackTrace(System.out);
+        // Add the user to the database as an end-user
+        if (userDao.find(user.getLogin()) == null) {
+            userDao.create(user);
+            userDao.addEndUser(user);
+            redirectURL = "./login";
         }
+
+        response.sendRedirect(redirectURL);
     }
 }

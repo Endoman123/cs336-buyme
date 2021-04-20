@@ -13,6 +13,7 @@ import edu.rutgers.model.Admin;
 import edu.rutgers.model.CustomerRep;
 import edu.rutgers.model.EndUser;
 import edu.rutgers.model.User;
+import edu.rutgers.util.Crypto;
 
 /**
  * This is the DAO to interface with the {@code User} model.
@@ -25,8 +26,7 @@ import edu.rutgers.model.User;
  * @author Jared Tulayan
  */
 public class UserDAO extends DAO<User> {
-    // Query constants for easy access and change
-    private static final String SQL_LIST_USERS = "SELECT login, email FROM user ORDER BY login";
+    private static final String SQL_LIST_USERS = "SELECT * FROM user ORDER BY login";
 
     private static final String SQL_LIST_ENDUSERS = "SELECT u.login, u.email, e.bid_alert FROM user u JOIN end_user e ON u.login = e.login ORDER BY u.login";
 
@@ -40,19 +40,17 @@ public class UserDAO extends DAO<User> {
 
     private static final String SQL_FIND_REP_BY_LOGIN = "SELECT u.login, u.email FROM user u JOIN customer_rep c ON u.login = c.login WHERE u.login=?";
 
+    private static final String SQL_ATTEMPT_LOGIN = "SELECT * FROM user WHERE login=?";
+
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT login, email FROM user WHERE email=?";
 
-    // TODO: Query with hashed password
-    private static final String SQL_FIND_USER_BY_LOGIN_INFO = "SELECT login, email FROM user WHERE login=? AND password=?";
-
-    // TOOD: Insert with hashed password
-    private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, password) VALUES (?, ?, ?)";
+    private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, hash, salt) VALUES (?, ?, ?, ?)";
 
     private static final String SQL_ADD_ENDUSER = "INSERT INTO end_user (login) VALUES (?)";
 
     private static final String SQL_ADD_REP = "INSERT INTO customer_rep (login) VALUES (?)";
 
-    private static final String SQL_UPDATE_USER = "UPDATE user SET email=IFNULL(NULLIF(?, ''), email), password=IFNULL(NULLIF(?, ''), password) WHERE login=?";
+    private static final String SQL_UPDATE_USER = "UPDATE user SET email=IFNULL(NULLIF(?, ''), email), hash=IFNULL(NULLIF(?, ''), hash), salt=IFNULL(NULLIF(?, ''), salt) WHERE login=?";
 
     private static final String SQL_UPDATE_ENDUSER = "UPDATE end_user SET bid_alert=IFNULL(?, TRUE) WHERE login=?";
 
@@ -247,34 +245,34 @@ public class UserDAO extends DAO<User> {
     }
 
     /**
-     * Finds a user by their login information, that is, their login and password.
+     * Attempt a login by matching a login and password to a user.
      * 
      * @param  login        the login to match
      * @param  password     the password to match
-     * @return              a {@code User} object with the given login info,
-     *                      or {@code null} if no {@code User} was found
+     * @return              the {@code User} object if the login and password match a user,
+     *                      null otherwise
      * @throws DAOException if there is an issue with interfacing with the database
      */
-    public User find(String login, String password) throws DAOException {
+    public User tryLogin(String login, String password) throws DAOException {
         User user = null;
-
-        Object[] values = new Object[]{
-            login,
-            password
-        };
 
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_FIND_USER_BY_LOGIN_INFO, true, values);
+            PreparedStatement statement = prepareStatement(connection, SQL_ATTEMPT_LOGIN, true, login);
             ResultSet resultSet = statement.executeQuery();
         ) {
             // Attempt to get a user.
-            if (resultSet.next())
-                user = map(resultSet);
+            if (resultSet.next()) {
+                String hash = resultSet.getString("hash");
+                String salt = resultSet.getString("salt");
+
+                if (password.equals(Crypto.decrypt(hash, salt)))
+                    user = map(resultSet);
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-
+        
         return user;
     }
 
@@ -314,7 +312,8 @@ public class UserDAO extends DAO<User> {
         Object[] values = new Object[] {
             user.getLogin(),
             user.getEmail(),
-            user.getPassword()
+            user.getHash(),
+            user.getSalt(),
         };
 
         try (
@@ -386,7 +385,8 @@ public class UserDAO extends DAO<User> {
         String query = SQL_UPDATE_USER;
         Object[] values = new Object[] {
             user.getEmail(),
-            user.getPassword(),
+            user.getHash(),
+            user.getSalt(),
             user.getLogin()
         };
 
@@ -468,6 +468,8 @@ public class UserDAO extends DAO<User> {
 
     /**
      * Map the result set to a new {@code User} object.
+     * <p>
+     * For security reasons we do not map the hash and salt to the {@code User}.
      * 
      * @param  resultSet    the {@code ResultSet} to use for mapping
      * @return              a {@code User} with the fields from the {@code ResultSet}

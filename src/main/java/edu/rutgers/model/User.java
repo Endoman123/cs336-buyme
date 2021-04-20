@@ -1,6 +1,9 @@
 package edu.rutgers.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
+
+import edu.rutgers.util.Crypto;
 
 /**
  * User model for the database.
@@ -16,7 +19,8 @@ public class User implements Serializable {
 
     private String login;
     private String email;
-    private String password;
+    private String hash;
+    private String salt;
 
     public void setLogin(String l) {
         login = l;
@@ -34,12 +38,20 @@ public class User implements Serializable {
         return email;
     }
 
-    public void setPassword(String pw) {
-        password = pw;
+    public void setHash(String h) {
+        hash = h;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHash() {
+        return hash;
+    }
+
+    public void setSalt(String s) {
+        salt = s;
+    }
+
+    public String getSalt() {
+        return salt;
     }
     
     @Override

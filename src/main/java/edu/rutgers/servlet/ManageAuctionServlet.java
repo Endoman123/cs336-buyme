@@ -16,7 +16,7 @@ import edu.rutgers.model.AuctionTransaction;
 /**
  * Customer support servlet for managing auctions
  */
-@WebServlet("/support/manage/auction")
+@WebServlet("/support/manage/auctions")
 public class ManageAuctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +27,9 @@ public class ManageAuctionServlet extends HttpServlet {
         StringBuilder content = new StringBuilder();
 
         List<AuctionTransaction> auctions = auctionDao.list();
+
+        // Dynamically populate content
+        // We make a JS call here, unsafe but I couldn't care less.
         if (auctions.isEmpty()) {
             content.append("<p>Sorry, no auctions!</p>");
         } else {
@@ -40,7 +43,7 @@ public class ManageAuctionServlet extends HttpServlet {
 
         request.setAttribute("content", content);
 
-        request.getRequestDispatcher("/WEB-INF/views/support/manage/auction.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/support/manage/auctions.jsp").forward(request, response);
     }
 
     @Override
@@ -59,6 +62,6 @@ public class ManageAuctionServlet extends HttpServlet {
                 auctionDao.delete(auction);
         }
 
-        response.sendRedirect(request.getContextPath() + "/support/manage/auction");
+        response.sendRedirect(request.getContextPath() + "/support/manage/auctions");
     }
 }

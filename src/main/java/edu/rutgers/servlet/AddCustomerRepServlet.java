@@ -1,6 +1,7 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.User;
+import edu.rutgers.util.Crypto;
 
 /**
  * Admin servlet for creating new customer representatives
@@ -34,11 +36,14 @@ public class AddCustomerRepServlet extends HttpServlet {
 
         // Create a user
         User user = new User();
+        String salt = Long.toHexString(Calendar.getInstance().getTimeInMillis());
+        String hash = Crypto.encrypt(request.getParameter("password"), salt);
 
         // Use the fields from the request to set up this user
         user.setLogin(request.getParameter("login"));
         user.setEmail(request.getParameter("email"));
-        user.setPassword(request.getParameter("password"));
+        user.setHash(hash);
+        user.setSalt(salt);
 
         // Add the user to the database as a customer representative
         if (userDao.find(user.getLogin()) == null) {
