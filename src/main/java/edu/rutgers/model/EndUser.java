@@ -1,7 +1,5 @@
 package edu.rutgers.model;
 
-import java.io.Serializable;
-
 /**
  * EndUser model for the database.
  * Models the end-user relation for the backend.

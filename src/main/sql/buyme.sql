@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 14, 2021 at 03:02 AM
+-- Generation Time: Apr 20, 2021 at 12:00 AM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -57,6 +57,26 @@ CREATE TABLE `auction_transactions` (
   `final_price` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `auction_transactions`
+--
+
+INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
+(2, 1, 'Mikita_Belausau', '2021-04-15', '23:00:00', 'Person', 2, 2, 25, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `autobid`
+--
+
+CREATE TABLE `autobid` (
+  `login` varchar(30) NOT NULL,
+  `auction_ID` int NOT NULL,
+  `bid_increment` float DEFAULT NULL,
+  `upper_limit` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -80,10 +100,7 @@ CREATE TABLE `bid_posts_for` (
   `auction_ID` int DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `bid_date` date DEFAULT NULL,
-  `bid_time` time DEFAULT NULL,
-  `auto_bid` tinyint(1) DEFAULT NULL,
-  `bid_increment` float DEFAULT NULL,
-  `upper_limit` float DEFAULT NULL
+  `bid_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -132,7 +149,13 @@ CREATE TABLE `end_user` (
 --
 
 INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
-('Customer', NULL);
+('Customer', NULL),
+('customer1', NULL),
+('Endoman123', NULL),
+('hello', NULL),
+('person', NULL),
+('person2', NULL),
+('person3', NULL);
 
 -- --------------------------------------------------------
 
@@ -143,6 +166,13 @@ INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
 CREATE TABLE `item` (
   `item_ID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`item_ID`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -162,12 +192,22 @@ CREATE TABLE `item_alerts` (
 --
 
 CREATE TABLE `questions` (
-  `question_number` int NOT NULL,
-  `user_login_End_User` varchar(30) DEFAULT NULL,
-  `user_login_Customer_Rep` varchar(30) DEFAULT NULL,
+  `id` int NOT NULL,
+  `eu_login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `cr_login` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `question_text` varchar(144) DEFAULT NULL,
   `answer_text` varchar(144) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`id`, `eu_login`, `cr_login`, `question_text`, `answer_text`) VALUES
+(1, 'Endoman123', NULL, 'What', NULL),
+(2, 'Endoman123', NULL, 'How do I get here?', NULL),
+(3, 'Endoman123', NULL, 'Where do I go for auctions?', NULL),
+(4, 'Endoman123', NULL, 'Why do I need a login?', NULL);
 
 -- --------------------------------------------------------
 
@@ -227,10 +267,16 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`login`, `password`, `email`) VALUES
 ('Admin', 'testpassword5', 'Admin@buyme.com'),
 ('Customer', 'testpassword6', 'customer@buyme.com'),
+('customer1', 'password', ''),
 ('Dorian_Hobot', 'testpassword1', 'djh242@scarletmail.rutgers.edu'),
+('Endoman123', 'jHkN$NT#$@nn(TrO2D', 'jared@jaredtulayan.xyz'),
+('hello', 'password', ''),
 ('Jared_Tulayan', 'testpassword4', 'jared.tulayan@rutgers.edu'),
 ('Mikita_Belausau', 'testpassword3', 'mikita.belausau@rutgers.edu'),
-('Muskan_Burman', 'testpassword2', 'mb1966@rutgers.edu');
+('Muskan_Burman', 'testpassword2', 'mb1966@rutgers.edu'),
+('person', 'password', 'person@buyme.com'),
+('person2', 'password', 'person2@buyme.com'),
+('person3', 'password', '');
 
 --
 -- Indexes for dumped tables
@@ -249,6 +295,13 @@ ALTER TABLE `auction_transactions`
   ADD PRIMARY KEY (`auction_ID`),
   ADD KEY `item_ID` (`item_ID`),
   ADD KEY `login` (`login`);
+
+--
+-- Indexes for table `autobid`
+--
+ALTER TABLE `autobid`
+  ADD PRIMARY KEY (`login`,`auction_ID`),
+  ADD KEY `auction_ID` (`auction_ID`);
 
 --
 -- Indexes for table `belongs_to`
@@ -300,9 +353,9 @@ ALTER TABLE `item_alerts`
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
-  ADD PRIMARY KEY (`question_number`),
-  ADD KEY `user_login_End_User` (`user_login_End_User`),
-  ADD KEY `user_login_Customer_Rep` (`user_login_Customer_Rep`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_login_End_User` (`eu_login`),
+  ADD KEY `user_login_Customer_Rep` (`cr_login`);
 
 --
 -- Indexes for table `sub_category_1`
@@ -329,6 +382,22 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`login`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `bid_posts_for`
+--
+ALTER TABLE `bid_posts_for`
+  MODIFY `bid_number` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -342,66 +411,73 @@ ALTER TABLE `admin`
 -- Constraints for table `auction_transactions`
 --
 ALTER TABLE `auction_transactions`
-  ADD CONSTRAINT `auction_transactions_ibfk_1` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`),
-  ADD CONSTRAINT `auction_transactions_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`);
+  ADD CONSTRAINT `auction_transactions_ibfk_1` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auction_transactions_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `autobid`
+--
+ALTER TABLE `autobid`
+  ADD CONSTRAINT `autobid_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `autobid_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `belongs_to`
 --
 ALTER TABLE `belongs_to`
-  ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`),
-  ADD CONSTRAINT `belongs_to_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`);
+  ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `belongs_to_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `bid_posts_for`
 --
 ALTER TABLE `bid_posts_for`
-  ADD CONSTRAINT `bid_posts_for_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`),
-  ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`);
+  ADD CONSTRAINT `bid_posts_for_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `customer_rep`
 --
 ALTER TABLE `customer_rep`
-  ADD CONSTRAINT `customer_rep_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE RESTRICT;
+  ADD CONSTRAINT `customer_rep_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `end_user`
 --
 ALTER TABLE `end_user`
-  ADD CONSTRAINT `end_user_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE RESTRICT;
+  ADD CONSTRAINT `end_user_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `item_alerts`
 --
 ALTER TABLE `item_alerts`
-  ADD CONSTRAINT `item_alerts_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`),
-  ADD CONSTRAINT `item_alerts_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`);
+  ADD CONSTRAINT `item_alerts_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `item_alerts_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `questions`
 --
 ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`user_login_End_User`) REFERENCES `end_user` (`login`),
-  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`user_login_Customer_Rep`) REFERENCES `customer_rep` (`login`);
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT,
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `sub_category_1`
 --
 ALTER TABLE `sub_category_1`
-  ADD CONSTRAINT `sub_category_1_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`);
+  ADD CONSTRAINT `sub_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sub_category_2`
 --
 ALTER TABLE `sub_category_2`
-  ADD CONSTRAINT `sub_category_2_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`);
+  ADD CONSTRAINT `sub_category_2_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sub_category_3`
 --
 ALTER TABLE `sub_category_3`
-  ADD CONSTRAINT `sub_category_3_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`);
+  ADD CONSTRAINT `sub_category_3_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

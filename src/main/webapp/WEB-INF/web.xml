@@ -4,11 +4,26 @@
     xmlns="http://java.sun.com/xml/ns/javaee" 
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
     version="3.0">
-    <display-name>Buyme</display-name>
+    <display-name>Buyme</display-name>   
 
+    <!-- Welcome Page -->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- Servlet mapping -->
+     <servlet>
+  	<description>
+  	</description>
+  	<display-name>Autobid</display-name>
+  	<servlet-name>Autobid</servlet-name>
+  	<servlet-class>edu.rutgers.servlet.Autobid</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Autobid</servlet-name>
+  	<url-pattern>/autobid</url-pattern>
+  </servlet-mapping>
 
     <!-- Filters -->
     <filter>  
@@ -31,6 +46,7 @@
     <!-- Filter mappings -->
     <filter-mapping>  
         <filter-name>LoginFilter</filter-name>  
+        <url-pattern>/profile</url-pattern>  
         <url-pattern>/admin</url-pattern>  
         <url-pattern>/admin/*</url-pattern>  
         <url-pattern>/support</url-pattern>  
@@ -38,7 +54,7 @@
     </filter-mapping>  
     <filter-mapping>  
         <filter-name>CustomerRepPermsFilter</filter-name>  
-        <url-pattern>/support/reset-password</url-pattern>  
+        <url-pattern>/support/manage-user</url-pattern>  
     </filter-mapping>  
     <filter-mapping>  
         <filter-name>AdminPermsFilter</filter-name>  

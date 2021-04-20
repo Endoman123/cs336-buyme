@@ -1,7 +1,6 @@
 package edu.rutgers.filter;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,14 +8,12 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
-import edu.rutgers.model.CustomerRep;
 import edu.rutgers.model.User;
 
 /**
@@ -52,7 +49,7 @@ public class PermissionsFilter implements Filter {
                 isAllowed |= userDao.findCustomerRep(((User) session.getAttribute("user")).getLogin()) != null;
             break;
             default:
-                // Already logged in, no worries
+                isAllowed |= userDao.findEndUser(((User) session.getAttribute("user")).getLogin()) != null;
             break;
         }
 

@@ -1,7 +1,5 @@
 package edu.rutgers.model;
 
-import java.io.Serializable;
-
 /**
  * Customer representative model for the database.
  * Models the customer rep relation for the backend.
