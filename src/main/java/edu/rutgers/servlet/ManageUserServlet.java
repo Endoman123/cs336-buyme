@@ -1,6 +1,7 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,9 +18,11 @@ import edu.rutgers.util.URLQuery;
 /**
  * Customer support servlet for managing a user
  */
-@WebServlet("/support/manage/user")
+@WebServlet("/support/manage/users")
 public class ManageUserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final String USER_JSP = "/WEB-INF/views/support/manage/user.jsp";
+    private static final String USERS_JSP = "/WEB-INF/views/support/manage/users.jsp";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,17 +30,33 @@ public class ManageUserServlet extends HttpServlet {
         UserDAO userDao = daoFactory.getUserDAO();
         String login = (String) request.getParameter("login");
 
-        // Get password reset view 
-        if (login == null)
-            throw new IllegalArgumentException("Login parameter not specified");
-        else  { 
-            User editUser = userDao.findEndUser(login);
-            if (editUser == null)
-                throw new ServletException("No end-user found with the login " + login);
-            else {
+        // Either get the list of users
+        // or get the user form.
+        if (login != null) {
+            EndUser editUser = userDao.findEndUser(login);
+
+            if (editUser != null) {
                 request.setAttribute("editUser", editUser);
-                request.getRequestDispatcher("/WEB-INF/views/support/manage/user.jsp").forward(request, response);
+                request.getRequestDispatcher(USER_JSP).forward(request, response);
+            } else
+                throw new IllegalArgumentException("No user found with the login " + login + ".");
+        } else { 
+            StringBuilder content = new StringBuilder();
+            List<EndUser> users = userDao.listEndUsers();
+            
+            if (users.isEmpty())
+                content.append("<p>No users found!</p>");
+            else {
+                users.forEach(u -> {
+                    content.append("<div class=\"user\">");
+                    content.append("<p class=\"user__desc\">" + u.toString() + "</p>");
+                    content.append("<a href=\"./support/manage/users?" + URLQuery.encode("login", u.getLogin()) + "\" class=\"user__edit\">Edit</a>");
+                    content.append("</div>");
+                }); 
             }
+
+            request.setAttribute("content", content);
+            request.getRequestDispatcher(USERS_JSP).forward(request, response);
         }
     }
     

@@ -1,4 +1,4 @@
-<!-- Reset Password Form -->
+<!-- Manage User Form -->
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags/forms" %>
 

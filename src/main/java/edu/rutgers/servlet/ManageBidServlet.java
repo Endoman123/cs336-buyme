@@ -16,7 +16,7 @@ import edu.rutgers.model.BidPostFor;
 /**
  * Customer support servlet for managing bids
  */
-@WebServlet("/support/manage/bid")
+@WebServlet("/support/manage/bids")
 public class ManageBidServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +27,9 @@ public class ManageBidServlet extends HttpServlet {
         StringBuilder content = new StringBuilder();
 
         List<BidPostFor> bids = bidDao.list();
+
+        // Dynamically populate content
+        // We make a JS call here, but I couldn't care less.
         if (bids.isEmpty()) {
             content.append("<p>Sorry, no bids!</p>");
         } else {
@@ -40,7 +43,7 @@ public class ManageBidServlet extends HttpServlet {
 
         request.setAttribute("content", content);
 
-        request.getRequestDispatcher("/WEB-INF/views/support/manage/bid.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/support/manage/bids.jsp").forward(request, response);
     }
 
     @Override
@@ -59,6 +62,6 @@ public class ManageBidServlet extends HttpServlet {
                 bidDao.delete(bid);
         }
 
-        response.sendRedirect(request.getContextPath() + "/support/manage/bid");
+        response.sendRedirect(request.getContextPath() + "/support/manage/bids");
     }
 }
