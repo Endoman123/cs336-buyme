@@ -1,6 +1,7 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.EndUser;
 import edu.rutgers.model.User;
+import edu.rutgers.util.Crypto;
 import edu.rutgers.util.URLQuery;
 
 /**
@@ -68,13 +70,22 @@ public class ManageUserServlet extends HttpServlet {
         String redirectURL = request.getRequestURI() + "?" + URLQuery.encode("login", request.getParameter("loginOld"));
 
         // Create a user
-        String newLogin = (String) request.getParameter("loginNew"); 
+        User u = userDao.find(request.getParameter("loginOld"));
         EndUser user = new EndUser();
 
+        String newLogin = (String) request.getParameter("loginNew"); 
+        String password = (String) request.getParameter("password");
+
         // Use the fields from the request to set up this user
-        user.setLogin(request.getParameter("loginOld"));
-        user.setEmail(request.getParameter("email"));
-        user.setPassword(request.getParameter("password"));
+        if (u != null) {
+            user.setLogin(request.getParameter("loginOld"));
+            user.setEmail(request.getParameter("email"));
+
+            if (password != null) {
+                user.setSalt(Long.toHexString(Calendar.getInstance().getTimeInMillis()));
+                user.setHash(Crypto.encrypt(password, user.getSalt()));
+            }
+        }
 
         // Attempt to change the username, if applicable.
         if (newLogin != null && !newLogin.isEmpty() && !user.getLogin().equals(newLogin))

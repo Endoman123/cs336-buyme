@@ -1,6 +1,7 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.UserDAO;
 import edu.rutgers.model.Admin;
 import edu.rutgers.model.User;
+import edu.rutgers.util.Crypto;
 
 /**
  * User servlet for viewing and editing their profile
@@ -41,22 +43,29 @@ public class ProfileServlet extends HttpServlet {
         String redirectURL = request.getRequestURI();
 
         // Create a user
+        User user = userDao.find(request.getParameter("loginOld"));
+
         String newLogin = (String) request.getParameter("loginNew"); 
-        boolean changeLogin = newLogin != null && !newLogin.isEmpty();
-        User user = (User) request.getSession(false).getAttribute("user");
+        String password = (String) request.getParameter("password");
 
         // Use the fields from the request to set up this user
-        user.setEmail(request.getParameter("email"));
-        user.setPassword(request.getParameter("password"));
+        if (user != null) {
+            user.setLogin(request.getParameter("loginOld"));
+            user.setEmail(request.getParameter("email"));
 
-        changeLogin = changeLogin && !user.getLogin().equals((String) request.getParameter("loginNew"));
+            if (password != null) {
+                user.setSalt(Long.toHexString(Calendar.getInstance().getTimeInMillis()));
+                user.setHash(Crypto.encrypt(password, user.getSalt()));
+            }
+        }
 
         // Attempt to change the username, if applicable.
-        if (changeLogin)
+        if (newLogin != null && !newLogin.isEmpty() && !user.getLogin().equals(newLogin))
             userDao.updateLogin(user, request.getParameter("loginNew"));
 
         // Attempt to update the user info
-        userDao.update(user);
+        if (userDao.find(user.getLogin()) != null)
+            userDao.update(user);
 
         response.sendRedirect(redirectURL);
     }
