@@ -23,3 +23,14 @@ For running a standardized Tomcat instance, the `tomcat` gradle plugin comes wit
 - `tomcatRun`: Run Tomcat with files in-place, which allows for hot-swapping code.
 - `tomcatRunWar`: Compiles the code base into a WAR, which is then run in a Tomcat container.
 - `tomcatStop`: Required to run after stopping any of the `tomcatRun` tasks to stop the Tomcat container.
+
+## Credentials
+Listed below are the test credentials currently registered with the webapp:
+| Login   | Password    | Type |
+|--------------- | --------------- | --------------- |
+| admin   | admin   | `ADMIN`
+| rep   | rep  | `CUSTOMER_REP`
+| dorianht   | password1   | `END_USER`
+| endoman123   | password2   | `END_USER`
+| muskanb12   | password3   | `END_USER`
+| windhollow   | password4   | `END_USER`

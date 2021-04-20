@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 20, 2021 at 01:42 PM
+-- Generation Time: Apr 20, 2021 at 02:57 PM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -36,7 +36,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`login`) VALUES
-('Admin');
+('admin');
 
 -- --------------------------------------------------------
 
@@ -57,13 +57,6 @@ CREATE TABLE `auction_transactions` (
   `final_price` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `auction_transactions`
---
-
-INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
-(2, 1, 'Mikita_Belausau', '2021-04-25', '23:00:00', 'Person', 2, 2, 25, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -76,13 +69,6 @@ CREATE TABLE `autobid` (
   `bid_increment` float DEFAULT NULL,
   `upper_limit` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `autobid`
---
-
-INSERT INTO `autobid` (`login`, `auction_ID`, `bid_increment`, `upper_limit`) VALUES
-('Endoman123', 2, 2, 22);
 
 -- --------------------------------------------------------
 
@@ -135,10 +121,7 @@ CREATE TABLE `customer_rep` (
 --
 
 INSERT INTO `customer_rep` (`login`) VALUES
-('Dorian_Hobot'),
-('Jared_Tulayan'),
-('Mikita_Belausau'),
-('Muskan_Burman');
+('rep');
 
 -- --------------------------------------------------------
 
@@ -156,13 +139,11 @@ CREATE TABLE `end_user` (
 --
 
 INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
-('Customer', NULL),
-('customer1', NULL),
-('Endoman123', NULL),
-('hello', NULL),
-('person', NULL),
-('person2', NULL),
-('person3', NULL);
+('admin', NULL),
+('dorianht', NULL),
+('endoman123', NULL),
+('muskanb12', NULL),
+('windhollow', NULL);
 
 -- --------------------------------------------------------
 
@@ -211,10 +192,10 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `eu_login`, `cr_login`, `question_text`, `answer_text`) VALUES
-(1, 'Endoman123', NULL, 'What', NULL),
-(2, 'Endoman123', NULL, 'How do I get here?', NULL),
-(3, 'Endoman123', NULL, 'Where do I go for auctions?', NULL),
-(4, 'Endoman123', NULL, 'Why do I need a login?', NULL);
+(1, NULL, NULL, 'What', NULL),
+(2, NULL, NULL, 'How do I get here?', NULL),
+(3, NULL, NULL, 'Where do I go for auctions?', NULL),
+(4, NULL, NULL, 'Why do I need a login?', NULL);
 
 -- --------------------------------------------------------
 
@@ -264,8 +245,8 @@ CREATE TABLE `sub_category_3` (
 CREATE TABLE `user` (
   `login` varchar(30) NOT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `hash` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `salt` varchar(30) NOT NULL
+  `hash` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `salt` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -273,18 +254,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`login`, `email`, `hash`, `salt`) VALUES
-('Admin', 'Admin@buyme.com', 'testpassword5', ''),
-('Customer', 'customer@buyme.com', 'testpassword6', ''),
-('customer1', '', 'password', ''),
-('Dorian_Hobot', 'djh242@scarletmail.rutgers.edu', 'testpassword1', ''),
-('Endoman123', 'jared@jaredtulayan.xyz', 'jHkN$NT#$@nn(TrO2D', ''),
-('hello', '', 'password', ''),
-('Jared_Tulayan', 'jared.tulayan@rutgers.edu', 'testpassword4', ''),
-('Mikita_Belausau', 'mikita.belausau@rutgers.edu', 'testpassword3', ''),
-('Muskan_Burman', 'mb1966@rutgers.edu', 'testpassword2', ''),
-('person', 'person@buyme.com', 'password', ''),
-('person2', 'person2@buyme.com', 'password', ''),
-('person3', '', 'password', '');
+('admin', 'admin@buyme.com', '7Dv6iB4qDQARRIstzfi7OA==', '178efc4a880'),
+('dorianht', 'dorian.hobot@rutgers.edu', 'Wf4ZSsopreO4BZmi52AZbQ==', '178efc572bb'),
+('endoman123', 'jared.tulayan@rutgers.edu', 'SUYvXobrEuW+73Sqg9REhg==', '178efc5b932'),
+('muskanb12', 'muskan.burman@rutgers.edu', 'b1qfynQU1QI1JeXMLEQQ0Q==', '178efc61152'),
+('rep', 'rep@buyme.com', 'eTRbwE7XQtJ+k1TlWb0QMA==', '178efc76f60'),
+('windhollow', 'mikita.belausau@rutgers.edu', 'fjM7wRaniOkLzSGSXIWmPQ==', '178efc68434');
 
 --
 -- Indexes for dumped tables
