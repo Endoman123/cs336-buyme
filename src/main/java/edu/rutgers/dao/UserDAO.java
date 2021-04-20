@@ -44,8 +44,6 @@ public class UserDAO extends DAO<User> {
 
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT login, email FROM user WHERE email=?";
 
-    private static final String SQL_FIND_USER_BY_LOGIN_INFO = "SELECT login, email FROM user WHERE login=? AND hash=?";
-
     private static final String SQL_CREATE_USER = "INSERT INTO user (login, email, hash, salt) VALUES (?, ?, ?, ?)";
 
     private static final String SQL_ADD_ENDUSER = "INSERT INTO end_user (login) VALUES (?)";
