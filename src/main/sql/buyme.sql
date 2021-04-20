@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 20, 2021 at 04:26 PM
+-- Generation Time: Apr 20, 2021 at 08:20 PM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -171,15 +171,16 @@ INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
 --
 
 CREATE TABLE `item` (
-  `item_ID` int NOT NULL
+  `item_ID` int NOT NULL,
+  `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`item_ID`) VALUES
-(1);
+INSERT INTO `item` (`item_ID`, `name`) VALUES
+(1, 'Shirt');
 
 -- --------------------------------------------------------
 
