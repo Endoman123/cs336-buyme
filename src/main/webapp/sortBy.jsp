@@ -32,7 +32,7 @@
 			Connection con = dao.getConnection();
 			Statement st = con.createStatement();
 			//query to select items and their current bids (currently is just selecting final price tho/add auctionID also)
-			String listOfItems = "select i.item_id Item, i.name Name, bpf.amount CurrentBid, atran.auction_id AuctionID from item i, auction_transactions atran, bid_posts_for bpf where i.item_id = atran.item_id	and atran.auction_ID = bpf.auction_ID group by atran.auction_ID order by CurrentBid asc";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID group by i.item_id, i.name, atran.auction_id order by CurrentBid asc";
 			ResultSet rs = st.executeQuery(listOfItems);
 			//build a table to display results
 			out.print("<table>");
@@ -78,7 +78,7 @@
 			Connection con = dao.getConnection();
 			Statement st = con.createStatement();
 			//query to select items and their current bids (currently is just selecting final price tho/add auctionID also)
-			String listOfItems = "select i.item_id Item, i.name Name, bpf.amount CurrentBid, atran.auction_id AuctionID from item i, auction_transactions atran, bid_posts_for bpf where i.item_id = atran.item_id	and atran.auction_ID = bpf.auction_ID group by atran.auction_ID order by CurrentBid desc";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID group by i.item_id, i.name, atran.auction_id order by CurrentBid desc";
 			ResultSet rs = st.executeQuery(listOfItems);
 			//build a table to display results
 			out.print("<table>");
@@ -123,7 +123,7 @@
 			Connection con = dao.getConnection();
 			Statement st = con.createStatement();
 			//query to select items and their current bids (currently is just selecting final price tho/add auctionID also)
-			String listOfItems = "select i.item_id Item, i.name Name, bpf.amount CurrentBid, atran.auction_id AuctionID from item i, auction_transactions atran, bid_posts_for bpf where i.item_id = atran.item_id	and atran.auction_ID = bpf.auction_ID and i.name like 'shirt' group by atran.auction_ID order by CurrentBid desc";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id	and i.name like 'shirt' group by i.item_id, i.name, atran.auction_id";
 			ResultSet rs = st.executeQuery(listOfItems);
 			//build a table to display results
 			out.print("<table>");
@@ -168,7 +168,7 @@
 			Connection con = dao.getConnection();
 			Statement st = con.createStatement();
 			//query to select items and their current bids (currently is just selecting final price tho/add auctionID also)
-			String listOfItems = "select i.item_id Item, i.name Name, bpf.amount CurrentBid, atran.auction_id AuctionID from item i, auction_transactions atran, bid_posts_for bpf where i.item_id = atran.item_id	and atran.auction_ID = bpf.auction_ID and i.name like 'pants' group by atran.auction_ID order by CurrentBid desc";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id	and i.name like 'pants' group by i.item_id, i.name, atran.auction_id";
 			ResultSet rs = st.executeQuery(listOfItems);
 			//build a table to display results
 			out.print("<table>");
@@ -213,7 +213,7 @@
 			Connection con = dao.getConnection();
 			Statement st = con.createStatement();
 			//query to select items and their current bids (currently is just selecting final price tho/add auctionID also)
-			String listOfItems = "select i.item_id Item, i.name Name, bpf.amount CurrentBid, atran.auction_id AuctionID from item i, auction_transactions atran, bid_posts_for bpf where i.item_id = atran.item_id	and atran.auction_ID = bpf.auction_ID and i.name like 'shoes' group by atran.auction_ID order by CurrentBid desc";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id	and i.name like 'shoes' group by i.item_id, i.name, atran.auction_id";
 			ResultSet rs = st.executeQuery(listOfItems);
 			//build a table to display results
 			out.print("<table>");
