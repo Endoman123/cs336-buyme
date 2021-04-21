@@ -45,8 +45,11 @@
 		</form>
 	<br>
 	
+	<br>
+	All Not-Closed Item Listings
+	<br>
 	<% 
-
+	
  		//First box in checklist just a list of all items and their current bids
  		List<String> list = new ArrayList<String>();
  
@@ -55,7 +58,7 @@ try {
 			Connection con = dao.getConnection();
 			Statement st = con.createStatement();
 			//query to select items and their current bids (currently is just selecting final price tho/add auctionID also)
-			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id	left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID group by i.item_id, i.name, atran.auction_id";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id	left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where atran.close_date > current_date() || (atran.close_date = current_date() && atran.close_time > current_time()) group by i.item_id, i.name, atran.auction_id";
 			ResultSet rs = st.executeQuery(listOfItems);
 			//build a table to display results
 			out.print("<table>");
