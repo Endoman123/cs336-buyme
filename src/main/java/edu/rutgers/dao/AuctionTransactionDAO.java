@@ -25,16 +25,18 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     // Query constants for easy access and change
     private static final String SQL_LIST_AUCTIONS = "SELECT * FROM auction_transactions ORDER BY auction_ID";
 
-    private static final String SQL_GET_BEST_BUYERS = "SELECT winner AS buyer, SUM(IFNULL(a.final_price, 0)) AS amount FROM auction_transactions WHERE winner IS NOT NULL GROUP BY buyer ORDER BY amount DESC";
+    private static final String SQL_GET_BEST_SELLING = "SELECT i.name AS item, SUM(IFNULL(a.final_price, 0)) AS amount FROM auction_transactions AS a JOIN item i ON a.item_ID=i.item_ID WHERE winner IS NOT NULL GROUP BY item ORDER BY amount DESC";
 
-    private static final String SQL_GET_TOTAL_EARNINGS = "SELECT SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions";
+    private static final String SQL_GET_BEST_BUYERS = "SELECT winner AS buyer, SUM(IFNULL(final_price, 0)) AS amount FROM auction_transactions WHERE winner IS NOT NULL GROUP BY buyer ORDER BY amount DESC";
 
-    private static final String SQL_GET_EARNINGS_PER_ITEM = "SELECT i.name AS item, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN item i ON a.item_ID=i.item_ID WHERE winner IS NOT NULL GROUP BY i.name ORDER BY earnings DESC";
+    private static final String SQL_GET_TOTAL_EARNINGS = "SELECT SUM(IFNULL(final_price, 0)) AS earnings FROM auction_transactions";
+
+    private static final String SQL_GET_EARNINGS_PER_ITEM = "SELECT i.name AS item, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN item i ON a.item_ID=i.item_ID WHERE winner IS NOT NULL GROUP BY i.name ORDER BY item DESC";
 
     // TODO: Figure out if this needs changing
-    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT c.category_number AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY earnings DESC";
+    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT c.category_number AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY category DESC";
 
-    private static final String SQL_GET_EARNINGS_PER_USER = "SELECT login AS user, SUM(IFNULL(final_price, 0)) AS earnings FROM auction_transactions WHERE winner IS NOT NULL GROUP BY winner ORDER BY earnings DESC";
+    private static final String SQL_GET_EARNINGS_PER_USER = "SELECT login AS user, SUM(IFNULL(final_price, 0)) AS earnings FROM auction_transactions WHERE winner IS NOT NULL GROUP BY winner ORDER BY user DESC";
 
     private static final String SQL_FIND_AUCTION_BY_ID = "SELECT * FROM auction_transactions WHERE auction_ID=?";
 
@@ -100,6 +102,30 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         }
 
         return ret;
+    }
+
+    /**
+     * Gets a list of the best selling items via finished auctions,
+     * that is, the list of items that have paid the most in total.
+     *  
+     * @return              the list of best selling items
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public Map<String, Float> getBestSellingItems() throws DAOException {
+        Map<String, Float> map = new HashMap<>();
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_GET_BEST_SELLING, true);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next())
+                map.put(resultSet.getString("item"), resultSet.getFloat("amount"));
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return map;
     }
 
     /**
