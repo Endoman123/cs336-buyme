@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.rutgers.model.AuctionTransaction;
 
@@ -22,6 +24,17 @@ import edu.rutgers.model.AuctionTransaction;
 public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     // Query constants for easy access and change
     private static final String SQL_LIST_AUCTIONS = "SELECT * FROM auction_transactions ORDER BY auction_ID";
+
+    private static final String SQL_GET_BEST_BUYERS = "SELECT winner AS buyer, SUM(IFNULL(a.final_price, 0)) AS amount FROM auction_transactions WHERE winner IS NOT NULL GROUP BY buyer ORDER BY amount DESC";
+
+    private static final String SQL_GET_TOTAL_EARNINGS = "SELECT SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions";
+
+    private static final String SQL_GET_EARNINGS_PER_ITEM = "SELECT i.name AS item, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN item i ON a.item_ID=i.item_ID WHERE winner IS NOT NULL GROUP BY i.name ORDER BY earnings DESC";
+
+    // TODO: Figure out if this needs changing
+    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT c.category_number AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY earnings DESC";
+
+    private static final String SQL_GET_EARNINGS_PER_USER = "SELECT login AS user, SUM(IFNULL(final_price, 0)) AS earnings FROM auction_transactions WHERE winner IS NOT NULL GROUP BY winner ORDER BY earnings DESC";
 
     private static final String SQL_FIND_AUCTION_BY_ID = "SELECT * FROM auction_transactions WHERE auction_ID=?";
 
@@ -62,6 +75,128 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         }
 
         return auctions;
+    }
+
+    /**
+     * Gets a lump sum of the earnings made via finished auctions.
+     *  
+     * @return              the total earnings over all auctions 
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public Float getTotalEarnings() throws DAOException {
+        Float ret = 0f;
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_GET_TOTAL_EARNINGS, true);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            // Attempt to get a query of auctions.
+            // if we get one, we can just fill it full of auctions.
+            if (resultSet.next()) {
+                ret = resultSet.getFloat("earnings");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return ret;
+    }
+
+    /**
+     * Gets a list of the best buyers via finished auctions,
+     * that is, the list of users that have paid the most in total.
+     *  
+     * @return              the list of best buyers 
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public Map<String, Float> getBestBuyers() throws DAOException {
+        Map<String, Float> map = new HashMap<>();
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_GET_BEST_BUYERS, true);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next())
+                map.put(resultSet.getString("buyer"), resultSet.getFloat("amount"));
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return map;
+    }
+
+    /**
+     * Gets a list of the earnings made via finished auctions,
+     * per item.
+     *  
+     * @return              the total earnings of each item 
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public Map<String, Float> getEarningsPerItem() throws DAOException {
+        Map<String, Float> map = new HashMap<>();
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_GET_EARNINGS_PER_ITEM, true);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next())
+                map.put(resultSet.getString("item"), resultSet.getFloat("earnings"));
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return map;
+    }
+
+    /**
+     * Gets a list of the earnings made via finished auctions,
+     * per item type.
+     *  
+     * @return              the total earnings of each item type 
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public Map<String, Float> getEarningsPerItemType() throws DAOException {
+        Map<String, Float> map = new HashMap<>();
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_GET_EARNINGS_PER_TYPE, true);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            // TODO: change when/if we get a category name implemented
+            while (resultSet.next()) 
+                map.put("" + resultSet.getInt("category"), resultSet.getFloat("earnings"));
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return map;
+    }
+
+    /**
+     * Gets a list of the earnings made via finished auctions,
+     * per end-user.
+     *  
+     * @return              the total earnings of each end-user 
+     * @throws DAOException if there is an issue with interfacing with the database
+     */
+    public Map<String, Float> getEarningsPerUser() throws DAOException {
+        Map<String, Float> map = new HashMap<>();
+
+        try (
+            Connection connection = FACTORY.getConnection();
+            PreparedStatement statement = prepareStatement(connection, SQL_GET_EARNINGS_PER_USER, true);
+            ResultSet resultSet = statement.executeQuery();
+        ) {
+            while (resultSet.next()) 
+                map.put(resultSet.getString("user"), resultSet.getFloat("earnings"));
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return map;
     }
 
     /**
