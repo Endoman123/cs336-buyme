@@ -17,7 +17,52 @@
  java.util.List, 
  java.lang.System"%>
  <body>
- 
+ Search Items By Name
+	<br>
+		<form method="post" action="searchBarByName.jsp">
+		<table>
+		<tr>    
+		<td>Item Name</td><td><input type="text" name="item_name"></td>
+		</tr>
+		</table>
+		<input type="submit" value="Search">
+		</form>
+	<br>
+	 Search Items By Brand
+	<br>
+		<form method="post" action="searchBarByBrand.jsp">
+		<table>
+		<tr>    
+		<td>Brand Name</td><td><input type="text" name="item_brand"></td>
+		</tr>
+		</table>
+		<input type="submit" value="Search">
+		</form>
+	<br>
+	 Search Items By Color
+	<br>
+		<form method="post" action="searchBarByColor.jsp">
+		<table>
+		<tr>    
+		<td>Color</td><td><input type="text" name="item_color"></td>
+		</tr>
+		</table>
+		<input type="submit" value="Search">
+		</form>
+	<br>
+	 Search for Similar Items That Closed In The Preceding Month
+	<br>
+		<form method="post" action="searchBarByPrecedingMonth.jsp">
+		<table>
+		<tr>    
+		<td>Item Name</td><td><input type="text" name="item_name"></td>
+		<td>Item Color</td><td><input type="text" name="item_color"></td>
+		<td>Item Brand</td><td><input type="text" name="item_brand"></td>
+		</tr>
+		</table>
+		<input type="submit" value="Search">
+		</form>
+	<br>
 		Input AuctionID you'd like to see all bid history for
 	<br>
 		<form method="post" action="historyOfBidSpecificAuction.jsp">

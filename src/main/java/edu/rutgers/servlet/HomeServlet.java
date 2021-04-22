@@ -39,6 +39,7 @@ public class HomeServlet extends HttpServlet {
                 // not sure what to put here
             } else { // End user stuff
                 content.append("<a href=\"autobid.jsp\">Autobid</a>");
+                content.append("<a href=\"browse.jsp\">Browse</a>");
             }
         } else {
             content.append("<a href=\"login\">Login</a>");
