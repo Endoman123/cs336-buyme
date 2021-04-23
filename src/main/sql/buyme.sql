@@ -170,7 +170,6 @@ CREATE TABLE `end_user` (
 --
 
 INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
-('admin', 1),
 ('dorianht', 1),
 ('endoman123', 1),
 ('muskanb12', 1),
