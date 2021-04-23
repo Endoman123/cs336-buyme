@@ -45,7 +45,7 @@ public class ViewQuestionServlet extends HttpServlet {
                 );
             } else if (userDao.findCustomerRep(curUser.getLogin()) != null) {
                 request.setAttribute("content",
-                    "<a class=\"question__button\" href=\"./support/answer?questionID=" + question.getID() + "\">Answer Question</a>"
+                    "<a class=\"question__button\" href=\"./support/answer?questionID=" + question.getId() + "\">Answer Question</a>"
                 );
             }
 

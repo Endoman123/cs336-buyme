@@ -130,7 +130,7 @@ public class QuestionDAO extends DAO<Question> {
             question.getCrLogin(),
             question.getQuestionText(),
             question.getAnswerText(),
-            question.getID()
+            question.getId()
         };
 
 
@@ -155,12 +155,12 @@ public class QuestionDAO extends DAO<Question> {
     public void delete(Question question) throws DAOException {
         try (
             Connection connection = FACTORY.getConnection();
-            PreparedStatement statement = prepareStatement(connection, SQL_DELETE_QUESTION, false, question.getID());
+            PreparedStatement statement = prepareStatement(connection, SQL_DELETE_QUESTION, false, question.getId());
         ) {
             if (statement.executeUpdate() == 0)
                 throw new DAOException("Failed to delete question, no affected rows.");
             else
-                question.setID(null);
+                question.setId(null);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -178,7 +178,7 @@ public class QuestionDAO extends DAO<Question> {
     protected Question map(ResultSet resultSet) throws SQLException {
         Question question = new Question();
 
-        question.setID(resultSet.getInt("id"));
+        question.setId(resultSet.getInt("id"));
         question.setEuLogin(resultSet.getString("eu_login"));
         question.setCrLogin(resultSet.getString("cr_login"));
         question.setQuestionText(resultSet.getString("question_text"));

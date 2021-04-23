@@ -16,11 +16,11 @@ public class Question {
     private String questionText;
     private String answerText;
 
-    public void setID(Integer i) {
+    public void setId(Integer i) {
         id = i;
     }
 
-    public Integer getID() {
+    public Integer getId() {
         return id;
     }
 
