@@ -4,6 +4,18 @@
     <short-name>Utility TLD</short-name>
 
     <tag>
+        <name>get-navlinks</name>
+        <tag-class>edu.rutgers.tag.GetNavlinksTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>itemClass</name>
+            <type>java.lang.String</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
         <name>generate-report</name>
         <tag-class>edu.rutgers.tag.GenerateReportTag</tag-class>
         <attribute>
