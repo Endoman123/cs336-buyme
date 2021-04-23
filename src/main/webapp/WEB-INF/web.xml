@@ -12,20 +12,30 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
-    <!-- Servlet mapping -->
-     <servlet>
-  	<description>
-  	</description>
-  	<display-name>Autobid</display-name>
-  	<servlet-name>Autobid</servlet-name>
-  	<servlet-class>edu.rutgers.servlet.Autobid</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>Autobid</servlet-name>
-  	<url-pattern>/autobid</url-pattern>
-  </servlet-mapping>
+    <!-- Servlets -->
+    <servlet>
+  	    <description>
+  	    </description>
+  	    <display-name>Autobid</display-name>
+  	    <servlet-name>Autobid</servlet-name>
+  	    <servlet-class>edu.rutgers.servlet.Autobid</servlet-class>
+    </servlet>
+
+    <!-- Servlet Mappings -->
+    <servlet-mapping>
+    	<servlet-name>Autobid</servlet-name>
+    	<url-pattern>/autobid</url-pattern>
+    </servlet-mapping>
 
     <!-- Filters -->
+    <filter>  
+        <filter-name>EndUserPermsFilter</filter-name>  
+        <filter-class>edu.rutgers.filter.PermissionsFilter</filter-class>  
+        <init-param>  
+            <param-name>level</param-name>  
+            <param-value>END_USER</param-value>  
+        </init-param>  
+    </filter>  
     <filter>  
         <filter-name>CustomerRepPermsFilter</filter-name>  
         <filter-class>edu.rutgers.filter.PermissionsFilter</filter-class>  
@@ -51,10 +61,18 @@
         <url-pattern>/admin/*</url-pattern>  
         <url-pattern>/support</url-pattern>  
         <url-pattern>/support/*</url-pattern>  
+        <url-pattern>/autobid.jsp</url-pattern>  
+        <url-pattern>/historyOfBidSpecificAuction.jsp</url-pattern>  
+        <url-pattern>/itemAlert.jsp</url-pattern>  
+    </filter-mapping>  
+    <filter-mapping>  
+        <filter-name>EndUserPermsFilter</filter-name>  
+        <url-pattern>/autobid.jsp</url-pattern>  
+        <url-pattern>/itemAlert.jsp</url-pattern>  
     </filter-mapping>  
     <filter-mapping>  
         <filter-name>CustomerRepPermsFilter</filter-name>  
-        <url-pattern>/support/manage-user</url-pattern>  
+        <url-pattern>/support/manage/*</url-pattern>  
     </filter-mapping>  
     <filter-mapping>  
         <filter-name>AdminPermsFilter</filter-name>  
