@@ -37,10 +37,10 @@ public class ProfileServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Attempt to update the password
         DAOFactory daoFactory = new DAOFactory();
         UserDAO userDao = daoFactory.getUserDAO();
         String redirectURL = request.getRequestURI();
+        HttpSession session = request.getSession(false);
 
         // Create a user
         User user = userDao.find(request.getParameter("loginOld"));
@@ -67,6 +67,8 @@ public class ProfileServlet extends HttpServlet {
         if (userDao.find(user.getLogin()) != null)
             userDao.update(user);
 
+        // Update the user session object
+        session.setAttribute("user", user);
         response.sendRedirect(redirectURL);
     }
 
