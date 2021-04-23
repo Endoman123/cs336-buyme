@@ -1,6 +1,7 @@
 <!-- Customer Support index -->
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags/forms" %>
+<%@ taglib prefix="u" uri="/WEB-INF/taglibs/util.tld" %>
 
 <t:base title="Customer Support">
     <h2>Customer Support</h2>
@@ -10,5 +11,10 @@
         <button type="submit">Search</button>
     </form>
 
-    ${content}
+    <u:get-questions searchQuery="${param.search}">
+        <div class="questions__question">
+            <h3>Question by ${question.euLogin}</h3>
+            <a href="./support/view?questionID=${question.id}">${question.questionText}</a>
+        </div>
+    </u:get-questions>
 </t:base>
