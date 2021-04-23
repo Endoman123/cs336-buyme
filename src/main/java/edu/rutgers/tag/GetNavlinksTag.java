@@ -47,7 +47,9 @@ public class GetNavlinksTag extends TagSupport {
                 if (userDao.getAdmin().equals(user)) { // Admin stuff
                     out.append("<a class=\"" + itemClass + "\" href=\"admin/add-rep\">Add Customer Representative</a>");
                 } else if (userDao.findCustomerRep(user.getLogin()) != null) { // Customer Rep Stuff
-                    // TODO: Add manage link
+                    out.append("<a class=\"" + itemClass + "\" href=\"support/manage/users\">Manage Users</a>");
+                    out.append("<a class=\"" + itemClass + "\" href=\"support/manage/auctions\">Manage Auctions</a>");
+                    out.append("<a class=\"" + itemClass + "\" href=\"support/manage/bids\">Manage Bids</a>");
                 } else { // End user stuff
                     out.append("<a class=\"" + itemClass + "\" href=\"autobid.jsp\">Autobid</a>");
                     out.append("<a class=\"" + itemClass + "\" href=\"browse.jsp\">Browse</a>");
