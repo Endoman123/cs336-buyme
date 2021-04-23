@@ -28,7 +28,7 @@ try {
 			String item_brand = request.getParameter("item_brand");
 			String item_color = request.getParameter("item_color");
 			Statement st = con.createStatement();
-			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id and i.name like '" + item_name + "' and i.color like '" + item_color + "' and i.brand like '" + item_brand + "' and atran.close_date >= current_date() - interval 1 month && (atran.close_date <= current_date()) group by i.item_id, i.name, atran.auction_id";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id and i.name like '%" + item_name + "%' and i.color like '%" + item_color + "%' and i.brand like '%" + item_brand + "%' and atran.close_date >= current_date() - interval 1 month && (atran.close_date <= current_date()) group by i.item_id, i.name, atran.auction_id";
 			ResultSet rs = st.executeQuery(listOfItems);
 			out.print("<table>");
 			out.print("<tr>");

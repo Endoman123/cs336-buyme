@@ -26,7 +26,7 @@ try {
 			Connection con = dao.getConnection();
 			String item_brand = request.getParameter("item_brand");
 			Statement st = con.createStatement();
-			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id and i.brand like '" + item_brand + "' and atran.close_date > current_date() || (atran.close_date = current_date() && atran.close_time > current_time()) group by i.item_id, i.name, atran.auction_id";
+			String listOfItems = "select i.item_id Item, i.name Name, max(coalesce(bpf.amount, 0)) CurrentBid, atran.auction_id AuctionID from item i join auction_transactions atran on i.item_id = atran.item_id left outer join bid_posts_for bpf on atran.auction_ID = bpf.auction_ID where i.item_id = atran.item_id and i.brand like '%" + item_brand + "%' and atran.close_date > current_date() || (atran.close_date = current_date() && atran.close_time > current_time()) group by i.item_id, i.name, atran.auction_id";
 			ResultSet rs = st.executeQuery(listOfItems);
 			out.print("<table>");
 			out.print("<tr>");

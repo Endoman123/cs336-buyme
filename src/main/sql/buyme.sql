@@ -69,11 +69,11 @@ INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `name`, `subcategor
 (1, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
 (2, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
 (3, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
-(4, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50);
+(4, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50),
 (5, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
 (6, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
 (7, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
-(8, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50);
+(8, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50),
 (9, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
 (10, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
 (11, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
@@ -183,9 +183,9 @@ INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
 
 CREATE TABLE `item` (
   `item_ID` int NOT NULL,
-  `name` varchar(20) NOT NULL
-  `subcategory` varchar(30) NOT NULL
-  `color` varchar(30) NOT NULL
+  `name` varchar(20) NOT NULL,
+  `subcategory` varchar(30) NOT NULL,
+  `color` varchar(30) NOT NULL,
   `brand` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -206,16 +206,16 @@ INSERT INTO `item` (`item_ID`, `name`, `subcategory`, `color`,  `brand`) VALUES
 
 CREATE TABLE `item_alerts` (
   `login` varchar(30) NOT NULL,
-  `item_ID` int NOT NULL
+  `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `item_alerts`
 --
 
-INSERT INTO `item_alerts` (`login`, `item_ID`) VALUES
-('dorianht', 1),
-('endoman123', 1);
+INSERT INTO `item_alerts` (`login`, `name`) VALUES
+('dorianht', 'gucci shoes'),
+('endoman123', 'gucci');
 
 -- --------------------------------------------------------
 

@@ -29,7 +29,7 @@ try {
 			Connection con = dao.getConnection();
 			String login = user.getLogin();
 			Statement st = con.createStatement();
-			//query to check what logged in user has bid on (maybe add a union for auctions they have sold?)
+			//query to check what logged in user has bid on
 			String checkHistory = "select distinct bpf.auction_ID AuctionID, i.name ItemName from bid_posts_for bpf, item i, auction_transactions atran where bpf.login = \"" + login + "\"" + " and atran.auction_ID = bpf.auction_ID and i.item_ID = atran.item_ID";
 			ResultSet rs = st.executeQuery(checkHistory);
 			//build a table to display results
@@ -39,7 +39,7 @@ try {
 			out.print("AuctionID");
 			out.print("</td>");
 			out.print("<td>");
-			out.print("Item Name");
+			out.print("ItemName");
 			out.print("</td>");
 			while (rs.next()) {
 				out.print("<tr>");
@@ -69,7 +69,7 @@ try {
 		String login = user.getLogin();
 		Statement st = con.createStatement();
 		//query to check what logged in user has sold
-		String checkHistorySell = "select atran.auction_ID AuctionID, atran.item_ID ItemName from auction_transactions atran where atran.login = \"" + login + "\"";
+		String checkHistorySell = "select atran.auction_ID AuctionID, atran.name ItemName from auction_transactions atran where atran.login = \"" + login + "\"";
 		ResultSet rs = st.executeQuery(checkHistorySell);
 		//build a table to display results
 		out.print("<table>");
@@ -78,7 +78,7 @@ try {
 		out.print("AuctionID");
 		out.print("</td>");
 		out.print("<td>");
-		out.print("Item Name");
+		out.print("ItemName");
 		out.print("</td>");
 		while (rs.next()) {
 			out.print("<tr>");
