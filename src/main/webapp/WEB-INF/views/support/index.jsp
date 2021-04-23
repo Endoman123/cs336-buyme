@@ -4,8 +4,6 @@
 
 <t:base title="Customer Support">
     <h2>Customer Support</h2>
-    <a href="support/reset-password?login=test">Reset Password</a>
-
     <form method="get" action="./support">
         <label for="search">Search</label>
         <input type="text" name="search" placeholder="Enter search text here" value="${param.search}" required>
