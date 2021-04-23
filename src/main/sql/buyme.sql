@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 23, 2021 at 02:07 AM
+-- Generation Time: Apr 23, 2021 at 04:14 AM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -478,7 +478,7 @@ ALTER TABLE `belongs_to`
 --
 ALTER TABLE `bid_posts_for`
   ADD CONSTRAINT `bid_posts_for_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
+  ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `customer_rep`
@@ -503,8 +503,8 @@ ALTER TABLE `item_alerts`
 -- Constraints for table `questions`
 --
 ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT,
-  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sub_category_1`
