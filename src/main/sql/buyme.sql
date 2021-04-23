@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 20, 2021 at 08:20 PM
+-- Generation Time: Apr 23, 2021 at 04:14 AM
 -- Server version: 8.0.23
 -- PHP Version: 7.4.16
 
@@ -65,7 +65,7 @@ CREATE TABLE `auction_transactions` (
 -- Dumping data for table `auction_transactions`
 --
 
-INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `name`, `subcategory`, `color`,  `brand`,  `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
+INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `name`, `subcategory`, `color`, `brand`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
 (1, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
 (2, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
 (3, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
@@ -78,6 +78,7 @@ INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `name`, `subcategor
 (10, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
 (11, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
 (12, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50);
+
 -- --------------------------------------------------------
 
 --
@@ -169,7 +170,6 @@ CREATE TABLE `end_user` (
 --
 
 INSERT INTO `end_user` (`login`, `bid_alert`) VALUES
-('admin', 1),
 ('dorianht', 1),
 ('endoman123', 1),
 ('muskanb12', 1),
@@ -193,7 +193,7 @@ CREATE TABLE `item` (
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`item_ID`, `name`, `subcategory`, `color`,  `brand`) VALUES
+INSERT INTO `item` (`item_ID`, `name`, `subcategory`, `color`, `brand`) VALUES
 (1, 'Gucci Shoes', 'shoes', 'black', 'gucci'),
 (2, 'Uniqlo Pants', 'pants', 'blue', 'uniqlo'),
 (3, 'Polo Shirt', 'shirt', 'green', 'polo');
@@ -416,7 +416,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `auction_transactions`
 --
 ALTER TABLE `auction_transactions`
-  MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `bid_posts_for`
@@ -434,7 +434,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `item_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -478,7 +478,7 @@ ALTER TABLE `belongs_to`
 --
 ALTER TABLE `bid_posts_for`
   ADD CONSTRAINT `bid_posts_for_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
+  ADD CONSTRAINT `bid_posts_for_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `customer_rep`
@@ -503,8 +503,8 @@ ALTER TABLE `item_alerts`
 -- Constraints for table `questions`
 --
 ALTER TABLE `questions`
-  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT,
-  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`) ON DELETE SET NULL ON UPDATE RESTRICT;
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sub_category_1`
