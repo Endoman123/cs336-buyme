@@ -10,4 +10,13 @@
 	<br>
 	<p></p>
 
+	<div
+	style="border: 1px solid black; width: 400px; height: 150px; overflow: scroll;">
+	<h2>Bid Alerts</h2>
+
+	<p>Higher bids placed on this item by: <p>
+
+	</p>
+</div>
+
 </t:base>
