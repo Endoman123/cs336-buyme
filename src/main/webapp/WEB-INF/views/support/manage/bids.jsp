@@ -8,12 +8,11 @@
 
     <u:get-bids>
         <div class="bid">
-            <p class="bid__info">${bid.login} (${bidDate} ${bid.bidTime}): ${bid.amount} for auction ${bid.auctionID}</p>
+            <p class="bid__info">${bid.login} (${bid.bidDate} ${bid.bidTime.time}): ${bid.amount} for auction ${bid.auctionID}</p>
             <button onclick="tryDelete(${bid.bidNumber})">Delete Bid</button>
         </div>
     </u:get-bids>
 
-    <script>
     <script>
         function tryDelete(id) {
             if (confirm("Are you sure you want to delete bid " + id + "?")) {

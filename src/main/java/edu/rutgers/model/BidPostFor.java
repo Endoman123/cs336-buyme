@@ -85,7 +85,7 @@ public class BidPostFor implements Serializable {
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 
