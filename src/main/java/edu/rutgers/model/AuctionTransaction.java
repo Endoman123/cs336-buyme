@@ -122,11 +122,11 @@ public class AuctionTransaction implements Serializable {
         return category_number;
     }
 
-    public void setSubCategory(String sub) {
+    public void setSubcategory(String sub) {
         subcategory = sub;
     }
 
-    public String getSubCategory() {
+    public String getSubcategory() {
         return subcategory;
     }
 

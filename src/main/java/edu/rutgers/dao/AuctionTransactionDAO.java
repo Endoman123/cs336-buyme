@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Date;
 
 import edu.rutgers.model.AuctionTransaction;
 
@@ -270,7 +269,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
             auction.getBidIncrement(),
             auction.getMinimum(),
             auction.getCategoryNum(),
-            auction.getSubCategory(),
+            auction.getSubcategory(),
             auction.getName(),
             auction.getBrand(),
             auction.getColor()
@@ -307,7 +306,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
             auction.getBidIncrement(),
             auction.getMinimum(),
             auction.getCategoryNum(),
-            auction.getSubCategory(),
+            auction.getSubcategory(),
             auction.getName(),
             auction.getBrand(),
             auction.getColor()
@@ -366,7 +365,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         auction.setBidIncrement(resultSet.getFloat("bid_increment"));
         auction.setMinimum(resultSet.getFloat("minimum"));
         auction.setCategoryNum(resultSet.getInt("category_number"));
-        auction.setSubCategory(resultSet.getString("subcategory"));
+        auction.setSubcategory(resultSet.getString("subcategory"));
         auction.setName(resultSet.getString("name"));
         auction.setBrand(resultSet.getString("brand"));
         auction.setColor(resultSet.getString("color"));

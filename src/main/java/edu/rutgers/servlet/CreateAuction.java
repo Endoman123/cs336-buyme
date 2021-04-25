@@ -1,20 +1,19 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.WebServlet;
+
+import edu.rutgers.dao.AuctionTransactionDAO;
 import edu.rutgers.dao.DAOException;
 import edu.rutgers.dao.DAOFactory;
-import edu.rutgers.dao.AuctionTransactionDAO;
 import edu.rutgers.model.AuctionTransaction;
 
 @WebServlet("/createauction")
@@ -56,7 +55,7 @@ public class CreateAuction extends HttpServlet {
         auctionTransaction.setMinimum(Float.parseFloat(request.getParameter("minimum")));
         auctionTransaction.setBidIncrement(Float.parseFloat(request.getParameter("bid_increment")));
         auctionTransaction.setCategoryNum(Integer.parseInt(request.getParameter("category_number")));
-        auctionTransaction.setSubCategory(request.getParameter("subcategory"));
+        auctionTransaction.setSubcategory(request.getParameter("subcategory"));
         auctionTransaction.setName(request.getParameter("name"));
         auctionTransaction.setBrand(request.getParameter("brand"));
         auctionTransaction.setColor(request.getParameter("color"));
