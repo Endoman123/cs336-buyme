@@ -13,6 +13,8 @@ import edu.rutgers.util.URLQuery;
 
 /**
  * Admin servlet for generating sales reports
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/admin/generate-report")
 public class GenerateReportServlet extends HttpServlet {
