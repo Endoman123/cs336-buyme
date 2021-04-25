@@ -19,7 +19,9 @@ import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.model.User;
 
 /**
- * Autobid written by Dorian Hobot
+ * This class handles autobid functionality
+ * 
+ * @autho Dorian Hobot
  */
 public class Autobid extends HttpServlet {
 	private static final long serialVersionUID = 1L;

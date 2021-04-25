@@ -14,6 +14,8 @@ import edu.rutgers.model.AuctionTransaction;
 
 /**
  * Customer support servlet for managing auctions
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/support/manage/auctions")
 public class ManageAuctionServlet extends HttpServlet {

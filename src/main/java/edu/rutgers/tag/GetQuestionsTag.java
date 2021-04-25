@@ -18,6 +18,8 @@ import edu.rutgers.model.Question;
 
 /**
  * This tag lists all the questions.
+ * 
+ * @author Jared Tulayan
  */
 public class GetQuestionsTag extends BodyTagSupport {
     private DAOFactory daoFactory = new DAOFactory();

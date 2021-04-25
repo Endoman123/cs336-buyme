@@ -20,6 +20,8 @@ import edu.rutgers.model.AuctionTransaction;
  * @author Muskan Burman
  * @author Dorian Hobot
  * @author Jared Tulayan
+ * 
+ * @see edu.rutgers.model.AuctionTransaction AuctionTransaction
  */
 public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     // Query constants for easy access and change

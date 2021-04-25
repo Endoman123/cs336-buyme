@@ -18,6 +18,8 @@ import edu.rutgers.model.BidPostFor;
  * @author Muskan Burman
  * @author Dorian Hobot
  * @author Jared Tulayan
+ * 
+ * @see edu.rutgers.model.BidPostFor BidPostFor
  */
 public class BidPostForDAO extends DAO<BidPostFor> {
     // Query constants for easy access and change

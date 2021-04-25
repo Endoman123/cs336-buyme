@@ -18,6 +18,8 @@ import edu.rutgers.model.AuctionTransaction;
 
 /**
  * This tag gets all the auctions.
+ * 
+ * @author Jared Tulayan
  */
 public class GetAuctionsTag extends BodyTagSupport {
     private DAOFactory daoFactory = new DAOFactory();
@@ -106,10 +108,10 @@ public class GetAuctionsTag extends BodyTagSupport {
             e.printStackTrace();
         }
 
-        AuctionTransaction q = auctions.hasNext() ? auctions.next() : null;
+        AuctionTransaction a = auctions.hasNext() ? auctions.next() : null;
 
-        if (q != null) {
-            pageContext.setAttribute("auction", q);
+        if (a != null) {
+            pageContext.setAttribute("auction", a);
             return EVAL_BODY_AGAIN;
         } else
             return SKIP_BODY;

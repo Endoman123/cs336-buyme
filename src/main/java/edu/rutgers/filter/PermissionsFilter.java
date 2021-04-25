@@ -20,6 +20,7 @@ import edu.rutgers.model.User;
  * Filter to test user permissions.
  * This is done with the premise that there is a valid session.
  * 
+ * @author Jared Tulayan
  */
 public class PermissionsFilter implements Filter {
     private enum Level {

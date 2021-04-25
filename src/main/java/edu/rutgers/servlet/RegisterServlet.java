@@ -16,6 +16,8 @@ import edu.rutgers.util.Crypto;
 
 /**
  * Registration servlet for processing registration info
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
