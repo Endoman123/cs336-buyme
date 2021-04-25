@@ -19,7 +19,7 @@
         <name>get-auctions</name>
         <tag-class>edu.rutgers.tag.GetAuctionsTag</tag-class>
         <attribute>
-            <name>searchQuery</name>
+            <name>winner</name>
             <type>java.lang.String</type>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
