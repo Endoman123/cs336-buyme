@@ -45,12 +45,8 @@ INSERT INTO `admin` (`login`) VALUES
 --
 
 CREATE TABLE `auction_transactions` (
-  `auction_ID` int NOT NULL,
+  `auction_ID` int NOT NULL AUTO_INCREMENT,
   `item_ID` int DEFAULT NULL,
-  `name` varchar(30) DEFAULT NULL,
-  `subcategory` varchar(30) DEFAULT NULL,
-  `color` varchar(30) DEFAULT NULL,
-  `brand` varchar(30) DEFAULT NULL,
   `login` varchar(30) DEFAULT NULL,
   `close_date` date DEFAULT NULL,
   `close_time` time DEFAULT NULL,
@@ -58,26 +54,32 @@ CREATE TABLE `auction_transactions` (
   `init_price` float DEFAULT NULL,
   `bid_increment` float DEFAULT NULL,
   `minimum` float DEFAULT NULL,
-  `final_price` float DEFAULT NULL
+  `final_price` float DEFAULT NULL,
+  `category_number` int DEFAULT NULL,
+  `subcategory` varchar(30) DEFAULT NULL,
+  `name` varchar(30) DEFAULT NULL,
+  `brand` varchar(30) DEFAULT NULL,
+  `color` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (auction_ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `auction_transactions`
 --
 
-INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `name`, `subcategory`, `color`, `brand`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`) VALUES
-(1, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
-(2, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
-(3, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
-(4, 1, 'Gucci Shoes', 'shoes', 'black', 'gucci', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50),
-(5, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
-(6, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
-(7, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
-(8, 2, 'Uniqlo Pants', 'pants', 'grey', 'uniqlo', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50),
-(9, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL),
-(10, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40),
-(11, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30),
-(12, 3, 'Polo Shirt', 'shirts', 'green', 'polo', 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50);
+INSERT INTO `auction_transactions` (`item_ID`,`login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`,`category_number`,`subcategory`, `name`, `brand`, `color`) VALUES
+(1, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, '1', 'shoes','Gucci Shoes','gucci','black'),
+(1, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 1, 'shoes','Gucci Shoes','gucci', 'black'),
+(1, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30,1,'shoes','Gucci Shoes','gucci', 'black'),
+(1, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 1,'shoes','Gucci Shoes', 'gucci','black'),
+(2, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 1,'pants', 'Uniqlo Pants','uniqlo','grey'),
+(2, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 1,'pants','Uniqlo Pants','uniqlo','grey'),
+(2, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 1,'pants','Uniqlo Pants', 'uniqlo', 'grey'),
+(2, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 1, 'pants','Uniqlo Pants','uniqlo','grey'),
+(3, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 1,'shirts','Polo Shirt','polo', 'green'),
+(3, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 1, 'shirts','Polo Shirt', 'polo','green'),
+(3, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 1, 'shirts','Polo Shirt', 'polo', 'green'),
+(3, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50,1,'shirts','Polo Shirt', 'polo','green');
 
 -- --------------------------------------------------------
 
@@ -205,6 +207,7 @@ INSERT INTO `item` (`item_ID`, `name`, `subcategory`, `color`, `brand`) VALUES
 --
 
 CREATE TABLE `item_alerts` (
+  `item_ID` int NOT NULL,
   `login` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -319,7 +322,6 @@ ALTER TABLE `admin`
 -- Indexes for table `auction_transactions`
 --
 ALTER TABLE `auction_transactions`
-  ADD PRIMARY KEY (`auction_ID`),
   ADD KEY `item_ID` (`item_ID`),
   ADD KEY `login` (`login`);
 
@@ -415,8 +417,8 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for table `auction_transactions`
 --
-ALTER TABLE `auction_transactions`
-  MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+-- ALTER TABLE `auction_transactions`
+--   MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `bid_posts_for`
@@ -455,9 +457,9 @@ ALTER TABLE `admin`
 --
 -- Constraints for table `auction_transactions`
 --
-ALTER TABLE `auction_transactions`
-  ADD CONSTRAINT `auction_transactions_ibfk_1` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `auction_transactions_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
+-- ALTER TABLE `auction_transactions`
+--   ADD CONSTRAINT `auction_transactions_ibfk_1` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+--   ADD CONSTRAINT `auction_transactions_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `autobid`
@@ -496,8 +498,8 @@ ALTER TABLE `end_user`
 -- Constraints for table `item_alerts`
 --
 ALTER TABLE `item_alerts`
-  ADD CONSTRAINT `item_alerts_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `item_alerts_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `item_alerts_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
+  -- ADD CONSTRAINT `item_alerts_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `questions`

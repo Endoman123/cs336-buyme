@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import edu.rutgers.model.AuctionTransaction;
 
@@ -41,7 +42,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     private static final String SQL_FIND_AUCTION_BY_ID = "SELECT * FROM auction_transactions WHERE auction_ID=?";
 
     private static final String SQL_CREATE_AUCTION = 
-        "INSERT INTO auction_transactions (itemID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, category_number, subcategory, name, brand, color) VALUES (?, NULL, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_AUCTION = 
         "UPDATE auction_transactions SET close_date=IFNULL(?, close_date), close_time=IFNULL(?, close_time), winner=IFNULL(?, winner), init_price=IFNULL(?, init_price), bid_increment=IFNULL(?, bid_increment), minimum=IFNULL(?, minimum), final_price=(?, final_price) WHERE auctionID=?";
@@ -261,14 +262,16 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     public void create(AuctionTransaction auction) throws DAOException {
         Object[] values = new Object[] {
             auction.getItemID(),
-            auction.getLogin(),
             auction.getCloseDate(),
             auction.getCloseTime(),
-            auction.getWinner(),
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getFinalPrice()
+            auction.getCategoryNum(),
+            auction.getSubCategory(),
+            auction.getName(),
+            auction.getBrand(),
+            auction.getColor()
         };
 
         try (
@@ -294,13 +297,18 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     @Override
     public void update(AuctionTransaction auction) throws DAOException {
         Object[] values = new Object[] {
+            auction.getAuctionID(),
+            auction.getItemID(),
             auction.getCloseDate(),
             auction.getCloseTime(),
-            auction.getWinner(),
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getFinalPrice()
+            auction.getCategoryNum(),
+            auction.getSubCategory(),
+            auction.getName(),
+            auction.getBrand(),
+            auction.getColor()
         };
 
         try (
@@ -352,12 +360,14 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         auction.setLogin(resultSet.getString("login"));
         auction.setCloseDate(resultSet.getDate("close_date"));
         auction.setCloseTime(resultSet.getDate("close_time"));
-        auction.setWinner(resultSet.getString("winner"));
         auction.setInitPrice(resultSet.getFloat("init_price"));
         auction.setBidIncrement(resultSet.getFloat("bid_increment"));
         auction.setMinimum(resultSet.getFloat("minimum"));
-        auction.setFinalPrice(resultSet.getFloat("final_price"));
-
+        auction.setCategoryNum(resultSet.getInt("category_number"));
+        auction.setSubCategory(resultSet.getString("subcategory"));
+        auction.setName(resultSet.getString("name"));
+        auction.setBrand(resultSet.getString("brand"));
+        auction.setColor(resultSet.getString("color"));
         return auction;
     }
 }
