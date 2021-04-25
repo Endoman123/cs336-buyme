@@ -17,6 +17,7 @@ public class Item implements Serializable {
     private Integer itemID;
     private String name;
     private String subcategory;
+    private String color;
     private String brand;
 
     public void setItemID(Integer i) {
@@ -31,7 +32,7 @@ public class Item implements Serializable {
         name = n;
     }
 
-    public String getNmae() {
+    public String getName() {
         return name;
     }
 
@@ -41,6 +42,14 @@ public class Item implements Serializable {
 
     public String getSubcategory() {
         return subcategory;
+    }
+
+    public void setColor(String c) {
+        color = c;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public void setBrand(String b) {
@@ -63,6 +72,6 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Item[itemID=%d,name=%s,subcategory=%s,brand=%s]", itemID, name, subcategory, brand);
+        return String.format("Item[itemID=%d,name=%s,subcategory=%s,color=%s,brand=%s]", itemID, name, subcategory, color, brand);
     } 
 }
