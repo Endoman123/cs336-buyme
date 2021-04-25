@@ -18,6 +18,8 @@ import edu.rutgers.util.Crypto;
 
 /**
  * User servlet for viewing and editing their profile
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet( "/profile" )
 public class ProfileServlet extends HttpServlet {

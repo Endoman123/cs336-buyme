@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Customer support servlet for displaying questions
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/support")
 public class SupportServlet extends HttpServlet {

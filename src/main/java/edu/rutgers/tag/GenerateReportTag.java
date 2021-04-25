@@ -14,6 +14,7 @@ import edu.rutgers.dao.DAOFactory;
 /**
  * This tag programmatically generates a sales report.
  * 
+ * @author Jared Tulayan
  */
 public class GenerateReportTag extends TagSupport {
     public static final int

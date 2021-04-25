@@ -12,20 +12,20 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
+import edu.rutgers.dao.BidPostForDAO;
 import edu.rutgers.dao.DAOFactory;
-import edu.rutgers.dao.QuestionDAO;
-import edu.rutgers.model.Question;
+import edu.rutgers.model.BidPostFor;
 
 /**
- * This tag lists all the questions.
+ * This tag gets all the bids.
  * 
  * @author Jared Tulayan
  */
-public class GetQuestionsTag extends BodyTagSupport {
+public class GetBidsTag extends BodyTagSupport {
     private DAOFactory daoFactory = new DAOFactory();
-    private QuestionDAO questionDao = daoFactory.getQuestionDAO();
+    private BidPostForDAO bidDao = daoFactory.getBidPostForDAO();
 
-    private Iterator<Question> questions;
+    private Iterator<BidPostFor> bids;
     private String searchQuery;
 
     private static final Pattern KEYWORD_PATTERN = Pattern.compile("(\"([^\"]*)\"|(\\S+))");
@@ -41,7 +41,7 @@ public class GetQuestionsTag extends BodyTagSupport {
     @Override
     public int doStartTag() throws JspException {
         // Initialize variables
-        List<Question> qList = questionDao.list();
+        List<BidPostFor> bList = bidDao.list();
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
             StringBuilder queryBuilder = new StringBuilder();
@@ -71,12 +71,15 @@ public class GetQuestionsTag extends BodyTagSupport {
             queryRegex = queryBuilder.toString();
 
             // We do filtering in here because we can use regex for matching.
-            qList.removeIf(q -> !q.getQuestionText().toLowerCase().matches(queryRegex)); 
+            // TODO: Implement search filtering
+            bList.removeIf(a -> {
+                return false;
+            }); 
         }
 
-        if (qList.isEmpty()) {
+        if (bList.isEmpty()) {
             try {
-                getPreviousOut().write("<p>Sorry, no questions!</p>");
+                getPreviousOut().write("<p>Sorry, no bids!</p>");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -84,14 +87,14 @@ public class GetQuestionsTag extends BodyTagSupport {
             return SKIP_BODY;
         }
 
-        questions = qList.iterator();
+        bids = bList.iterator();
 
         return EVAL_BODY_BUFFERED;
     }
 
     @Override
     public void doInitBody() throws JspException {
-        pageContext.setAttribute("question", questions.next());
+        pageContext.setAttribute("bid", bids.next());
     }
 
     @Override
@@ -105,10 +108,10 @@ public class GetQuestionsTag extends BodyTagSupport {
             e.printStackTrace();
         }
 
-        Question q = questions.hasNext() ? questions.next() : null;
+        BidPostFor b = bids.hasNext() ? bids.next() : null;
 
-        if (q != null) {
-            pageContext.setAttribute("question", q);
+        if (b != null) {
+            pageContext.setAttribute("bid", b);
             return EVAL_BODY_AGAIN;
         } else
             return SKIP_BODY;

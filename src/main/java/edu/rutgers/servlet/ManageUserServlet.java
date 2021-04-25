@@ -19,6 +19,8 @@ import edu.rutgers.util.URLQuery;
 
 /**
  * Customer support servlet for managing a user
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/support/manage/users")
 public class ManageUserServlet extends HttpServlet {
