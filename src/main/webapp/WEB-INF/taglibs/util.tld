@@ -28,7 +28,7 @@
 
     <tag>
         <name>get-bids</name>
-        <tag-class>edu.rutgers.tag.GetBidsnTag</tag-class>
+        <tag-class>edu.rutgers.tag.GetBidsTag</tag-class>
         <attribute>
             <name>searchQuery</name>
             <type>java.lang.String</type>

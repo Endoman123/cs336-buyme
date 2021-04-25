@@ -16,7 +16,6 @@
     </u:get-auctions>
 
     <script>
-
         function tryDelete(id) {
             if (confirm("Are you sure you want to delete auction " + id + "?")) {
                 var url = new URL(window.location.href);
