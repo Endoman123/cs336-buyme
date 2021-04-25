@@ -17,12 +17,12 @@ import edu.rutgers.model.User;
 import edu.rutgers.util.Crypto;
 
 /**
- * User servlet for viewing and editing their profile
+ * User servlet for editing their profile
  * 
  * @author Jared Tulayan
  */
-@WebServlet( "/profile" )
-public class ProfileServlet extends HttpServlet {
+@WebServlet( "/profile/edit" )
+public class EditProfileServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -34,7 +34,7 @@ public class ProfileServlet extends HttpServlet {
         if (user == null || !userDao.find(user.getLogin()).equals(user))
             throw new IllegalStateException("Illegal session, invalid login information.");
         else 
-            request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/profile/edit.jsp").forward(request, response);
     }
     
     @Override
