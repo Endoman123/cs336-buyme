@@ -36,14 +36,14 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     private static final String SQL_GET_EARNINGS_PER_ITEM = "SELECT i.name AS item, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN item i ON a.item_ID=i.item_ID WHERE winner IS NOT NULL GROUP BY i.name ORDER BY item DESC";
 
     // TODO: Figure out if this needs changing
-    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT c.category_number AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY category DESC";
+    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT a.subcategory AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY category DESC";
 
     private static final String SQL_GET_EARNINGS_PER_USER = "SELECT login AS user, SUM(IFNULL(final_price, 0)) AS earnings FROM auction_transactions WHERE winner IS NOT NULL GROUP BY winner ORDER BY user DESC";
 
     private static final String SQL_FIND_AUCTION_BY_ID = "SELECT * FROM auction_transactions WHERE auction_ID=?";
 
     private static final String SQL_CREATE_AUCTION = 
-        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, category_number, subcategory, name, brand, color) VALUES (?, NULL, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?, ?)";
+        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, subcategory, name, brand, color) VALUES (?, NULL, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_AUCTION = 
         "UPDATE auction_transactions SET close_date=IFNULL(?, close_date), close_time=IFNULL(?, close_time), winner=IFNULL(?, winner), init_price=IFNULL(?, init_price), bid_increment=IFNULL(?, bid_increment), minimum=IFNULL(?, minimum), final_price=(?, final_price) WHERE auctionID=?";
@@ -268,7 +268,6 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getCategoryNum(),
             auction.getSubcategory(),
             auction.getName(),
             auction.getBrand(),
@@ -305,7 +304,6 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getCategoryNum(),
             auction.getSubcategory(),
             auction.getName(),
             auction.getBrand(),
@@ -364,7 +362,6 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         auction.setInitPrice(resultSet.getFloat("init_price"));
         auction.setBidIncrement(resultSet.getFloat("bid_increment"));
         auction.setMinimum(resultSet.getFloat("minimum"));
-        auction.setCategoryNum(resultSet.getInt("category_number"));
         auction.setSubcategory(resultSet.getString("subcategory"));
         auction.setName(resultSet.getString("name"));
         auction.setBrand(resultSet.getString("brand"));
