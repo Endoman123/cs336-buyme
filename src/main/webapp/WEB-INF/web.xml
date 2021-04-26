@@ -62,6 +62,8 @@
         <url-pattern>/support</url-pattern>  
         <url-pattern>/support/*</url-pattern>  
         <url-pattern>/autobid.jsp</url-pattern>  
+        <url-pattern>/createAuction.jsp</url-pattern>  
+        <url-pattern>/manualbid.jsp</url-pattern>  
         <url-pattern>/historyOfBidSpecificAuction.jsp</url-pattern>  
         <url-pattern>/itemAlert.jsp</url-pattern>  
         <url-pattern>/createauction</url-pattern>  
@@ -69,6 +71,8 @@
     <filter-mapping>  
         <filter-name>EndUserPermsFilter</filter-name>  
         <url-pattern>/autobid.jsp</url-pattern>  
+        <url-pattern>/createAuction.jsp</url-pattern>  
+        <url-pattern>/manualbid.jsp</url-pattern>  
         <url-pattern>/itemAlert.jsp</url-pattern>  
         <url-pattern>/createauction</url-pattern>  
     </filter-mapping>  

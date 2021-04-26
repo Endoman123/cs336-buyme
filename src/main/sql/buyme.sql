@@ -112,12 +112,13 @@ CREATE TABLE `belongs_to` (
 --
 
 CREATE TABLE `bid_posts_for` (
-  `bid_number` int NOT NULL,
+  `bid_number` int NOT NULL AUTO_INCREMENT,
   `login` varchar(30) DEFAULT NULL,
   `auction_ID` int DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `bid_date` date DEFAULT NULL,
-  `bid_time` time DEFAULT NULL
+  `bid_time` time DEFAULT NULL,
+  PRIMARY KEY (bid_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -343,7 +344,6 @@ ALTER TABLE `belongs_to`
 -- Indexes for table `bid_posts_for`
 --
 ALTER TABLE `bid_posts_for`
-  ADD PRIMARY KEY (`bid_number`),
   ADD KEY `auction_ID` (`auction_ID`),
   ADD KEY `login` (`login`);
 

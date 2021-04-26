@@ -28,10 +28,10 @@ public class BidPostForDAO extends DAO<BidPostFor> {
     private static final String SQL_FIND_BID_BY_ID = "SELECT * FROM bid_posts_for WHERE bid_number=?";
 
     private static final String SQL_CREATE_BID = 
-        "INSERT INTO bid_posts_for (login, auction_ID, amount, bid_date, bid_time, bid_increment, upper_limit) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO bid_posts_for (login, auction_ID, amount, bid_date, bid_time) VALUES (NULL, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_BID = 
-        "UPDATE bid_posts_for SET amount=IFNULL(?, amount), bid_date=IFNULL(?, bid_time), bid_time=IFNULL(?, bid_time), bid_increment=IFNULL(?, bid_increment), upper_limit=IFNULL(?, upper_limit) WHERE bid_number=?";
+        "UPDATE bid_posts_for SET amount=IFNULL(?, amount), bid_date=IFNULL(?, bid_time), bid_time=IFNULL(?, bid_time) WHERE bid_number=?";
 
     private static final String SQL_DELETE_BID = "DELETE FROM bid_posts_for WHERE bid_number=?";
 
@@ -93,7 +93,7 @@ public class BidPostForDAO extends DAO<BidPostFor> {
     }
 
     /**
-     * Attempt to create a new auction using the given info.
+     * Attempt to create a new bid using the given info.
      * 
      * @param  auction      the auction to add to the database
      * @throws DAOException if there is an issue with interfacing with the database
@@ -101,7 +101,6 @@ public class BidPostForDAO extends DAO<BidPostFor> {
     @Override
     public void create(BidPostFor bid) throws DAOException {
         Object[] values = new Object[] {
-            bid.getLogin(),
             bid.getAuctionID(),
             bid.getAmount(),
             bid.getBidDate(),
@@ -181,7 +180,6 @@ public class BidPostForDAO extends DAO<BidPostFor> {
         BidPostFor bid = new BidPostFor();
 
         bid.setBidNumber(resultSet.getInt("bid_number"));
-        bid.setLogin(resultSet.getString("login"));
         bid.setAuctionID(resultSet.getInt("auction_ID"));
         bid.setAmount(resultSet.getFloat("amount"));
         bid.setBidDate(resultSet.getDate("bid_date"));

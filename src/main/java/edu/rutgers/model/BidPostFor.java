@@ -6,6 +6,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+
 /**
  * Bid post model for the database.
  * Models the generic bid posts for auction relation in the backend.

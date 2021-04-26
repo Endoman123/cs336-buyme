@@ -1,9 +1,10 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,7 @@ import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.model.AuctionTransaction;
 
 @WebServlet("/createauction")
-public class CreateAuction extends HttpServlet {
+public class CreateAuctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     /**
@@ -26,7 +27,7 @@ public class CreateAuction extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.getWriter().append("/webapp/createAuction.jsp").append(request.getContextPath());
+        request.getRequestDispatcher("/webapp/createAuction.jsp").forward(request, response);
     }
 
 	/**
@@ -42,19 +43,21 @@ public class CreateAuction extends HttpServlet {
         DAOFactory daoFactory = new DAOFactory();
         AuctionTransactionDAO auctionTransactionDAO = daoFactory.getAuctionTransactionDAO();
 
-        SimpleDateFormat formatter = new SimpleDateFormat();
-
         AuctionTransaction auctionTransaction = new AuctionTransaction();
         auctionTransaction.setItemID(Integer.parseInt(request.getParameter("item_ID")));
+
+        System.out.println(request.getParameter("close_date"));
         try{
-            auctionTransaction.setCloseDate(formatter.parse(request.getParameter("close_date")));
-            auctionTransaction.setCloseTime(formatter.parse(request.getParameter("close_time")));
+            Date closeDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("close_date")); 
+            auctionTransaction.setCloseDate(closeDate);
+            
+            Date closeTime = new SimpleDateFormat("HH:mm").parse(request.getParameter("close_time"));
+            auctionTransaction.setCloseTime(closeTime);
         } catch(ParseException e) {};
         
         auctionTransaction.setInitPrice(Float.parseFloat(request.getParameter("init_price")));
         auctionTransaction.setMinimum(Float.parseFloat(request.getParameter("minimum")));
         auctionTransaction.setBidIncrement(Float.parseFloat(request.getParameter("bid_increment")));
-        auctionTransaction.setCategoryNum(Integer.parseInt(request.getParameter("category_number")));
         auctionTransaction.setSubcategory(request.getParameter("subcategory"));
         auctionTransaction.setName(request.getParameter("name"));
         auctionTransaction.setBrand(request.getParameter("brand"));
