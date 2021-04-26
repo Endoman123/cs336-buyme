@@ -283,26 +283,26 @@ public class Autobid extends HttpServlet {
 								currentMaxBid = makeBid(con, username, auctionId, bidIncrement, currentMaxBid);
 								currentMaxLogin = username;
 
-								 System.out.println("new maxbid =" + currentMaxBid);
-								 System.out.println("new max login =" + currentMaxLogin);
+								// System.out.println("new maxbid =" + currentMaxBid);
+								// System.out.println("new max login =" + currentMaxLogin);
 								rs = st.executeQuery(getAutobids);
 							} else {
 								// create new bid based on the current autobid entry
 								currentMaxBid = makeBid(con, username, auctionId, 0, upperLimit);
 								currentMaxLogin = username;
 
-								 System.out.println("new maxbid =" + currentMaxBid);
-								 System.out.println("new max login =" + currentMaxLogin);
+								//System.out.println("new maxbid =" + currentMaxBid);
+								//System.out.println("new max login =" + currentMaxLogin);
 								rs = st.executeQuery(getAutobids);
 
 							}
 
 						} else {
-							 System.out.println("limit reached");
+							 //System.out.println("limit reached");
 							continue;
 						}
 					} else {
-						 System.out.println("same login");
+						//System.out.println("same login");
 						continue;
 					}
 
@@ -310,7 +310,7 @@ public class Autobid extends HttpServlet {
 				// Runs if there was no previous bid. Creates the initial bid.
 			} else {
 
-				System.out.println("no previous bids");
+				//System.out.println("no previous bids");
 				String checkAuction = "select init_price from auction_transactions where auction_id = " + auctionId;
 				rs = st.executeQuery(checkAuction);
 				rs.next();

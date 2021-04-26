@@ -43,8 +43,8 @@ Written by Dorian Hobot
 				int auctionId = rs.getInt("auction_ID");
 				double upperLimit = rs.getDouble("upper_limit");
 
-				System.out.println(auctionId);
-				System.out.println(upperLimit);
+				//System.out.println(auctionId);
+				//System.out.println(upperLimit);
 
 				String highBid = "select login, amount from bid_posts_for where auction_ID=" + auctionId
 						+ " and amount = (select max(amount) as amount from bid_posts_for where auction_ID=" + auctionId
@@ -58,8 +58,8 @@ Written by Dorian Hobot
 					String highBidderLogin = highBidder.getString("login");
 					double amount = highBidder.getDouble("amount");
 
-					System.out.println(highBidderLogin);
-					System.out.println(amount);
+					//System.out.println(highBidderLogin);
+					//System.out.println(amount);
 
 					if (amount > upperLimit) {
 						if (login.compareTo(highBidderLogin) != 0) {
@@ -142,7 +142,7 @@ Written by Dorian Hobot
 			while (rs.next()) {
 				int auctionId = rs.getInt("auction_ID");
 
-				System.out.println(auctionId);
+				//System.out.println(auctionId);
 
 				if (!checkAuctionClosing(con, auctionId)) {
 
@@ -154,7 +154,7 @@ Written by Dorian Hobot
 					min.close();
 					st2.close();
 
-					System.out.println("reserve " + reserve);
+					//System.out.println("reserve " + reserve);
 
 					String maximumBid = "select login, amount from bid_posts_for where auction_ID=" + auctionId
 							+ " and amount = (select max(amount) as amount from bid_posts_for where auction_ID="
@@ -168,11 +168,11 @@ Written by Dorian Hobot
 					max.close();
 					st3.close();
 
-					System.out.println("Max bid " + maxBid);
+					//System.out.println("Max bid " + maxBid);
 
 					if (maxBid >= reserve) {
 
-						System.out.println("Winner " + winner);
+						//System.out.println("Winner " + winner);
 						String updateWinner = "update auction_transactions set winner =\"" + winner
 								+ "\", final_price =\"" + maxBid + "\" where auction_ID=" + auctionId;
 						Statement st4 = con.createStatement();
@@ -191,6 +191,7 @@ Written by Dorian Hobot
 		}
 	}
 	
+	//updates the winner of any close auction
 	void updateWinner(){
 		try {
 
@@ -210,7 +211,7 @@ Written by Dorian Hobot
 			while (rs.next()) {
 				int auctionId = rs.getInt("auction_ID");
 
-				System.out.println(auctionId);
+				//System.out.println(auctionId);
 
 				
 
@@ -222,7 +223,7 @@ Written by Dorian Hobot
 					min.close();
 					st2.close();
 
-					System.out.println("reserve " + reserve);
+					//System.out.println("reserve " + reserve);
 
 					String maximumBid = "select login, amount from bid_posts_for where auction_ID=" + auctionId
 							+ " and amount = (select max(amount) as amount from bid_posts_for where auction_ID="
@@ -237,11 +238,12 @@ Written by Dorian Hobot
 					max.close();
 					st3.close();
 
-					System.out.println("Max bid " + maxBid);
+					//System.out.println("Max bid " + maxBid);
 
 					if (maxBid >= reserve) {
 
-						System.out.println("Winner " + winner);
+						//System.out.println("Winner " + winner);
+						
 						String updateWinner = "update auction_transactions set winner =\"" + winner
 								+ "\", final_price =\"" + maxBid + "\" where auction_ID=" + auctionId;
 						Statement st4 = con.createStatement();
