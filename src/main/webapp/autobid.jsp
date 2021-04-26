@@ -124,7 +124,7 @@ Written by Dorian Hobot
 	}
 
 	//updates the winner of any auction that the current logged in user has bid for
-	void updateWinner(HttpSession session) {
+	void updateWinner2(HttpSession session) {
 
 		try {
 
@@ -190,6 +190,77 @@ Written by Dorian Hobot
 			throw new DAOException(e);
 		}
 	}
+	
+	void updateWinner(){
+		try {
+
+			DAOFactory dao = new DAOFactory();
+			Connection con = dao.getConnection();
+			Statement st = con.createStatement();
+			
+			LocalTime currentTime = LocalTime.now();
+			LocalDate currentDate = LocalDate.now();
+
+
+			String auctionList = "select auction_ID from auction_transactions where close_date < \"" + currentDate + "\" union select auction_ID from auction_transactions where close_date = \"" + currentDate + "\" and close_time < \"" + currentTime + "\"";
+
+
+			ResultSet rs = st.executeQuery(auctionList);
+
+			while (rs.next()) {
+				int auctionId = rs.getInt("auction_ID");
+
+				System.out.println(auctionId);
+
+				
+
+					String minimum = "select minimum from auction_transactions where auction_ID =" + auctionId;
+					Statement st2 = con.createStatement();
+					ResultSet min = st2.executeQuery(minimum);
+					min.next();
+					double reserve = min.getDouble("minimum");
+					min.close();
+					st2.close();
+
+					System.out.println("reserve " + reserve);
+
+					String maximumBid = "select login, amount from bid_posts_for where auction_ID=" + auctionId
+							+ " and amount = (select max(amount) as amount from bid_posts_for where auction_ID="
+							+ auctionId + ")";
+
+					Statement st3 = con.createStatement();
+					ResultSet max = st3.executeQuery(maximumBid);
+					
+					if(max.next()){
+					double maxBid = max.getDouble("amount");
+					String winner = max.getString("login");
+					max.close();
+					st3.close();
+
+					System.out.println("Max bid " + maxBid);
+
+					if (maxBid >= reserve) {
+
+						System.out.println("Winner " + winner);
+						String updateWinner = "update auction_transactions set winner =\"" + winner
+								+ "\", final_price =\"" + maxBid + "\" where auction_ID=" + auctionId;
+						Statement st4 = con.createStatement();
+						st4.executeUpdate(updateWinner);
+					}
+					
+
+					}
+
+				}
+
+			rs.close();
+			con.close();
+
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		}
+	}
+	
 
 	//gets the list of auctions the current logged in user has won
 	List<String> checkWinner(HttpSession session) {
@@ -211,10 +282,9 @@ Written by Dorian Hobot
 			while (rs.next()) {
 
 				int auctionId = rs.getInt("auction_ID");
-				int itemId = rs.getInt("item_ID");
 				String itemName = rs.getString("name");
 
-				String entry = "Auction ID: " + auctionId + ", Item ID: " + itemId + ", Item Name: " + itemName;
+				String entry = "Auction ID: " + auctionId + ", Item Name: " + itemName;
 				Wins.add(entry);
 
 			}
@@ -246,7 +316,7 @@ Written by Dorian Hobot
 </t:base>
 
 <%
-updateWinner(session);
+updateWinner();
 %>
 
 <div
