@@ -21,7 +21,7 @@ import edu.rutgers.model.User;
 /**
  * This class handles autobid functionality
  * 
- * @autho Dorian Hobot
+ * @author Dorian Hobot
  */
 public class Autobid extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -240,8 +240,8 @@ public class Autobid extends HttpServlet {
 		if (!checkAuctionClosing(con, auctionId)) {
 			return;
 		}
-		String bidExists = "select auction_ID as amount from Bid_Posts_For where auction_ID = " + auctionId;
-		String maxBid = "select max(amount) as amount from Bid_Posts_For where auction_ID = " + auctionId;
+		String bidExists = "select auction_ID as amount from bid_posts_for where auction_ID = " + auctionId;
+		String maxBid = "select max(amount) as amount from bid_bosts_for where auction_ID = " + auctionId;
 		String maxLogin = "select distinct login from bid_posts_for where auction_ID=" + auctionId
 				+ " and amount = (select max(amount) as amount from bid_posts_for where auction_ID=" + auctionId + ")";
 		String getAutobids = "select * from autobid where Auction_ID=" + auctionId;
@@ -298,11 +298,11 @@ public class Autobid extends HttpServlet {
 							}
 
 						} else {
-							// System.out.println("limit reached");
+							 System.out.println("limit reached");
 							continue;
 						}
 					} else {
-						// System.out.println("same login");
+						 System.out.println("same login");
 						continue;
 					}
 
