@@ -20,6 +20,11 @@ import edu.rutgers.dao.BidPostForDAO;
 import edu.rutgers.model.BidPostFor;
 import edu.rutgers.model.User;
 
+/**
+ * Manual bid posted and bid alerts received(on the selected auction) by the currently logged in end user 
+ * 
+ * @author Muskan Burman
+ */
 @WebServlet("/manualbid")
 public class ManualBidServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;

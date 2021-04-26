@@ -43,7 +43,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     private static final String SQL_FIND_AUCTION_BY_ID = "SELECT * FROM auction_transactions WHERE auction_ID=?";
 
     private static final String SQL_CREATE_AUCTION = 
-        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, category_number, subcategory, name, brand, color) VALUES (?, NULL, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?, ?)";
+        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, category_number, subcategory, name, brand, color) VALUES (?, ?, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_AUCTION = 
         "UPDATE auction_transactions SET close_date=IFNULL(?, close_date), close_time=IFNULL(?, close_time), winner=IFNULL(?, winner), init_price=IFNULL(?, init_price), bid_increment=IFNULL(?, bid_increment), minimum=IFNULL(?, minimum), final_price=(?, final_price), category_number=(?, category_number), subcategory=(?, subcategory), name=(?, name), brand=(?, brand), color=(?, color) WHERE auctionID=?";
@@ -263,6 +263,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     public void create(AuctionTransaction auction) throws DAOException {
         Object[] values = new Object[] {
             auction.getItemID(),
+            auction.getLogin(),
             auction.getCloseDate(),
             auction.getCloseTime(),
             auction.getInitPrice(),
@@ -300,6 +301,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         Object[] values = new Object[] {
             auction.getAuctionID(),
             auction.getItemID(),
+            auction.getLogin(),
             auction.getCloseDate(),
             auction.getCloseTime(),
             auction.getInitPrice(),
@@ -358,6 +360,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
 
         auction.setAuctionID(resultSet.getInt("auction_ID"));
         auction.setItemID(resultSet.getInt("item_ID"));
+        auction.setLogin(resultSet.getString("login"));
         auction.setLogin(resultSet.getString("login"));
         auction.setCloseDate(resultSet.getDate("close_date"));
         auction.setCloseTime(resultSet.getDate("close_time"));

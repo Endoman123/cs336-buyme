@@ -10,12 +10,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.WebServlet;
 import edu.rutgers.dao.DAOException;
 import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.dao.AuctionTransactionDAO;
 import edu.rutgers.model.AuctionTransaction;
+import edu.rutgers.model.User;
 
+/**
+ * Creation of a new auction by the currently logged in end user
+ * 
+ * @author Muskan Burman
+ */
 @WebServlet("/createauction")
 public class CreateAuctionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -37,15 +44,20 @@ public class CreateAuctionServlet extends HttpServlet {
     throws ServletException, IOException, DAOException {
 
         PrintWriter output = response.getWriter();
-		response.setContentType("text/html");
+        response.setContentType("text/html");
+        
+        HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+        String login = user.getLogin();
                 
         DAOFactory daoFactory = new DAOFactory();
         AuctionTransactionDAO auctionTransactionDAO = daoFactory.getAuctionTransactionDAO();
 
         AuctionTransaction auctionTransaction = new AuctionTransaction();
+
+        auctionTransaction.setLogin(login);
         auctionTransaction.setItemID(Integer.parseInt(request.getParameter("item_ID")));
 
-        System.out.println(request.getParameter("close_date"));
         try{
             Date closeDate = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("close_date")); 
             auctionTransaction.setCloseDate(closeDate);
