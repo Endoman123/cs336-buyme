@@ -180,6 +180,7 @@ public class BidPostForDAO extends DAO<BidPostFor> {
         BidPostFor bid = new BidPostFor();
 
         bid.setBidNumber(resultSet.getInt("bid_number"));
+        bid.setLogin(resultSet.getString("login"));
         bid.setAuctionID(resultSet.getInt("auction_ID"));
         bid.setAmount(resultSet.getFloat("amount"));
         bid.setBidDate(resultSet.getDate("bid_date"));
