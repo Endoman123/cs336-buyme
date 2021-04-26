@@ -12,7 +12,6 @@
             
         <h2>Item Details</h2>
         <label>Create New Item ID:</label> <input type="number" name="item_ID" required min=1> <br>
-        <br/><label>Enter Category Number:</label> <input type="number" name="category_number" required> <br>
         <br/><label>Enter Sub-Category:</label> <input type="name" name="subcategory" required> <br>
         <br/><label>Enter Name:</label> <input type="name" name="name" required> <br>
         <br/><label>Enter Brand:</label> <input type="name" name="brand" required> <br>
