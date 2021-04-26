@@ -76,7 +76,7 @@ public class GetQuestionsTag extends BodyTagSupport {
 
         if (qList.isEmpty()) {
             try {
-                getPreviousOut().write("<p>Sorry, no questions!</p>");
+                pageContext.getOut().write("<p>Sorry, no questions!</p>");
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Apr 23, 2021 at 04:14 AM
--- Server version: 8.0.23
+-- Generation Time: Apr 26, 2021 at 01:57 AM
+-- Server version: 8.0.24
 -- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -45,7 +45,7 @@ INSERT INTO `admin` (`login`) VALUES
 --
 
 CREATE TABLE `auction_transactions` (
-  `auction_ID` int NOT NULL AUTO_INCREMENT,
+  `auction_ID` int NOT NULL,
   `item_ID` int DEFAULT NULL,
   `login` varchar(30) DEFAULT NULL,
   `close_date` date DEFAULT NULL,
@@ -55,31 +55,29 @@ CREATE TABLE `auction_transactions` (
   `bid_increment` float DEFAULT NULL,
   `minimum` float DEFAULT NULL,
   `final_price` float DEFAULT NULL,
-  `category_number` int DEFAULT NULL,
   `subcategory` varchar(30) DEFAULT NULL,
   `name` varchar(30) DEFAULT NULL,
   `brand` varchar(30) DEFAULT NULL,
-  `color` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (auction_ID)
+  `color` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `auction_transactions`
 --
 
-INSERT INTO `auction_transactions` (`item_ID`,`login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`,`category_number`,`subcategory`, `name`, `brand`, `color`) VALUES
-(1, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, '1', 'shoes','Gucci Shoes','gucci','black'),
-(1, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 1, 'shoes','Gucci Shoes','gucci', 'black'),
-(1, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30,1,'shoes','Gucci Shoes','gucci', 'black'),
-(1, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 1,'shoes','Gucci Shoes', 'gucci','black'),
-(2, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 1,'pants', 'Uniqlo Pants','uniqlo','grey'),
-(2, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 1,'pants','Uniqlo Pants','uniqlo','grey'),
-(2, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 1,'pants','Uniqlo Pants', 'uniqlo', 'grey'),
-(2, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 1, 'pants','Uniqlo Pants','uniqlo','grey'),
-(3, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 1,'shirts','Polo Shirt','polo', 'green'),
-(3, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 1, 'shirts','Polo Shirt', 'polo','green'),
-(3, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 1, 'shirts','Polo Shirt', 'polo', 'green'),
-(3, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50,1,'shirts','Polo Shirt', 'polo','green');
+INSERT INTO `auction_transactions` (`auction_ID`, `item_ID`, `login`, `close_date`, `close_time`, `winner`, `init_price`, `bid_increment`, `minimum`, `final_price`, `subcategory`, `name`, `brand`, `color`) VALUES
+(1, 1, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 'shoes', 'Gucci Shoes', 'gucci', 'black'),
+(2, 1, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 'shoes', 'Gucci Shoes', 'gucci', 'black'),
+(3, 1, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 'shoes', 'Gucci Shoes', 'gucci', 'black'),
+(4, 1, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 'shoes', 'Gucci Shoes', 'gucci', 'black'),
+(5, 2, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 'pants', 'Uniqlo Pants', 'uniqlo', 'grey'),
+(6, 2, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 'pants', 'Uniqlo Pants', 'uniqlo', 'grey'),
+(7, 2, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 'pants', 'Uniqlo Pants', 'uniqlo', 'grey'),
+(8, 2, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 'pants', 'Uniqlo Pants', 'uniqlo', 'grey'),
+(9, 3, 'dorianht', '2021-04-25', '23:00:00', NULL, 20, 2, 3, NULL, 'shirts', 'Polo Shirt', 'polo', 'green'),
+(10, 3, 'endoman123', '2021-04-18', '23:00:00', 'muskanb12', 20, 1, 2, 40, 'shirts', 'Polo Shirt', 'polo', 'green'),
+(11, 3, 'muskanb12', '2021-03-08', '23:00:00', 'windhollow', 10, 1, 2, 30, 'shirts', 'Polo Shirt', 'polo', 'green'),
+(12, 3, 'windhollow', '2021-04-09', '23:00:00', 'dorianht', 30, 2, 5, 50, 'shirts', 'Polo Shirt', 'polo', 'green');
 
 -- --------------------------------------------------------
 
@@ -97,28 +95,16 @@ CREATE TABLE `autobid` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `belongs_to`
---
-
-CREATE TABLE `belongs_to` (
-  `category_number` int NOT NULL,
-  `item_ID` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `bid_posts_for`
 --
 
 CREATE TABLE `bid_posts_for` (
-  `bid_number` int NOT NULL AUTO_INCREMENT,
+  `bid_number` int NOT NULL,
   `login` varchar(30) DEFAULT NULL,
   `auction_ID` int DEFAULT NULL,
   `amount` float DEFAULT NULL,
   `bid_date` date DEFAULT NULL,
-  `bid_time` time DEFAULT NULL,
-  PRIMARY KEY (bid_number)
+  `bid_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -129,16 +115,6 @@ INSERT INTO `bid_posts_for` (`bid_number`, `login`, `auction_ID`, `amount`, `bid
 (1, 'endoman123', 2, 20, '2021-04-20', '11:48:28'),
 (2, 'muskanb12', 2, 20, '2021-04-20', '11:47:00'),
 (3, 'endoman123', 2, 20, '2021-04-21', '11:48:28');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category`
---
-
-CREATE TABLE `category` (
-  `category_number` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -217,9 +193,9 @@ CREATE TABLE `item_alerts` (
 -- Dumping data for table `item_alerts`
 --
 
-INSERT INTO `item_alerts` (`login`, `name`) VALUES
-('dorianht', 'gucci shoes'),
-('endoman123', 'gucci');
+INSERT INTO `item_alerts` (`item_ID`, `login`, `name`) VALUES
+(0, 'dorianht', 'gucci shoes'),
+(0, 'endoman123', 'gucci');
 
 -- --------------------------------------------------------
 
@@ -244,45 +220,6 @@ INSERT INTO `questions` (`id`, `eu_login`, `cr_login`, `question_text`, `answer_
 (2, 'dorianht', NULL, 'When do I know an auction has ended?', NULL),
 (3, 'muskanb12', NULL, 'How do I reset my password?', NULL),
 (4, 'windhollow', NULL, 'Can I remove an auction?', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sub_category_1`
---
-
-CREATE TABLE `sub_category_1` (
-  `category_number` int NOT NULL,
-  `spec_1` varchar(20) DEFAULT NULL,
-  `spec_2` varchar(20) DEFAULT NULL,
-  `spec_3` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sub_category_2`
---
-
-CREATE TABLE `sub_category_2` (
-  `category_number` int NOT NULL,
-  `spec_1` varchar(20) DEFAULT NULL,
-  `spec_2` varchar(20) DEFAULT NULL,
-  `spec_3` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sub_category_3`
---
-
-CREATE TABLE `sub_category_3` (
-  `category_number` int NOT NULL,
-  `spec_1` varchar(20) DEFAULT NULL,
-  `spec_2` varchar(20) DEFAULT NULL,
-  `spec_3` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -323,6 +260,7 @@ ALTER TABLE `admin`
 -- Indexes for table `auction_transactions`
 --
 ALTER TABLE `auction_transactions`
+  ADD PRIMARY KEY (`auction_ID`),
   ADD KEY `item_ID` (`item_ID`),
   ADD KEY `login` (`login`);
 
@@ -334,24 +272,12 @@ ALTER TABLE `autobid`
   ADD KEY `auction_ID` (`auction_ID`);
 
 --
--- Indexes for table `belongs_to`
---
-ALTER TABLE `belongs_to`
-  ADD PRIMARY KEY (`category_number`,`item_ID`),
-  ADD KEY `item_ID` (`item_ID`);
-
---
 -- Indexes for table `bid_posts_for`
 --
 ALTER TABLE `bid_posts_for`
+  ADD PRIMARY KEY (`bid_number`),
   ADD KEY `auction_ID` (`auction_ID`),
   ADD KEY `login` (`login`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`category_number`);
 
 --
 -- Indexes for table `customer_rep`
@@ -387,24 +313,6 @@ ALTER TABLE `questions`
   ADD KEY `cr_login` (`cr_login`) USING BTREE;
 
 --
--- Indexes for table `sub_category_1`
---
-ALTER TABLE `sub_category_1`
-  ADD PRIMARY KEY (`category_number`);
-
---
--- Indexes for table `sub_category_2`
---
-ALTER TABLE `sub_category_2`
-  ADD PRIMARY KEY (`category_number`);
-
---
--- Indexes for table `sub_category_3`
---
-ALTER TABLE `sub_category_3`
-  ADD PRIMARY KEY (`category_number`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -417,20 +325,14 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for table `auction_transactions`
 --
--- ALTER TABLE `auction_transactions`
---   MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `auction_transactions`
+  MODIFY `auction_ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `bid_posts_for`
 --
 ALTER TABLE `bid_posts_for`
   MODIFY `bid_number` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `category_number` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `item`
@@ -457,9 +359,9 @@ ALTER TABLE `admin`
 --
 -- Constraints for table `auction_transactions`
 --
--- ALTER TABLE `auction_transactions`
---   ADD CONSTRAINT `auction_transactions_ibfk_1` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
---   ADD CONSTRAINT `auction_transactions_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `auction_transactions`
+  ADD CONSTRAINT `auction_transactions_ibfk_1` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `auction_transactions_ibfk_2` FOREIGN KEY (`login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `autobid`
@@ -467,13 +369,6 @@ ALTER TABLE `admin`
 ALTER TABLE `autobid`
   ADD CONSTRAINT `autobid_ibfk_1` FOREIGN KEY (`auction_ID`) REFERENCES `auction_transactions` (`auction_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `autobid_ibfk_2` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `belongs_to`
---
-ALTER TABLE `belongs_to`
-  ADD CONSTRAINT `belongs_to_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `belongs_to_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `bid_posts_for`
@@ -499,7 +394,6 @@ ALTER TABLE `end_user`
 --
 ALTER TABLE `item_alerts`
   ADD CONSTRAINT `item_alerts_ibfk_1` FOREIGN KEY (`login`) REFERENCES `user` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
-  -- ADD CONSTRAINT `item_alerts_ibfk_2` FOREIGN KEY (`item_ID`) REFERENCES `item` (`item_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `questions`
@@ -507,24 +401,6 @@ ALTER TABLE `item_alerts`
 ALTER TABLE `questions`
   ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`eu_login`) REFERENCES `end_user` (`login`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `questions_ibfk_2` FOREIGN KEY (`cr_login`) REFERENCES `customer_rep` (`login`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `sub_category_1`
---
-ALTER TABLE `sub_category_1`
-  ADD CONSTRAINT `sub_category_1_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `sub_category_2`
---
-ALTER TABLE `sub_category_2`
-  ADD CONSTRAINT `sub_category_2_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `sub_category_3`
---
-ALTER TABLE `sub_category_3`
-  ADD CONSTRAINT `sub_category_3_ibfk_1` FOREIGN KEY (`category_number`) REFERENCES `category` (`category_number`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -36,14 +36,14 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     private static final String SQL_GET_EARNINGS_PER_ITEM = "SELECT i.name AS item, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN item i ON a.item_ID=i.item_ID WHERE winner IS NOT NULL GROUP BY i.name ORDER BY item DESC";
 
     // TODO: Figure out if this needs changing
-    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT c.category_number AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY category DESC";
+    private static final String SQL_GET_EARNINGS_PER_TYPE = "SELECT a.subcategory AS category, SUM(IFNULL(a.final_price, 0)) AS earnings FROM auction_transactions AS a JOIN belongs_to c ON a.item_ID=c.item_ID WHERE winner IS NOT NULL GROUP BY c.category_number ORDER BY category DESC";
 
     private static final String SQL_GET_EARNINGS_PER_USER = "SELECT login AS user, SUM(IFNULL(final_price, 0)) AS earnings FROM auction_transactions WHERE winner IS NOT NULL GROUP BY winner ORDER BY user DESC";
 
     private static final String SQL_FIND_AUCTION_BY_ID = "SELECT * FROM auction_transactions WHERE auction_ID=?";
 
     private static final String SQL_CREATE_AUCTION = 
-        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, category_number, subcategory, name, brand, color) VALUES (?, ?, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?, ?)";
+        "INSERT INTO auction_transactions (item_ID, login, close_date, close_time, winner, init_price, bid_increment, minimum, final_price, subcategory, name, brand, color) VALUES (?, ?, ?, ?, NULL, ?, ?, ?, NULL, ?, ?, ?, ?)";
 
     private static final String SQL_UPDATE_AUCTION = 
         "UPDATE auction_transactions SET close_date=IFNULL(?, close_date), close_time=IFNULL(?, close_time), winner=IFNULL(?, winner), init_price=IFNULL(?, init_price), bid_increment=IFNULL(?, bid_increment), minimum=IFNULL(?, minimum), final_price=(?, final_price), category_number=(?, category_number), subcategory=(?, subcategory), name=(?, name), brand=(?, brand), color=(?, color) WHERE auctionID=?";
@@ -269,8 +269,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getCategoryNum(),
-            auction.getSubCategory(),
+            auction.getSubcategory(),
             auction.getName(),
             auction.getBrand(),
             auction.getColor()
@@ -289,7 +288,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
 
     /**
      * Updates the auction's information in the database, matched by the given {@code AuctionTransaction}'s ID.
-     * You cannot update the auction's ID, itemID, or owner login.
+     * You cannot update the auction's ID, item info, or owner login.
      * <p>
      * Any field left {@code null} will not be updated.
      * 
@@ -304,14 +303,12 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
             auction.getLogin(),
             auction.getCloseDate(),
             auction.getCloseTime(),
+            auction.getWinner(),
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getCategoryNum(),
-            auction.getSubCategory(),
-            auction.getName(),
-            auction.getBrand(),
-            auction.getColor()
+            auction.getFinalPrice(),
+            auction.getAuctionID()
         };
 
         try (
@@ -367,11 +364,13 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         auction.setInitPrice(resultSet.getFloat("init_price"));
         auction.setBidIncrement(resultSet.getFloat("bid_increment"));
         auction.setMinimum(resultSet.getFloat("minimum"));
-        auction.setCategoryNum(resultSet.getInt("category_number"));
-        auction.setSubCategory(resultSet.getString("subcategory"));
+        auction.setWinner(resultSet.getString("winner"));
+        auction.setFinalPrice(resultSet.getFloat("final_price"));
+        auction.setSubcategory(resultSet.getString("subcategory"));
         auction.setName(resultSet.getString("name"));
         auction.setBrand(resultSet.getString("brand"));
         auction.setColor(resultSet.getString("color"));
+
         return auction;
     }
 }

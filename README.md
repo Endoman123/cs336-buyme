@@ -47,3 +47,65 @@ Listed below are the test credentials currently registered with the webapp:
 | endoman123   | password2   | `END_USER`
 | muskanb12   | password3   | `END_USER`
 | windhollow   | password4   | `END_USER`
+
+## Features
+1. [x] Create accounts of users; login, logout.
+2. [x] Auctions (Manual)
+    * [x] seller creates auctions and posts items for sale
+        - [x] set all the characteristics of the item
+        - [x] set closing date and time
+        - [x] set a hidden minimum price (reserve)
+    * [x] a buyer should be able to bid
+        - [x] let the buyer set a new bid
+        - [x] alert other buyers of the item that a higher bid has been placed 
+    * [x] define the winner of the auction
+        - [x] when the closing time has come, check if the seller has set a reserve
+            * [x] if yes: if the reserve is higher than the last bid none is the winner.
+            * [x] if no: whoever has the higher bid is the winner
+                - [x] alert the winner that they won the auction
+3. [x] Auctions (Automatic)
+    * [x] a buyer should be able to set an automatic bidding
+        - [x] set a secret upper limit
+        - [x] set a bid increment (put in the database a higher bid automatically for the user in       
+       case someone bids higher)
+        - [x] alert buyers in case someone bids more than their upper limit 
+    * [x] define the winner of the auction
+        - [x] when the closing time has come, check if the seller has set a reserve
+            * [x] if yes: if the reserve is higher than the last bid none is the winner.
+            * [x] if no: whoever has the higher bid is the winner
+                - [x] alert the winner that they won the auction
+4. [x] Browsing and advanced search functionality
+    * [x] let people browse on the items and see the status of the current bidding
+    * [x] sort by different criteria (by type, bidding price etc.)
+    * [x] search the list of items by various criteria.
+    * [x] a user should be able to:
+        - [x] view all the history of bids for any specific auction
+        - [x] view the list of all auctions a specific buyer or seller has participated in
+        - [x] view the list of "similar" items on auctions in the preceding month (and auction information about them)
+    * [x] let user set an alert for specific items s/he is interested 
+        - [x] get an alert when the item becomes available
+5. [ ] Admin and customer rep functions
+    * [x] Admin (create an admin account ahead of time)
+        - [x] creates accounts for customer representatives
+        - [ ] generates sales reports for:
+            * [x] total earnings
+            * [ ] earnings per: 
+                - [x] item
+                - [ ] item type
+                - [x] end-user
+            * [x] best-selling items
+            * [x] best buyers
+    * [x] Customer representative functions:
+        - [x] users browse questions and answers
+        - [x] users search questions by keywords
+        - [x] users post questions to the customer representatives (i.e. customer service)
+        - [x] reps reply to user questions
+        - [x] edits and deletes account information
+        - [x] removes bids 
+        - [x] removes auctions 
+
+## Contribution
+- Nikita Belausav (windhollow): Browsing and advanced search functionality
+- Muskan Burman (muskanb12): Auctions (Manual)
+- Dorian Hobot (dorianht): Auctions (Automatic)
+- Jared Tulayan (endoman123): Admin and Customer Rep functions
