@@ -50,7 +50,7 @@ Listed below are the test credentials currently registered with the webapp:
 
 ## Features
 1. [x] Create accounts of users; login, logout.
-2. [-] Auctions (Manual)
+2. [x] Auctions (Manual)
     * [x] seller creates auctions and posts items for sale
         - [x] set all the characteristics of the item
         - [x] set closing date and time
@@ -84,14 +84,14 @@ Listed below are the test credentials currently registered with the webapp:
         - [x] view the list of "similar" items on auctions in the preceding month (and auction information about them)
     * [x] let user set an alert for specific items s/he is interested 
         - [x] get an alert when the item becomes available
-5. [-] Admin and customer rep functions
+5. [ ] Admin and customer rep functions
     * [x] Admin (create an admin account ahead of time)
         - [x] creates accounts for customer representatives
-        - [-] generates sales reports for:
+        - [ ] generates sales reports for:
             * [x] total earnings
-            * [-] earnings per:
+            * [ ] earnings per: 
                 - [x] item
-                - [] item type
+                - [ ] item type
                 - [x] end-user
             * [x] best-selling items
             * [x] best buyers
