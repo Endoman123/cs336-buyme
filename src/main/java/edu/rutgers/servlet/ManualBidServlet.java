@@ -35,7 +35,7 @@ public class ManualBidServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("/webapp/manualbid.jsp").forward(request, response);
+        request.getRequestDispatcher("/manualbid.jsp").forward(request, response);
     }
 
 	/**
@@ -52,7 +52,6 @@ public class ManualBidServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
         String login = user.getLogin();
         
-                
         DAOFactory daoFactory = new DAOFactory();
         BidPostForDAO bidPostForDAO = daoFactory.getBidPostForDAO();
 

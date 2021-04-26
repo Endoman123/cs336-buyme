@@ -43,7 +43,6 @@ public class CreateAuctionServlet extends HttpServlet {
 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     throws ServletException, IOException, DAOException {
-
         PrintWriter output = response.getWriter();
         response.setContentType("text/html");
         

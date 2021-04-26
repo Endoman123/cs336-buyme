@@ -19,7 +19,7 @@ import="java.io.IOException,
  edu.rutgers.servlet.ManualBidServlet"%>
 
 <%!
-List<String> getBiddersList(HttpSession session) {
+List<String> getBiddersList(HttpServletRequest request) {
 	String auctionID = request.getParameter("auction_ID");
 	String bidAmount = request.getParameter("bid_amount");
 
@@ -71,7 +71,7 @@ List<String> getBiddersList(HttpSession session) {
 	<p>Higher bids placed on this item by:</p>
 	<p>
 		<%
-		List<String> bidders = getBiddersList(session);
+		List<String> bidders = getBiddersList(request);
 		for (String bidder : bidders) {
 			out.println(bidder);
 		%>
