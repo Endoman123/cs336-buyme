@@ -17,6 +17,8 @@ import edu.rutgers.util.URLQuery;
 
 /**
  * Filter to check if a user is logged in.
+ * 
+ * @author Jared Tulayan
  */
 @WebFilter(filterName="LoginFilter")
 public class LoginFilter implements Filter {

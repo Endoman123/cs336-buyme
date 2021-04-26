@@ -24,6 +24,8 @@ import edu.rutgers.util.Crypto;
  * @author Muskan Burman
  * @author Dorian Hobot
  * @author Jared Tulayan
+ * 
+ * @see edu.rutgers.model.User User
  */
 public class UserDAO extends DAO<User> {
     private static final String SQL_LIST_USERS = "SELECT * FROM user ORDER BY login";

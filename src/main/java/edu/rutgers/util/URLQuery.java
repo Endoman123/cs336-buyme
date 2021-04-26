@@ -5,6 +5,8 @@ import java.net.URLEncoder;
 
 /**
  * Utility class to encode GET queries
+ * 
+ * @author Jared Tulayan
  */
 public class URLQuery {
     private static final String CHARSET = "UTF-8";

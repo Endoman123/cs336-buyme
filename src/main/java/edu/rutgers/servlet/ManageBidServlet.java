@@ -1,7 +1,6 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,9 @@ import edu.rutgers.dao.DAOFactory;
 import edu.rutgers.model.BidPostFor;
 
 /**
- * Customer support servlet for managing bids
+ * Customer support servlet for managing bids.
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/support/manage/bids")
 public class ManageBidServlet extends HttpServlet {
@@ -22,27 +23,6 @@ public class ManageBidServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAOFactory daoFactory = new DAOFactory();
-        BidPostForDAO bidDao = daoFactory.getBidPostForDAO();
-        StringBuilder content = new StringBuilder();
-
-        List<BidPostFor> bids = bidDao.list();
-
-        // Dynamically populate content
-        // We make a JS call here, but I couldn't care less.
-        if (bids.isEmpty()) {
-            content.append("<p>Sorry, no bids!</p>");
-        } else {
-            bids.forEach(b -> {
-                content.append("<div class=\"bid\">");
-                content.append("<p class=\"bid__text\">" + b + "</p>");
-                content.append("<button onClick=\"askDelete(" + b.getBidNumber() + ")\">Delete bid</button>");
-                content.append("</div>");
-            });
-        }
-
-        request.setAttribute("content", content);
-
         request.getRequestDispatcher("/WEB-INF/views/support/manage/bids.jsp").forward(request, response);
     }
 
@@ -52,12 +32,12 @@ public class ManageBidServlet extends HttpServlet {
         BidPostForDAO bidDao = daoFactory.getBidPostForDAO();
 
         // Make sure that there is a bid to get 
-        if (request.getParameter("bidID") == null)
-            throw new IllegalArgumentException("Bid ID not specified.");
+        if (request.getParameter("bidNumber") == null)
+            throw new IllegalArgumentException("Bid number not specified.");
         else { 
-            BidPostFor bid = bidDao.find(Integer.parseInt(request.getParameter("bidID")));
+            BidPostFor bid = bidDao.find(Integer.parseInt(request.getParameter("bidNumber")));
             if (bid == null)
-                throw new ServletException("Invalid bid ID.");
+                throw new ServletException("Invalid bid number.");
             else
                 bidDao.delete(bid);
         }

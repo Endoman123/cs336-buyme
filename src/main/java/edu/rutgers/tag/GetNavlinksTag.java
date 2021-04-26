@@ -40,9 +40,9 @@ public class GetNavlinksTag extends TagSupport {
             if (session != null && session.getAttribute("user") != null) {
                 User user = (User) session.getAttribute("user");
 
-                out.append("<a class=\"" + itemClass + "\" href=\"support\">Support</a>");
-                out.append("<a class=\"" + itemClass + "\" href=\"profile\">Profile</a>");
-                out.append("<a class=\"" + itemClass + "\" href=\"logout\">Logout</a>");
+                out.append("<a class=\"" + itemClass + "\" href=\"support\">Support<br/></a>");
+                out.append("<a class=\"" + itemClass + "\" href=\"profile\">Profile<br/></a>");
+                out.append("<a class=\"" + itemClass + "\" href=\"logout\">Logout<br/></a>");
 
                 if (userDao.getAdmin().equals(user)) { // Admin stuff
                     out.append("<a class=\"" + itemClass + "\" href=\"admin/add-rep\">Add Customer Representative</a>");
@@ -51,8 +51,10 @@ public class GetNavlinksTag extends TagSupport {
                     out.append("<a class=\"" + itemClass + "\" href=\"support/manage/auctions\">Manage Auctions</a>");
                     out.append("<a class=\"" + itemClass + "\" href=\"support/manage/bids\">Manage Bids</a>");
                 } else { // End user stuff
-                    out.append("<a class=\"" + itemClass + "\" href=\"autobid.jsp\">Autobid</a>");
-                    out.append("<a class=\"" + itemClass + "\" href=\"browse.jsp\">Browse</a>");
+                    out.append("<a class=\"" + itemClass + "\" href=\"createAuction.jsp\">Create Auction<br/></a>");
+                    out.append("<a class=\"" + itemClass + "\" href=\"manualbid.jsp\">Manual Bid<br/></a>");
+                    out.append("<a class=\"" + itemClass + "\" href=\"autobid.jsp\">Autobid<br/></a>");
+                    out.append("<a class=\"" + itemClass + "\" href=\"browse.jsp\">Browse<br/></a>");
                 }
             } else {
                 out.append("<a class=\"" + itemClass + "\" href=\"login\">Login</a>");

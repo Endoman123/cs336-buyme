@@ -28,6 +28,10 @@ public class AuctionTransaction implements Serializable {
     private Float bidIncrement;
     private Float minimum;
     private Float finalPrice;
+    private String subcategory;
+    private String name;
+    private String brand;
+    private String color;
 
     public void setAuctionID(Integer id) {
         auctionID = id;
@@ -107,6 +111,38 @@ public class AuctionTransaction implements Serializable {
 
     public Float getFinalPrice() {
         return finalPrice;
+    }
+
+    public void setSubcategory(String sub) {
+        subcategory = sub;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public void setName(String n) {
+        name = n;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setBrand(String b) {
+        brand = b;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setColor(String c) {
+        color = c;
+    }
+
+    public String getColor() {
+        return color;
     }
     
     @Override

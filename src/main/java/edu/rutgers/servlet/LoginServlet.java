@@ -15,6 +15,11 @@ import edu.rutgers.util.URLQuery;
 
 /**
  * Login servlet for processing login info
+ * 
+ * @author Mikita Belausau
+ * @author Muskan Burman
+ * @author Dorian Hobot
+ * @author Jared Tulayan
  */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {

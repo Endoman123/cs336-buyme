@@ -1,7 +1,6 @@
 package edu.rutgers.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +14,8 @@ import edu.rutgers.model.AuctionTransaction;
 
 /**
  * Customer support servlet for managing auctions
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/support/manage/auctions")
 public class ManageAuctionServlet extends HttpServlet {
@@ -22,27 +23,6 @@ public class ManageAuctionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAOFactory daoFactory = new DAOFactory();
-        AuctionTransactionDAO auctionDao = daoFactory.getAuctionTransactionDAO();
-        StringBuilder content = new StringBuilder();
-
-        List<AuctionTransaction> auctions = auctionDao.list();
-
-        // Dynamically populate content
-        // We make a JS call here, unsafe but I couldn't care less.
-        if (auctions.isEmpty()) {
-            content.append("<p>Sorry, no auctions!</p>");
-        } else {
-            auctions.forEach(a -> {
-                content.append("<div class=\"auction\">");
-                content.append("<p class=\"auction__text\">" + a + "</p>");
-                content.append("<button onClick=\"askDelete(" + a.getAuctionID() + ")\">Delete auction</button>");
-                content.append("</div>");
-            });
-        }
-
-        request.setAttribute("content", content);
-
         request.getRequestDispatcher("/WEB-INF/views/support/manage/auctions.jsp").forward(request, response);
     }
 

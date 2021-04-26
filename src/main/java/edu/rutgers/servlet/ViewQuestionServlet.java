@@ -17,6 +17,8 @@ import edu.rutgers.model.User;
 
 /**
  * Customer Support servlet for viewing a specific question
+ * 
+ * @author Jared Tulayan
  */
 @WebServlet("/support/view")
 public class ViewQuestionServlet extends HttpServlet {

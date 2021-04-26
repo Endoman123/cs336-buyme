@@ -16,6 +16,28 @@
     </tag>
 
     <tag>
+        <name>get-auctions</name>
+        <tag-class>edu.rutgers.tag.GetAuctionsTag</tag-class>
+        <attribute>
+            <name>winner</name>
+            <type>java.lang.String</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>get-bids</name>
+        <tag-class>edu.rutgers.tag.GetBidsTag</tag-class>
+        <attribute>
+            <name>searchQuery</name>
+            <type>java.lang.String</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
         <name>get-questions</name>
         <tag-class>edu.rutgers.tag.GetQuestionsTag</tag-class>
         <attribute>

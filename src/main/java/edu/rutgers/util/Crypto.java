@@ -18,9 +18,6 @@ import javax.crypto.spec.SecretKeySpec;
  * A utility class with an encryption function that encrypts a string to AES-256-CBC.
  * Included is a function to also decrypt, but mainly used for testing.
  * 
- * @author Mikita Belausau
- * @author Muskan Burman
- * @author Dorian Hobot
  * @author Jared Tulayan
  */
 public class Crypto {

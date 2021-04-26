@@ -19,7 +19,7 @@
  <body>
  All Auctions <%
  User user = (User) session.getAttribute("user");
- out.print(user);%>
+ out.print(user.getLogin());%>
  has bid for
  <% 
  		List<String> list = new ArrayList<String>();
@@ -59,7 +59,7 @@ try {
 %>
 
 All Auctions <%
- out.print(user);%>
+ out.print(user.getLogin());%>
  has sold
  <% 
 

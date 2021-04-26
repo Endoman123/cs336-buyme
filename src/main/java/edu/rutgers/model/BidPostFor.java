@@ -6,6 +6,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+
 /**
  * Bid post model for the database.
  * Models the generic bid posts for auction relation in the backend.
@@ -85,7 +87,7 @@ public class BidPostFor implements Serializable {
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 
