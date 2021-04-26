@@ -288,7 +288,7 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
 
     /**
      * Updates the auction's information in the database, matched by the given {@code AuctionTransaction}'s ID.
-     * You cannot update the auction's ID, itemID, or owner login.
+     * You cannot update the auction's ID, item info, or owner login.
      * <p>
      * Any field left {@code null} will not be updated.
      * 
@@ -298,17 +298,14 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
     @Override
     public void update(AuctionTransaction auction) throws DAOException {
         Object[] values = new Object[] {
-            auction.getAuctionID(),
-            auction.getItemID(),
             auction.getCloseDate(),
             auction.getCloseTime(),
+            auction.getWinner(),
             auction.getInitPrice(),
             auction.getBidIncrement(),
             auction.getMinimum(),
-            auction.getSubcategory(),
-            auction.getName(),
-            auction.getBrand(),
-            auction.getColor()
+            auction.getFinalPrice(),
+            auction.getAuctionID()
         };
 
         try (
@@ -363,10 +360,13 @@ public class AuctionTransactionDAO extends DAO<AuctionTransaction> {
         auction.setInitPrice(resultSet.getFloat("init_price"));
         auction.setBidIncrement(resultSet.getFloat("bid_increment"));
         auction.setMinimum(resultSet.getFloat("minimum"));
+        auction.setWinner(resultSet.getString("winner"));
+        auction.setFinalPrice(resultSet.getFloat("final_price"));
         auction.setSubcategory(resultSet.getString("subcategory"));
         auction.setName(resultSet.getString("name"));
         auction.setBrand(resultSet.getString("brand"));
         auction.setColor(resultSet.getString("color"));
+
         return auction;
     }
 }

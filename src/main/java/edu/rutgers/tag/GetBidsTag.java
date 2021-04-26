@@ -79,7 +79,7 @@ public class GetBidsTag extends BodyTagSupport {
 
         if (bList.isEmpty()) {
             try {
-                getPreviousOut().write("<p>Sorry, no bids!</p>");
+                pageContext.getOut().write("<p>Sorry, no bids!</p>");
             } catch (IOException e) {
                 e.printStackTrace();
             }

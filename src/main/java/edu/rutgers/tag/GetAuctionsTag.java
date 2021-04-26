@@ -43,9 +43,7 @@ public class GetAuctionsTag extends BodyTagSupport {
 
         if (aList.isEmpty()) {
             try {
-                BodyContent b = bodyContent;
-                JspWriter out  = b.getEnclosingWriter();
-                out.write("<p>Sorry, no auctions!</p>");
+                pageContext.getOut().write("<p>Sorry, no auctions!</p>");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -65,13 +63,15 @@ public class GetAuctionsTag extends BodyTagSupport {
 
     @Override
     public int doAfterBody() throws JspException {
-        try {
-            BodyContent b = getBodyContent();
-            JspWriter out = b.getEnclosingWriter();
-            out.println(b.getString());
-            b.clearBody();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (pageContext.getAttribute("auction") != null) {
+            try {
+                BodyContent b = getBodyContent();
+                JspWriter out = b.getEnclosingWriter();
+                out.println(b.getString());
+                b.clearBody();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         AuctionTransaction a = auctions.hasNext() ? auctions.next() : null;

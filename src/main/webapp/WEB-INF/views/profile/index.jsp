@@ -11,7 +11,7 @@
     </div>
     <div class="profile__auctions">
         <h3>Auctions Won</h3>
-        <u:get-auctions>
+        <u:get-auctions winner="${user.login}">
            <div class="auctions__auction">
                 <p>${auction.closeDate}</p>
                 <p>${auction.name}: ${auction.finalPrice}</p>
